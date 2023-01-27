@@ -1,0 +1,188 @@
+#game-setup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 50%;
+  margin: 2em;
+  padding: 1rem;
+  border: 2px solid black;
+  // border-radius: 5px;
+}
+
+#game-setup > input {
+  margin-top: .3rem;
+  margin-bottom: .5rem;
+}
+
+#game-setup > button {
+  margin-top: .5rem;
+}
+
+#game-builder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem 0 3rem 0;
+  // border: 2px solid black;
+
+}
+
+.game-board {
+  display: flex;
+  border: 2px solid black;
+  width: 75%;
+  margin: 2rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+  margin: 0 auto 0 auto;
+  // border: 2px solid black;
+}
+
+
+#playGameContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem 0 3rem 0;
+}
+
+.playGameBoard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 10px solid #0D4C92;
+  width: 75%;
+  background-color:#A0E4CB;
+}
+
+.btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-container > * {
+  margin: .5rem;
+}
+
+#profileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#profileContainer > * {
+  margin: 1rem;
+}
+
+#savedGameList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 50%;
+
+  h4, h3 {
+    margin: 0.4rem;
+  }
+}
+
+.game-list-choice {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+
+  h4:hover {
+    cursor: pointer;
+    color: blue;
+  }
+
+  h3:hover {
+    cursor: default;
+  }
+}
+.game-list-name {
+  margin-right: auto;
+}
+.game-list-options {
+  display: flex;
+  margin-left: auto;
+}
+
+
+#input-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 45%;
+  left: 25%;
+  background-color: #59C1BD;
+  width: 50%;
+  height: 50%;
+  border: solid 2px #0D4C92;
+  box-shadow: 0 0 5px 5px #0D4C92;
+  z-index: 5;
+}
+
+
+#play-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 45%;
+  left: 25%;
+  background-color: #59C1BD;
+  width: 50%;
+  height: 50%;
+  border: solid 10px #0D4C92;
+  box-shadow: 0 0 3px 3px #0D4C92;
+  z-index: 5;
+}
+
+#play-modal > button {
+  width: 4rem;
+  margin: .5rem;
+  border: 3px solid #0D4C92;
+}
+
+#welcome-options {
+  display: flex;
+
+  * {
+    margin: auto 0.5rem auto 0.5rem;
+  }
+
+  h2 {
+    margin: 0.5rem;
+    cursor: pointer;
+  }
+
+  h2:hover {
+    color: blue;
+  }
+}
+
+.profile-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  // padding: 1rem;
+
+  * {
+    margin: auto 0.5rem auto 0.5rem;
+  }
+}

@@ -1,0 +1,53 @@
+button {
+  font-family: 'Josefin Sans';
+  padding: .3rem;
+  background-color: #59C1BD;
+  border-radius: 3px;
+  border: 1px solid #0D4C92;
+}
+
+button:hover {
+  background-color: #A0E4CB;
+  color: #0D4C92;
+  cursor: pointer;
+}
+
+
+#btnSaveGame {
+  width: 11rem;
+  height: 4rem;
+  font-size: large;
+}
+
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: .5rem 0 0 0;
+  max-width: 150px;
+}
+
+.category-card > input {
+  text-align: center;
+}
+
+.clue-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0 1rem 0;
+  border: 5px solid #0D4C92;
+  width: 100px;
+  color: #0D4C92;
+}
+
+.clue-card:hover {
+  background-color: #0D4C92;
+  color:#CFF5E7;
+  border-color: #CFF5E7;
+}
+
+.clue-card > h2:hover {
+  cursor: pointer;
+}
