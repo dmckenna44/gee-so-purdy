@@ -15,11 +15,18 @@ props passed down from Column:
 const CluePlay = (props) => {
 
   const dispatch = useDispatch();
+  const {handleModal} = props;
+  const [big, setBig] = useState(false)
 
   const showModal = (e) => {
     dispatch({type: 'SET_CURRENT_Q', payload: props.question});
     dispatch({type: 'SET_CURRENT_A', payload: props.answer});
-    document.getElementById('play-modal').classList.remove('hidden');
+    handleModal(e);
+    // document.getElementById('play-modal').classList.remove('hidden');
+  }
+
+  const embiggen = (e) => {
+    setBig(!big);
   }
 
   const closeModal = (e) => {
@@ -38,12 +45,13 @@ const CluePlay = (props) => {
 
 
   return (
-    <div className="clue-card" onClick={showModal}>
+    <div className={`clue-card ${big ? 'embiggen' : ''}`} onClick={embiggen} >
+      
       <h2 onClick={showModal}>{props.value}</h2>
 
       <div className={"clue-play-modal hidden"} >
         <p className="play-question">{props.question}</p>
-        <p className="play-answer" hidden={true}>{props.answer}</p>
+        <p className="play-answer" >{props.answer}</p>
 
         <div className="btn-container">
           <button onClick={showAnswer}>Show Answer</button>

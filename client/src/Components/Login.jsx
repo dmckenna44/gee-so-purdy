@@ -40,7 +40,7 @@ const Login = (props) => {
 
 
   return (
-    <div id="welcome-page-container">
+    <div id="login-page-container">
       <section id="accounts-container">
         <h3>Have an Account? Log in here</h3>
         <form action="submit" className="account-form">

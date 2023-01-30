@@ -15,7 +15,8 @@ props: {
 
 const ColumnPlay = (props) => {
 
-  console.log('columnplay props', props);
+  const {handleModal} = props;
+  
   const clueList = props.questions.map((clue, i) => {
     return <CluePlay 
         key={i}  
@@ -23,7 +24,8 @@ const ColumnPlay = (props) => {
         index={i} 
         value={(i+1)*100} 
         question={clue} 
-        answer={props.answers[i]} 
+        answer={props.answers[i]}
+        handleModal={handleModal} 
       />
   })
 

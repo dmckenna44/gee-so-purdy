@@ -5,19 +5,26 @@
   justify-content: center;
   width: 50%;
   margin: 2em;
-  padding: 1rem;
+  padding: 1.5rem;
   border: 2px solid black;
   // border-radius: 5px;
+
+  input {
+    margin-top: .3rem;
+    margin-bottom: .5rem;
+  }
+
+  button {
+    align-self: center;
+    margin-top: .5rem;
+    box-shadow: 0.2rem 0.2rem .3rem 1px darken($backgroundColor, 40%);
+  }
+
+  button:hover {
+    box-shadow: none;
+  }
 }
 
-#game-setup > input {
-  margin-top: .3rem;
-  margin-bottom: .5rem;
-}
-
-#game-setup > button {
-  margin-top: .5rem;
-}
 
 #game-builder {
   display: flex;
@@ -29,7 +36,28 @@
 
 }
 
-.game-board {
+.build-game-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 1rem;
+  background-color: #A0E4CB;
+  border: 1px solid $borderColor;
+  box-shadow: 0 0 .5rem 1px $borderColor;
+}
+
+.game-editor-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // border: 2px solid black;
+  width: 75%;
+  margin: 2rem;
+}
+
+.edit-game-board {
   display: flex;
   border: 2px solid black;
   width: 75%;
@@ -53,6 +81,8 @@
   justify-content: center;
   align-items: center;
   margin: 3rem 0 3rem 0;
+  padding: 1rem;
+  width: 75%;
 }
 
 .playGameBoard {
@@ -62,6 +92,7 @@
   border: 10px solid #0D4C92;
   width: 75%;
   background-color:#A0E4CB;
+  padding: 1rem;
 }
 
 .btn-container {
@@ -79,6 +110,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 2rem;
+  width: 75%;
 }
 
 #profileContainer > * {
@@ -159,6 +192,24 @@
   border: 3px solid #0D4C92;
 }
 
+#welcome-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+
+  * {
+    margin: 1rem auto 1rem auto;
+  }
+}
+
+#accounts-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #welcome-options {
   display: flex;
 
@@ -185,4 +236,9 @@
   * {
     margin: auto 0.5rem auto 0.5rem;
   }
+}
+
+.player-signin {
+  display: flex;
+  flex-direction: column;
 }

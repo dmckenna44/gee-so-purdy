@@ -29,6 +29,9 @@ const io = new Server(server, {
   }
 })
 
+const clients = [];
+const rooms = [];
+
 const mongoUri = process.env.MONGO_DB_URI;
 mongoose.connect(mongoUri, {
   // options for the connect method to parse the URI
@@ -46,6 +49,42 @@ mongoose.connect(mongoUri, {
 
 io.on('connection', socket => {
   console.log(`User connected: ${socket.id}`);
+  clients.push(socket.id)
+
+  socket.on('join_room', data => {
+    console.log('join room data', data)
+    if (rooms.includes(data)) {
+      socket.join(data);
+    } else {
+      socket.emit('receive_message', {message: 'No room found'})
+    }
+    // if (data.room) socket.to(data.room).emit('receive_message', data);
+  });
+
+  socket.on('create_room', (data) => {
+    console.log('create room data', data)
+    const newRoom = {
+      id: data._id,
+      game: data,
+      players: []
+    }
+    rooms.push(newRoom);
+    socket.join(newRoom);
+  })
+
+  socket.on('check_rooms', (data, cb) => {
+    console.log('check rooms data', data);
+    const response = {};
+    rooms.forEach(room => {
+      if (room.game.name === data.name && room.game.password === data.password) {
+        response.found = true;
+        response.room = room;
+        room.players.push(data.player)
+      }
+    })
+    if (response.found) cb(response)
+
+  })
 })
 
 app.get('/', (req, res) => {
@@ -64,6 +103,10 @@ app.post('/signup', cors(), userController.createUser, (req, res) => {
 
 app.post('/games', gameController.setGame, (req, res) => {
   res.status(200).json(res.locals.newGame);
+})
+
+app.put('/games', gameController.updateGame, (req, res) => {
+  res.status(200).json(res.locals.updated);
 })
 
 app.delete('/games', gameController.deleteGame, (req, res) => {

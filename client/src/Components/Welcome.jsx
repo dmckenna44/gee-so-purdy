@@ -12,7 +12,7 @@ const Welcome = (props) => {
       <div id="welcome-options">
         <h2 onClick={() => navigate('/login')}>Host/Create</h2>
         <h1>|</h1>
-        <h2 onClick={() => navigate('/signup')}>Play</h2>
+        <h2 onClick={() => navigate('/playerlogin')}>Play</h2>
       </div>
     </div>
   )

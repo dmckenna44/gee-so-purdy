@@ -1,48 +1,37 @@
-import React, {useState} from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { SET_CAT_NAME } from "../constants/actionTypes.js";
 import Clue from './Clue.jsx';
 
-/*
-props: {
-  category: string
-  clues: array
-}
-
-*/
-
 const Column = (props) => {
-  const currGame = useSelector(state => state.game);
+  const {category, clues, index, handleModal} = props;
   const dispatch = useDispatch();
+  console.log('props from column', clues)
 
-  const clueList = currGame.clues.map((clue, i) => {
+  const clueList = clues.map((clue, i) => {
     return <Clue 
         key={i}  
-        column={props.index}
+        column={index}
         index={i} 
         value={(i+1)*100} 
         question={clue.question} 
         answer={clue.answer} 
-        state={props.state}
-        saveGame={props.saveGame} 
-        handleModal={props.handleModal}
+        handleModal={handleModal}
       />
   })
 
   const setCategoryName = (e) => {
     e.preventDefault();
-    dispatch({type: 'SET_CAT_NAME', payload: [e.target.value, props.index]})
-    console.log('category index, name', props.index, currGame.categories)
+    dispatch({type: SET_CAT_NAME, payload: [e.target.value, index]})
   }
 
   return (
     <div className="column">
       <div className="category-card">
         <label htmlFor="">Category Name</label>
-        <input type="text" onChange={setCategoryName}/>
-        {/* <h2 contentEditable={true} onInput={setCategoryName} className="category-name" >{props.category}</h2> */}
+        <input type="text" value={category} onChange={setCategoryName}/>
       </div>
       {clueList}
-
     </div>
   )
 }

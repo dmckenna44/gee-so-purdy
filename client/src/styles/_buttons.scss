@@ -3,13 +3,14 @@ button {
   padding: .3rem;
   background-color: #59C1BD;
   border-radius: 3px;
-  border: 1px solid #0D4C92;
-}
+  border: 1.5px solid #0D4C92;
 
-button:hover {
-  background-color: #A0E4CB;
-  color: #0D4C92;
-  cursor: pointer;
+  &:hover {
+    // background-color: #A0E4CB;
+    // color: #0D4C92;
+    cursor: pointer;
+    filter: brightness(0.85);
+  }
 }
 
 
@@ -18,7 +19,6 @@ button:hover {
   height: 4rem;
   font-size: large;
 }
-
 
 .category-card {
   display: flex;
@@ -37,17 +37,17 @@ button:hover {
   justify-content: center;
   align-items: center;
   margin: 1rem 0 1rem 0;
+  padding: 1rem;
   border: 5px solid #0D4C92;
   width: 100px;
   color: #0D4C92;
+  // transition: 0.5s ease-in-out;
+
+  &:hover {
+    background-color: #0D4C92;
+    color:#CFF5E7;
+    border-color: #CFF5E7;
+    cursor: pointer;
+  }
 }
 
-.clue-card:hover {
-  background-color: #0D4C92;
-  color:#CFF5E7;
-  border-color: #CFF5E7;
-}
-
-.clue-card > h2:hover {
-  cursor: pointer;
-}

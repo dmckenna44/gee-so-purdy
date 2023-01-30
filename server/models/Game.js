@@ -13,7 +13,11 @@ const gameSchema = new mongoose.Schema({
     category: String,
     questions: [String],
     answers: [String]
-  }]
+  }],
+  password: {
+    type: String,
+    required: true
+  }
 })
 
 

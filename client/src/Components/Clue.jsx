@@ -1,6 +1,6 @@
-import e from "cors";
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { SET_CURRENT_Q, SET_CURRENT_A, SET_CURRENT_INDEX } from "../constants/actionTypes";
 
 /*
 props passed down from Column:
@@ -14,41 +14,25 @@ props passed down from Column:
 
 
 const Clue = (props) => {
+  const { question, answer, column, handleModal, index, value } = props;
 
   const dispatch = useDispatch();
-
-  // const question = useSelector(state => { 
-  //   state.game.currentQuestion
-  // })
-  // const answer = useSelector(state => {
-  //   state.game.currentAnswer
-  // })
-
-  // const [question, setQuestion] = useState('');
-  // const [answer, setAnswer] = useState('');
-
-  let currEl;
+ 
+  const { currentQuestion, currentAnswer, clues } = useSelector(state => state.game);
 
   const showModal = (e) => {
-    dispatch({type: 'SET_CURRENT_INDEX', payload: [props.column, props.index]});
-    props.handleModal(e);
-    // document.getElementById('input-modal').classList.remove('hidden');
-    // const modal = document.getElementById('input-modal');
-    // console.log(modal)
+    console.log('currentQuestion:', currentQuestion, 'currentAnswer', currentAnswer)
+    console.log('info from clue: index', index, 'question', question, 'answer', answer)
+    dispatch({type: SET_CURRENT_INDEX, payload: [column, index]});
+    dispatch({type: SET_CURRENT_Q, payload: question});
+    dispatch({type: SET_CURRENT_A, payload: answer});
+    console.log('state from clue, clues: ', clues)
+    handleModal(e);
   }
-
 
   return (
     <div className="clue-card" onClick={showModal}>
-      <h2 onClick={showModal}>{props.value}</h2>
-
-      {/* <div className={"input-modal"} style={{display: 'none'}}>
-      <p>{props.question}</p>
-      <input type="text" className="input-question" onChange={(e) => dispatch({type:'SET_CURRENT_Q', payload: e.target.value})}/>
-      <p>{props.answer}</p>
-      <input type="text" className="input-answer" onChange={(e) => dispatch({type:'SET_CURRENT_A', payload: e.target.value})} />
-      <button type="button" onClick={closeModal}>Submit</button> */}
-      {/* </div> */}
+      <h2 onClick={showModal}>{value}</h2>
     </div>
   )
 }

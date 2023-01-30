@@ -11,11 +11,14 @@ const initialState = {
   userGames: [],
   currentQuestion: '',
   currentAnswer: '',
-  currentIndex: null
+  currentIndex: null,
+  password: ''
 }
 
 const gameReducer = (state = initialState, action) => {
   let numCat;
+  let newState;
+  let newPlayers;
   
   switch (action.type) {
     case types.SET_USERID:
@@ -33,10 +36,15 @@ const gameReducer = (state = initialState, action) => {
         name: action.payload
       })
 
+    case types.SET_GAME_PW:
+      return Object.assign({}, state, {
+        password: action.payload
+      })
+
     case types.SET_CAT_NAME:
-      const [name, index] = action.payload;
+      const [ catName, index] = action.payload;
       const copyState = {...state};
-      copyState.categories[index] = name;
+      copyState.categories[index] = catName;
       return Object.assign({}, state, copyState)
 
 
@@ -54,8 +62,6 @@ const gameReducer = (state = initialState, action) => {
       const arr = [...Array(+numCat)]
                     .map(e => Array(+numQ)
                     .fill({question: 'Question goes here', answer: 'Answer goes here'}))
-      
-      console.log('clues array from reducer', arr)
 
       return Object.assign({}, state, {
         clues: arr
@@ -76,19 +82,31 @@ const gameReducer = (state = initialState, action) => {
         currentIndex: action.payload
       })
 
-
-    case types.UDPATE_CLUE:
+    case types.UPDATE_CLUE:
       const [column, row, clue] = action.payload;
       console.log(column, row, clue);
       console.log('update payload', action.payload);
-      const newState = {...state};
-      console.log('copy of state', newState);
+      newState = {...state};
       newState.clues[column][row] = clue;
+      console.log('copy of state', newState);
 
       return Object.assign({}, state, newState)
 
-    case types.SAVE_GAME:
-      return state;
+    case types.SET_GAME:
+      const { name, clues } = action.payload;
+      const newCategories = clues.map(clue => clue.category);
+      const newClues = [];
+      clues.forEach(clue => {
+        const subArr = [];
+        clue.questions.forEach((q, i) => subArr.push({question: q, answer: clue.answers[i]}));
+        newClues.push(subArr)
+      })
+      newState = {...state};
+      newState.name = name;
+      newState.categories = newCategories;
+      newState.clues = newClues;
+
+      return Object.assign({}, state, newState)
 
     case types.LOAD_GAMES:
       return Object.assign({}, state, {
@@ -98,6 +116,19 @@ const gameReducer = (state = initialState, action) => {
     case types.SET_RAND_GAME:
       return Object.assign({}, state, {
         clues: action.payload
+      })
+
+    case types.ADD_PLAYER:
+      newPlayers = [];
+      newPlayers.push(action.payload);
+      return Object.assign({}, state, {
+        players: newPlayers
+      })
+
+    case types.REMOVE_PLAYER:
+      newPlayers = state.players.filter(p => p !== action.payload);
+      return Object.assign({}, state, {
+        players: newPlayers
       })
 
     case types.CREATE_USER:
@@ -127,7 +158,8 @@ export const saveGame = () => async (dispatch, getState) => {
   const formattedGame = {
     user_id: game.userId,
     name: game.name,
-    clues: formattedClues
+    clues: formattedClues,
+    password: game.password
   }
 
   try {
@@ -146,6 +178,45 @@ export const saveGame = () => async (dispatch, getState) => {
   }
 }
 
+export const updateGame = () => async (dispatch, getState) => {
+  const game = getState().game;
+  const currentGame = game.userGames.find(g => g.name === game.name);
+  console.log('game from update thunk', currentGame)
+
+  const formattedClues = game.clues.map((clueArr, i) => {
+    const questions = clueArr.map(clue => clue.question);
+    const answers = clueArr.map(clue => clue.answer);
+
+    return {
+      category: game.categories[i],
+      questions: questions,
+      answers: answers
+    }
+  })
+
+  const formattedGame = {
+    user_id: game.userId,
+    game_id: currentGame._id,
+    name: game.name,
+    clues: formattedClues
+  }
+
+  try {
+    const options = {
+      method: 'PUT', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formattedGame)
+    }
+    fetch(`http://localhost:3001/games`, options)
+      .then(res => res.json())
+      .then(data => console.log('response from update ', data))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const loadGames = (userid) => async (dispatch, getState) => {
   const response = await fetch(`http://localhost:3001/games/${userid}`, {
     method: 'GET',
@@ -154,9 +225,7 @@ export const loadGames = (userid) => async (dispatch, getState) => {
     },
   })
   const games = await response.json();
-  // console.log('games from api', games);
-  dispatch({type: 'LOAD_GAMES', payload: games});
-  // console.log('games from state', getState().game.userGames);
+  dispatch({type: types.LOAD_GAMES, payload: games});
 }
 
 export const randomGame = () => async (dispatch, getState) => {

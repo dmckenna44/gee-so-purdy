@@ -1,4 +1,3 @@
-import { createPath } from 'react-router-dom';
 import * as types from '../constants/actionTypes.js';
 
 export const setNumCatActionCreator = num => ({
@@ -11,18 +10,18 @@ export const setNumQActionCreator = num => ({
   payload: num
 });
 
-export const setCatNameActionCreator = (name, index) => ({
+export const setCatNameActionCreator = (catName, index) => ({
   type: types.SET_CAT_NAME,
-  payload: [name, index]
+  payload: [catName, index]
 })
 
 export const updateClueActionCreator = (column, row, clue) => ({
-  type: types.UDPATE_CLUE,
+  type: types.UPDATE_CLUE,
   payload: [column, row, clue]
 });
 
-export const saveGameActionCreator = game => ({
-  type: types.SAVE_GAME,
+export const setGameActionCreator = game => ({
+  type: types.SET_GAME,
   payload: game
 });
 
@@ -69,6 +68,21 @@ export const setUsernameActionCreator = username => ({
 export const setRandomGameActionCreator = clues => ({
   type: types.SET_RAND_GAME,
   payload: clues
+})
+
+export const setGamePasswordActionCreator = pw => ({
+  type: types.SET_GAME_PW,
+  payload: pw
+})
+
+export const addPlayerActionCreator = name => ({
+  type: types.ADD_PLAYER,
+  payload: name
+})
+
+export const removePlayerActionCreator = name => ({
+  type: types.REMOVE_PLAYER,
+  payload: name
 })
 
 // export const SET_NUM_CATEGORIES = 'SET_NUM_CATEGORIES';
