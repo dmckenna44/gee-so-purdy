@@ -95,6 +95,7 @@
   background-color:#A0E4CB;
   padding: 1rem;
   margin: 1rem;
+  box-shadow: 0 0 1rem 0 $borderColor;
 }
 
 .btn-container {
@@ -194,6 +195,38 @@
   border: 3px solid #0D4C92;
 }
 
+.edit-scores-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 40%;
+  left: 25%;
+  background-color: #59C1BD;
+  width: 50%;
+  height: 50%;
+  border: solid 2px #0D4C92;
+  box-shadow: 0 0 5px 5px #0D4C92;
+  z-index: 5;
+}
+
+.edit-modal-player-list {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+.edit-modal-player-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  * {
+    margin: 0.4rem;
+  }
+}
+
 #welcome-page-container {
   display: flex;
   flex-direction: column;
@@ -278,6 +311,7 @@
   margin: 0.5rem;
   padding: 0.5rem;
   min-width: 7rem;
+  box-shadow: 0.1rem 0.1rem 0.1rem 0 $borderColor;
 
   p {
     margin: 0.1rem;

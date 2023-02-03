@@ -110,11 +110,22 @@ io.on('connection', socket => {
     console.log('current room', currentRoom)
     currentRoom.players.forEach(player => {
       if (player.name === playerName) {
-        player.score += correct ? value : -value;
+        player.score += correct ? +value : -value;
       }
     })
     io.to(currentRoom).emit('receive_new_scores', currentRoom.players)
   });
+
+  socket.on('send_updated_score', data => {
+    const {roomID, playerName, value} = data;
+    const currentRoom = rooms.find(room => room.id === roomID);
+    currentRoom.players.forEach(player => {
+      if (player.name === playerName) {
+        player.score = value;
+      }
+    })
+    io.to(currentRoom).emit('receive_new_scores', currentRoom.players)
+  })
 
   socket.on('update_clue_value', (data) => {
     const {roomID, value} = data;

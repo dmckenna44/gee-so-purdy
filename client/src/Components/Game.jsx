@@ -85,12 +85,18 @@ const Game = (props) => {
   console.log('current game', currGame)
 
   const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setEditModal] = useState(false);
 
   const handleModal = (e) => {
     e.preventDefault();
     console.log('button clicked')
     console.log(showModal)
     setShowModal(!showModal);
+  }
+
+  const handleEditModal = (e) => {
+    e.preventDefault();
+    setEditModal(!showEditModal);
   }
 
   const toggleBuzzers = (e) => {
@@ -130,9 +136,9 @@ const Game = (props) => {
 
   return (
     <div id="playGameContainer">
-      <div className="overlay" hidden={!showModal}></div>
+      <div className="overlay" hidden={!showEditModal}></div>
       <h2>{currGame.name}</h2>
-         
+         <EditScoresModal hidden={!showEditModal} handleModal={handleEditModal} />
          <CluePlayModal hidden={!showModal}  handleModal={handleModal}/>
          <div className="playGameBoard">
           {activeClue ? < ActiveClue/> : columns}
@@ -155,7 +161,7 @@ const Game = (props) => {
          <br />
          <div className="host-options">
           <div className="host-btns">
-            <button className="edit-scores-btn">Edit Scores</button>  
+            <button className="edit-scores-btn" onClick={handleEditModal}>Edit Scores</button>  
             <button className="open-response-btn" onClick={toggleBuzzers}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
           </div>
           <div className="judge-response">
