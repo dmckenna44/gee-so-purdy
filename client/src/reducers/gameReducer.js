@@ -8,11 +8,19 @@ const initialState = {
   categories: [],
   clues: [],
   players: [],
+  playerName: '',
+  activePlayer: '',
+  activeClue: false,
+  activeClueValue: 0,
+  correctResponse: false,
+  buzzersActive: false,
   userGames: [],
   currentQuestion: '',
   currentAnswer: '',
   currentIndex: null,
-  password: ''
+  password: '',
+  roomID: '',
+  timer: false
 }
 
 const gameReducer = (state = initialState, action) => {
@@ -31,7 +39,7 @@ const gameReducer = (state = initialState, action) => {
         username: action.payload
       })
 
-    case types.SET_NAME:
+    case types.SET_GAME_NAME:
       return Object.assign({}, state, {
         name: action.payload
       })
@@ -77,6 +85,21 @@ const gameReducer = (state = initialState, action) => {
         currentAnswer: action.payload
       })
 
+    case types.SET_ACTIVE_CLUE_VALUE:
+      return Object.assign({}, state, {
+        activeClueValue: action.payload
+      })
+
+    case types.SET_CORRECT_RESPONSE:
+      return Object.assign({}, state, {
+        correctResponse: action.payload
+      })
+
+    case types.SET_BUZZERS_ACTIVE:
+      return Object.assign({}, state, {
+        buzzersActive: action.payload
+      })
+
     case types.SET_CURRENT_INDEX:
       return Object.assign({}, state, {
         currentIndex: action.payload
@@ -118,6 +141,26 @@ const gameReducer = (state = initialState, action) => {
         clues: action.payload
       })
 
+    case types.SET_ACTIVE_PLAYER: 
+      return Object.assign({}, state, {
+        activePlayer: action.payload
+      })
+    
+    case types.SET_ACTIVE_CLUE:
+      return Object.assign({}, state, {
+        activeClue: action.payload
+      })
+
+    case types.SET_TIMER:
+      return Object.assign({}, state, {
+        timer: action.payload
+      })
+
+    case types.SET_PLAYER_NAME:
+      return Object.assign({}, state, {
+        playerName: action.payload
+      })
+
     case types.ADD_PLAYER:
       newPlayers = [];
       newPlayers.push(action.payload);
@@ -125,10 +168,20 @@ const gameReducer = (state = initialState, action) => {
         players: newPlayers
       })
 
+    case types.UPDATE_PLAYERS:
+      return Object.assign({}, state, {
+        players: action.payload
+    })  
+
     case types.REMOVE_PLAYER:
       newPlayers = state.players.filter(p => p !== action.payload);
       return Object.assign({}, state, {
         players: newPlayers
+      })
+
+    case types.SET_ROOM_ID:
+      return Object.assign({}, state, {
+        roomID: action.payload
       })
 
     case types.CREATE_USER:

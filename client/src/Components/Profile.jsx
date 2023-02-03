@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import io from 'socket.io-client';
 import { loadGames, randomGame } from '../reducers/gameReducer.js';
-import { SET_USERID } from "../constants/actionTypes.js";
+import { SET_USERID, SET_GAME } from "../constants/actionTypes.js";
 import BuildGameModal from "./BuildGameModal.jsx";
 
 const socket = io.connect('http://localhost:3001');
@@ -20,12 +20,7 @@ const Profile = props => {
     (state) => state.game.username
   );
 
-  const [showModal, setShowModal] = useState(false);
   const [modalHidden, toggleModal] = useState(true);
-  const [room, setRoom] = useState('');
-
-  const [message, setMessage] = useState('');
-  const [messageReceived, setMessageReceived] = useState('');
 
   const socketConnect = (e) => {
     e.preventDefault();
@@ -50,16 +45,29 @@ const Profile = props => {
     navigate(0);
   }
 
+  const playGame = (e, name)  => {
+    e.preventDefault();
+    dispatch({type: SET_GAME, payload: userGames.find(game => game.name === name)});
+    navigate(`/playgame/${userid}/${name}`)
+  }
+
+  const editGame = (e, name)  => {
+    e.preventDefault();
+    dispatch({type: SET_GAME, payload: userGames.find(game => game.name === name)});
+    navigate(`/buildgame/${name}`)
+  }
+
   console.log('links', userGames);
   console.log('username', username);
+  console.log(userGames.find(game => game.name === 'pwtest2'));
   const gameLinks = userGames.map((game, i) => {
     return (
       <div className="game-list-choice" key={i}>
         <h4 className="game-list-name">{game.name}</h4>
         <div className="game-list-options">
-          <h4 onClick={() => navigate(`/playgame/${userid}/${game.name}`)}>Play</h4>
+          <h4 onClick={(e) => {playGame(e, game.name)}}>Play</h4>
           <h3>|</h3>
-          <h4 onClick={() => navigate(`/buildgame/${game.name}`)}>Edit</h4>
+          <h4 onClick={(e) => {editGame(e, game.name)}}>Edit</h4>
           <h3>|</h3>
           <h4 onClick={(e) => deleteGame(e, game._id)}>Delete</h4>
         </div>
@@ -89,6 +97,7 @@ const Profile = props => {
   return (
     
     <div id="profileContainer">
+      <h1>Gee-So-Purdy</h1>
       <h1>Welcome, {username}!</h1>
       <div className="profile-options">
         <section id='goToBuilder'>
@@ -98,14 +107,13 @@ const Profile = props => {
           {/* <button onClick={() => navigate(`/playgame/${userid}/random`)}>Random Game</button> */}
           <button onClick={setRandomGame}>Random Game</button>
         </section>
-        <button onClick={socketConnect}>Connect to socket</button>
       </div>
       <div className="overlay" hidden={modalHidden}></div>
       <BuildGameModal hidden={modalHidden} handleModal={handleModal}/>
 
       <div id="savedGameList">
         <h2>Your Saved Games</h2>
-        {gameLinks}
+        {gameLinks.length ? gameLinks : <p><em>No Games Yet, Click the Button Above to Start Creating!</em></p>}
       </div>
       
     </div>

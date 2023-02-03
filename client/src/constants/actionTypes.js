@@ -2,7 +2,7 @@
 export const SET_NUM_CATEGORIES = 'SET_NUM_CATEGORIES';
 export const SET_NUM_QUESTIONS = 'SET_NUM_QUESTIONS';
 export const SET_CAT_NAME = 'SET_CAT_NAME';
-export const SET_NAME = 'SET_NAME';
+export const SET_GAME_NAME = 'SET_NAME';
 export const UPDATE_CLUE = 'UPDATE_CLUE';
 export const SET_GAME = 'SET_GAME';
 export const LOAD_GAMES = 'LOAD_GAMES';
@@ -16,3 +16,13 @@ export const SET_RAND_GAME = 'SET_RANDOM_GAME';
 export const SET_GAME_PW = 'SET_GAME_PW';
 export const ADD_PLAYER = 'ADD_PLAYER';
 export const REMOVE_PLAYER = 'REMOVE_PLAYER';
+export const UPDATE_PLAYERS = 'UPDATE_PLAYERS';
+export const SET_ACTIVE_PLAYER = 'SET_ACTIVE_PLAYER';
+export const SET_ROOM_ID = 'SET_ROOM_ID';
+export const SET_ACTIVE_CLUE_VALUE = 'SET_ACTIVE_CLUE_VALUE';
+export const SET_PLAYER_NAME = 'SET_PLAYER_NAME';
+export const SET_CORRECT_RESPONSE = 'SET_CORRECT_RESPONSE';
+export const SET_BUZZERS_ACTIVE = 'SET_BUZZERS_ACTIVE';
+export const SET_TIMER = 'SET_TIMER';
+export const SET_ACTIVE_CLUE = 'SET_ACTIVE_CLUE';
+// export const CLUE_ANSWERED

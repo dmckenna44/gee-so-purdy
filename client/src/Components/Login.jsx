@@ -41,16 +41,17 @@ const Login = (props) => {
 
   return (
     <div id="login-page-container">
-      <section id="accounts-container">
-        <h3>Have an Account? Log in here</h3>
+      <section className="accounts-container">
+        <h1>Sign In to Host or Create a Game</h1>
+        <h3>Make Your Own Trivia Games to Play With Friends and Family!</h3>
         <form action="submit" className="account-form">
           <label htmlFor="">Username</label>
           <input type="text" name="username" onChange={nameChange} />
           <label htmlFor="">Password</label>
           <input type="password" name="password" onChange={passwordChange} />
           <button type="submit" onClick={logIn}>Log in</button>
-          <button type="button" onClick={() => navigate('/signup')}>Sign Up</button>
         </form>
+        <h3>Don't Have an Account? Sign Up <span id="sign-up-link" onClick={() => navigate('/signup')}>Here</span></h3>
       </section>
     </div>
   )

@@ -2,17 +2,6 @@ import React, {useState} from "react";
 import { useSelector } from "react-redux";
 import CluePlay from './CluePlay.jsx';
 
-/*
-props: {
-        key={i} 
-        index={i} 
-        category={clue.category} 
-        questions={clue.questions} Array
-        answers={clue.answers} Array
-}
-
-*/
-
 const ColumnPlay = (props) => {
 
   const {handleModal} = props;

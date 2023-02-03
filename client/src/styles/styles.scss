@@ -15,6 +15,11 @@ body {
   border-radius: 7px;
 }
 
+input {
+  border-radius: 3px;
+  padding: 1px;
+}
+
 .content {
   display: flex;
   align-items: center;
@@ -126,8 +131,46 @@ body {
 
 .embiggen {
   // transition-property: scale;
-  transition: scale 0.5s ease-in-out;
-  scale: 2;
-  translate: 0 2rem;
+  transition: all 0.5s ease-in-out;
+  width: 100%;
+  height: 100%;
+  // translate: 0 2rem;
+}
+
+.invisible {
+  visibility: hidden;
+  color: red;
+}
+
+@keyframes expand-clue {
+  0% {
+    width: 1%;
+    height: 1%;
+    padding: 0;
+  }
+  100% {
+    width: 100%;
+    height: 100%;
+    padding: 30%;
+  }
+}
+
+.active-clue-expand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: $backgroundColor;
+  border: 10px solid #0D4C92;
+  animation: expand-clue .3s linear;
+  padding: 30%;
+  -webkit-transform: translateZ(0px);
+
+
+  * {
+    margin: 0.5rem auto 0.5rem auto;
+  }
 }
 

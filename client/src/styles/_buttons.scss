@@ -13,6 +13,20 @@ button {
   }
 }
 
+#sign-up-link {
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    color: blue;
+  }
+}
+
+.back-to-prof-link {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
 
 #btnSaveGame {
   width: 11rem;
@@ -51,3 +65,17 @@ button {
   }
 }
 
+.open-response-btn, .edit-scores-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.buzzer-btn {
+  padding: 1.5rem 3rem 1.5rem 3rem;
+  font-size: 1.4rem;
+}

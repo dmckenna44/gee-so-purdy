@@ -21,7 +21,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar />
+        {/* <Navbar /> */}
         {/* <nav>
           <Link to="/"> Home </Link>
           <Link to="/profile"> Profile </Link>

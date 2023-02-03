@@ -13,7 +13,7 @@ const RandomGame = (props) => {
   const dispatch = useDispatch();
 
   const currGame = useSelector(
-      state => state.game.clues
+      state => state.game
     )
 
   const { currentQuestion, currentAnswer } = useSelector(state => state.game);
@@ -22,7 +22,7 @@ const RandomGame = (props) => {
   console.log('current game', currGame)
   console.log('current game clues', currGame.clues)
 
-  const columns = currGame.map((clue, i) => {
+  const columns = currGame.clues.map((clue, i) => {
     return <ColumnPlay 
         key={i} 
         index={i} 
@@ -31,10 +31,6 @@ const RandomGame = (props) => {
         answers={clue.answers} 
       />
   })
-
-  console.log(columns);
-  // const columns = [<p>Hello</p>, <p>Hello</p>, <p>Hello</p>, <p>Hello</p>]
-  
 
   const closeModal = (e) => {
     document.getElementById('play-modal').classList.add('hidden');

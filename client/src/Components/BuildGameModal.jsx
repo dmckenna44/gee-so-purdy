@@ -32,7 +32,7 @@ const BuildGameModal = (props) => {
       <h2>Set Up Your New Game</h2>
       <form action="submit" id="game-setup" hidden={false}>
         <label htmlFor="">What Should We Call Your Game?</label>
-        <input type="text" required onChange={(e) => dispatch({type: actions.SET_NAME, payload: e.target.value})}></input>
+        <input type="text" required onChange={(e) => dispatch({type: actions.SET_GAME_NAME, payload: e.target.value})}></input>
         <label htmlFor="">How Many Categories?</label>
         <input type="number" name="numCategories" max={6} min={2} onChange={(e) => dispatch({type: actions.SET_NUM_CATEGORIES, payload: e.target.value})} />
         <label htmlFor="">How Many Questions per Category?</label>

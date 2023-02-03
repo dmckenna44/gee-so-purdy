@@ -32,6 +32,7 @@ const Signup = (props) => {
     const newUser = await response.json();
     console.log(newUser);
     if (newUser) {
+      console.log(newUser)
       // dispatch({type: 'SET_USERNAME', payload: newUser.username});
       navigate(`/profile/${newUser._id.toString()}`);
     }
@@ -39,9 +40,12 @@ const Signup = (props) => {
   }
 
   return (
-    <div id="welcome-page-container">
-      <section id="accounts-container">
-        <h3>Make an Account</h3>
+    <div id="signup-page-container">
+      <a className="back-to-prof-link" href="/login" >← Back to Login</a>
+
+      <section className="accounts-container">
+        <h1>Welcome to Gee-So-Purdy!</h1>
+        <h3>Create a New Account</h3>
         <form action="submit" className="account-form">
           <label htmlFor="">Username</label>
           <input type="text" name="newUsername" onChange={nameChange}/>
@@ -49,8 +53,6 @@ const Signup = (props) => {
           <input type="password" name="newPassword" onChange={passwordChange}/>
           <button type="button" onClick={signUp} >Sign Up</button>
         </form>
-      </section>
-      <section>
       </section>
     </div>
   )
