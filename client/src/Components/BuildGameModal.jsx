@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { saveGame } from '../reducers/gameReducer.js';
 import * as actions from '../constants/actionTypes.js';
-import Board from "./Board.jsx";
+import Board from "./EditGame.jsx";
 
 
 const BuildGameModal = (props) => {

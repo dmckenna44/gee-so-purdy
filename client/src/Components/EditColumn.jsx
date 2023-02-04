@@ -1,15 +1,15 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { SET_CAT_NAME } from "../constants/actionTypes.js";
-import Clue from './Clue.jsx';
+import EditClue from './EditClue.jsx';
 
-const Column = (props) => {
+const EditColumn = (props) => {
   const {category, clues, index, handleModal} = props;
   const dispatch = useDispatch();
   console.log('props from column', clues)
 
   const clueList = clues.map((clue, i) => {
-    return <Clue 
+    return <EditClue 
         key={i}  
         column={index}
         index={i} 
@@ -36,4 +36,4 @@ const Column = (props) => {
   )
 }
 
-export default Column;
+export default EditColumn;

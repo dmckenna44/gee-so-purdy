@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 
 const socket = io.connect('http://localhost:3001')
 
-const CluePlay = (props) => {
+const HostClue = (props) => {
   console.log('props from clue play', props)
 
   const dispatch = useDispatch();
@@ -53,4 +53,4 @@ const CluePlay = (props) => {
   )
 }
 
-export default CluePlay;
+export default HostClue;

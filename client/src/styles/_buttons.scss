@@ -53,7 +53,7 @@ button {
   margin: 1rem 0 1rem 0;
   padding: 1rem;
   border: 5px solid #0D4C92;
-  width: 100px;
+  width: 7rem;
   color: #0D4C92;
   // transition: 0.5s ease-in-out;
 
@@ -63,6 +63,18 @@ button {
     border-color: #CFF5E7;
     cursor: pointer;
   }
+}
+
+.clue-card-player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0 1rem 0;
+  padding: 1rem;
+  border: 5px solid #0D4C92;
+  width: 100px;
+  color: #0D4C92;
+  // transition: 0.5s ease-in-out;
 }
 
 .open-response-btn, .edit-scores-btn {

@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import getTrivia from "../random.js";
 import { randomGame } from "../reducers/gameReducer.js";
-import ColumnPlay from "./ColumnPlay.jsx";
-
-
+import HostColumn from "./HostColumn.jsx";
 
 const RandomGame = (props) => {
 
@@ -23,7 +21,7 @@ const RandomGame = (props) => {
   console.log('current game clues', currGame.clues)
 
   const columns = currGame.clues.map((clue, i) => {
-    return <ColumnPlay 
+    return <HostColumn
         key={i} 
         index={i} 
         category={clue.category} 

@@ -95,7 +95,7 @@ const PlayerGame = (props) => {
     {/* <div className="overlay" hidden={!showModal}></div> */}
     <h2>{currentGame.name}</h2>
        {/* <CluePlayModal hidden={!showModal}  handleModal={handleModal}/> */}
-       <div className="playGameBoard">
+       <div className="playGameBoard player-game">
        {activeClue ? <ActiveClue/> : columns}
         {/* {columns} */}
        </div>

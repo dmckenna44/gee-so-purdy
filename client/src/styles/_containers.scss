@@ -96,6 +96,10 @@
   padding: 1rem;
   margin: 1rem;
   box-shadow: 0 0 1rem 0 $borderColor;
+
+  .player-game {
+    pointer-events: none;
+  }
 }
 
 .btn-container {

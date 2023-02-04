@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import io from 'socket.io-client';
 import CluePlayModal from "./CluePlayModal.jsx";
-import ColumnPlay from "./ColumnPlay.jsx";
+import HostColumn from "./HostColumn.jsx";
 import Timer from "./Timer.jsx";
 import ActiveClue from "./ActiveClue.jsx";
 import EditScoresModal from "./EditScoresModal.jsx";
@@ -11,7 +11,7 @@ import * as actions from "../constants/actionTypes.js";
 
 const socket = io.connect('http://localhost:3001', {'sync disconnect on unload': true});
 
-const Game = (props) => {
+const HostGame = (props) => {
 
   const { name } = useParams();
   const dispatch = useDispatch();
@@ -113,7 +113,7 @@ const Game = (props) => {
   }
 
   const columns = currGame.clues.map((clue, i) => {
-    return <ColumnPlay 
+    return <HostColumn 
         key={i} 
         index={i} 
         category={clue.category} 
@@ -183,7 +183,7 @@ const Game = (props) => {
 } 
 
 
-export default Game;
+export default HostGame;
 
 
 /* 
