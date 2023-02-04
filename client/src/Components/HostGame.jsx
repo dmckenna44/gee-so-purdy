@@ -76,7 +76,7 @@ const HostGame = (props) => {
     
   }, [socket, dispatch])
       
-  const { players, roomID, buzzersActive, activePlayer, activeClue, clues} = useSelector(state => state.game);
+  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, clues} = useSelector(state => state.game);
   const thisGame = useSelector(state => state.game);
   console.log(thisGame)
   console.log('players from store: ', players)
@@ -127,15 +127,14 @@ const HostGame = (props) => {
     return (
       <div className="player-info" key={i}>
         <p className="player-name-display">{p.name}</p> 
-        
         <p className="player-score-display" style={{color: p.score >= 0 ? 'black' : 'red'}}>${p.score}</p> 
-        
       </div>
     )
   })
 
   return (
     <div id="playGameContainer">
+      <a className="back-to-prof-link" href={`/profile/${userId}`}>← Back to Profile</a>
       <div className="overlay" hidden={!showEditModal}></div>
       <h2>{currGame.name}</h2>
          <EditScoresModal hidden={!showEditModal} handleModal={handleEditModal} />

@@ -59,9 +59,15 @@
 
 .edit-game-board {
   display: flex;
-  border: 2px solid black;
-  width: 75%;
-  margin: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: 10px solid #0D4C92;
+  min-width: 75%;
+  min-height: 60vh;
+  background-color:#A0E4CB;
+  padding: 1rem;
+  margin: 1rem;
+  box-shadow: 0 0 1rem 0 $borderColor;
 }
 
 .column {
@@ -151,9 +157,11 @@
     cursor: default;
   }
 }
+
 .game-list-name {
   margin-right: auto;
 }
+
 .game-list-options {
   display: flex;
   margin-left: auto;
@@ -166,14 +174,45 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 45%;
-  left: 25%;
-  background-color: #59C1BD;
-  width: 50%;
+  top: 25%;
+  left: 23%;
+  background-color: $backgroundColor;
+  min-width: 50%;
   height: 50%;
-  border: solid 2px #0D4C92;
-  box-shadow: 0 0 5px 5px #0D4C92;
+  padding: 1.5rem;
+  border: solid 2px $borderColor;
+  // box-shadow: 0 0 0.4rem 0 $backgroundColor;
+  box-shadow: 0.1rem 0.1rem 0.5rem 2px darken($borderColor, 10%);
   z-index: 5;
+
+  label {
+    font-size: large;
+  }
+}
+
+.inputDisplay {
+  text-align: center;
+  // border: 1px solid $borderColor;
+  width: 50%;
+  margin: 1rem 0 1rem 0;
+  padding: 0.5rem;
+
+  input, textarea {
+    font-family: 'Arial';
+    border-radius: 0;
+    margin-bottom: .7rem;
+    padding: 0.2rem;
+    resize: none;
+  }
+
+}
+
+.clue-input-btns {
+  display: flex;
+
+  * {
+    margin: 0.3rem;
+  }
 }
 
 

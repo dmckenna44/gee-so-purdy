@@ -1,15 +1,26 @@
 button {
   font-family: 'Josefin Sans';
-  padding: .3rem;
+  padding: .4rem;
   background-color: #59C1BD;
   border-radius: 3px;
-  border: 1.5px solid #0D4C92;
+  border: 1.5px solid $borderColor;
 
   &:hover {
     // background-color: #A0E4CB;
     // color: #0D4C92;
     cursor: pointer;
     filter: brightness(0.85);
+  }
+}
+
+.close-btn {
+  background-color: $borderColor;
+  color: $backgroundColor;
+
+  &:hover {
+    background-color: $backgroundColor;
+    color: black;
+    // border: none;
   }
 }
 

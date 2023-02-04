@@ -249,7 +249,7 @@ export const updateGame = () => async (dispatch, getState) => {
 
   const formattedGame = {
     user_id: game.userId,
-    game_id: currentGame._id,
+    game_id: currentGame?._id,
     name: game.name,
     clues: formattedClues
   }

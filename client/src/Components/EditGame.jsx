@@ -53,6 +53,8 @@ const EditGame= (props) => {
 
   return (
     <div className="game-editor-container">
+      <a className="back-to-prof-link" href={`/profile/${userId}`}>← Back to Profile</a>
+      <div className="overlay" hidden={!showModal}></div>
         <h1>{name}</h1>
       <div className="edit-game-board">
         <ClueInputModal hidden={!showModal} handleModal={handleModal} />
