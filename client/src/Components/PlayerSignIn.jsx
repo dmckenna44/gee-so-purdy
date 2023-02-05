@@ -12,7 +12,6 @@ const PlayerSignIn = (props) => {
   const { userGames, password, name } = useSelector(state => state.game);
   console.log('player sign in state', userGames, password, name)
 
-  const [gameName, setGameName] = useState('');
   const [playerName, setPlayerName] = useState('');
   const [gamePassword, setGamePassword] = useState('');
   const [errorMsg, showErrorMsg] = useState(false);
@@ -21,9 +20,9 @@ const PlayerSignIn = (props) => {
 
   const handleSignin = (e) => {
     e.preventDefault();
-    if (gameName !== '' && playerName !== '' && gamePassword !== '') {
+    if (playerName !== '' && gamePassword !== '') {
       showErrorMsg(false);
-      socket.emit('join_room', {name: gameName, password: gamePassword, player: playerName}, (response) => {
+      socket.emit('join_room', {password: gamePassword, player: playerName}, (response) => {
         console.log(response)
         if (response.found) {
           console.log('response from player sign in', response)
@@ -46,8 +45,6 @@ const PlayerSignIn = (props) => {
         <h1>Play a Game</h1>
         <h3>Enter the <em>Name</em> and <em>Password</em> of the Game You Want to Join</h3>
         <form action="" className="player-signin">
-          <label htmlFor="">Game Name</label>
-          <input type="text" placeholder="Game Name" required onChange={(e) => setGameName(e.target.value)}/>
           <label htmlFor="">Game Password</label>
           <input type="text" placeholder="Game Password" required onChange={(e) => setGamePassword(e.target.value)}/>
           <label htmlFor="">What's Your Name?</label>

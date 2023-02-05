@@ -7,6 +7,7 @@ const http = require('http');
 const cors = require('cors');
 const { v4: uuidv4 } = require('uuid')
 require('dotenv').config();
+const newGamePW = require('./utils.js')
 
 const userController = require('./controllers/userController.js')
 const gameController = require('./controllers/gameController.js');
@@ -61,6 +62,7 @@ io.on('connection', socket => {
     // console.log('create room data', data)
     const newRoom = {
       id: uuidv4(),
+      pw: newGamePW(),
       game: data,
       players: []
     }
@@ -71,11 +73,11 @@ io.on('connection', socket => {
   })
 
   socket.on('join_room', (data, cb) => {
-    // console.log('check rooms data', data);
+    console.log('join room data', data);
     // I'm mutating the room before emitting the event...
     const response = {};
     rooms.forEach(room => {
-      if (room.game.name === data.name && room.game.password === data.password) {
+      if (room.pw === data.password) {
         response.found = true;
         response.room = room;
         const newPlayer = {name: data.player, score: 0, id: socket.id};

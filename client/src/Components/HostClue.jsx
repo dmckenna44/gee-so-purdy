@@ -6,11 +6,11 @@ import io from 'socket.io-client';
 const socket = io.connect('http://localhost:3001')
 
 const HostClue = (props) => {
-  console.log('props from clue play', props)
+  // console.log('props from clue play', props)
 
   const dispatch = useDispatch();
   const {activeClueValue, roomID, clues} = useSelector(state => state.game);
-  console.log('clues from clue play', clues)
+  // console.log('clues from clue play', clues)
   const currentClue = clues[props.column][props.index];
 
 

@@ -8,6 +8,7 @@ import Timer from "./Timer.jsx";
 import ActiveClue from "./ActiveClue.jsx";
 import EditScoresModal from "./EditScoresModal.jsx";
 import * as actions from "../constants/actionTypes.js";
+import { newGamePW } from "../utils.js";
 
 const socket = io.connect('http://localhost:3001', {'sync disconnect on unload': true});
 
@@ -29,14 +30,8 @@ const HostGame = (props) => {
       console.log('response from create game', response)
       dispatch({type: actions.UPDATE_PLAYERS, payload: response.players})
       dispatch({type: actions.SET_ROOM_ID, payload: response.id});
+      dispatch({type: actions.SET_GAME_PW, payload: response.pw});
     });
-    // socket.emit('get_players', currGame, (response) => {
-      //   console.log(response);
-      //   if (response.found) {
-        //     const newPlayers = response.newPlayerList.map(p => p.name);
-        //     dispatch({type: actions.UPDATE_PLAYERS, payload: newPlayers});
-        //   }
-        // });
   }, [currGame]);
       
   useEffect(() => {
@@ -76,12 +71,11 @@ const HostGame = (props) => {
     
   }, [socket, dispatch])
       
-  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, clues} = useSelector(state => state.game);
-  const thisGame = useSelector(state => state.game);
-  console.log(thisGame)
+  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, clues, password} = useSelector(state => state.game);
   console.log('players from store: ', players)
   console.log('room id from store: ', roomID)
   console.log('clues from store: ', clues)
+  console.log('password from store: ', password)
   console.log('current game', currGame)
 
   const [showModal, setShowModal] = useState(false);
@@ -135,6 +129,7 @@ const HostGame = (props) => {
   return (
     <div id="playGameContainer">
       <a className="back-to-prof-link" href={`/profile/${userId}`}>← Back to Profile</a>
+      <p className="game-pw-display">Password: {password}</p>
       <div className="overlay" hidden={!showEditModal}></div>
       <h2>{currGame.name}</h2>
          <EditScoresModal hidden={!showEditModal} handleModal={handleEditModal} />
