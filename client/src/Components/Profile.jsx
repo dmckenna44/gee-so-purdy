@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import io from 'socket.io-client';
 import { loadGames, randomGame } from '../reducers/gameReducer.js';
-import { SET_USERID, SET_GAME } from "../constants/actionTypes.js";
+import { SET_USERID, SET_GAME, SET_BUZZERS_ACTIVE } from "../constants/actionTypes.js";
 import BuildGameModal from "./BuildGameModal.jsx";
+import DeleteGameModal from "./DeleteGameModal.jsx";
 
 const socket = io.connect('http://localhost:3001');
 
@@ -21,32 +22,13 @@ const Profile = props => {
   );
 
   const [modalHidden, toggleModal] = useState(true);
+  const [deleteHidden, toggleDelete] = useState(true);
+  const [gameId, setGameId] = useState('');
 
-  const socketConnect = (e) => {
-    e.preventDefault();
-    socket.emit('send_message', {message: 'hello'})
-  }
   
-  const deleteGame = async (e, id) => {
-    e.preventDefault();
-    const options = {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id: id
-      })
-    }
-
-    const deleted = await fetch('http://localhost:3001/games', options);
-    const deletedGame = await deleted.json();
-    
-    navigate(0);
-  }
-
   const playGame = (e, name)  => {
     e.preventDefault();
+    dispatch({type: SET_BUZZERS_ACTIVE, payload: false});
     dispatch({type: SET_GAME, payload: userGames.find(game => game.name === name)});
     navigate(`/playgame/${userid}/${name}`)
   }
@@ -59,7 +41,7 @@ const Profile = props => {
 
   console.log('links', userGames);
   console.log('username', username);
-  console.log(userGames.find(game => game.name === 'pwtest2'));
+  
   const gameLinks = userGames.map((game, i) => {
     return (
       <div className="game-list-choice" key={i}>
@@ -69,7 +51,7 @@ const Profile = props => {
           <h3>|</h3>
           <h4 onClick={(e) => {editGame(e, game.name)}}>Edit</h4>
           <h3>|</h3>
-          <h4 onClick={(e) => deleteGame(e, game._id)}>Delete</h4>
+          <h4 onClick={(e) => handleDelete(e, game._id)}>Delete</h4>
         </div>
       </div>
     )
@@ -78,7 +60,7 @@ const Profile = props => {
   useEffect(() => {
     dispatch({type: SET_USERID, payload: userid});
     dispatch(loadGames(userid));
-  }, [dispatch, userid])
+  }, [dispatch, userid, userGames])
 
   const setRandomGame = () => {
     dispatch(randomGame());
@@ -88,17 +70,30 @@ const Profile = props => {
     }, 2500)
   }
 
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    setGameId(id);
+    toggleDelete(!deleteHidden);
+  }
+
   const handleModal = (e) => {
     e.preventDefault();
     toggleModal(!modalHidden);
     console.log(modalHidden)
   }
 
+  const logOut = (e) => {
+    
+  }
+
   return (
     
     <div id="profileContainer">
+      <a href="/" className="logout-btn" onClick={logOut}>Logout</a>
+      <div className="overlay" hidden={modalHidden && deleteHidden}></div>
       <h1>Gee-So-Purdy</h1>
       <h1>Welcome, {username}!</h1>
+      <hr style={{background: 'black', height: '2px', width: '75%'}}/>
       <div className="profile-options">
         <section id='goToBuilder'>
           <button onClick={handleModal}>Create a New Game</button>
@@ -108,8 +103,8 @@ const Profile = props => {
           <button onClick={setRandomGame}>Random Game</button>
         </section>
       </div>
-      <div className="overlay" hidden={modalHidden}></div>
       <BuildGameModal hidden={modalHidden} handleModal={handleModal}/>
+      <DeleteGameModal hidden={deleteHidden} handleDelete={handleDelete} gameId={gameId}/>
 
       <div id="savedGameList">
         <h2>Your Saved Games</h2>

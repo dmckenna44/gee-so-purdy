@@ -2,9 +2,10 @@
 @import 'variables.scss';
 @import 'containers.scss';
 @import 'buttons.scss';
+@import 'modals.scss';
 
 body {
-  background-color: #CFF5E7;
+  background-color: #EAFDFC;
   font-family: 'Josefin Sans';
   // border-radius: 5%;
 }
@@ -29,6 +30,7 @@ input {
 .hidden {
   display: none;
 }
+
 .overlay {
   position: fixed;
   width: 100%;
@@ -41,8 +43,6 @@ input {
   margin: 0;
   border-radius: 0;
 }
-
-
 
 
 .account-form {

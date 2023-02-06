@@ -1,0 +1,186 @@
+.delete-game-modal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  z-index: 10;
+  padding: 1rem;
+  background-color: #A0E4CB;
+  border: 1px solid $borderColor;
+  box-shadow: 0 0 .5rem 1px $borderColor;
+  z-index: 10;
+
+  button {
+    width: 11rem;
+    height: 4rem;
+    font-size: larger;
+  
+    margin: 0.5rem;
+    cursor: pointer;
+    border: none;
+    // padding: .5rem 1rem;
+    width: 10rem;
+    background-color: #EAFDFC;
+    box-shadow: 0.2rem 0.2rem 0.5rem 0 darken($backgroundColor, 50%);
+  
+    &:hover {
+      box-shadow: none;
+      transform: translate(2px, 2px);
+      color: #EAFDFC;
+      background-color: black;
+    }
+  }
+}
+
+
+.build-game-modal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  z-index: 10;
+  padding: 2rem 1rem 1rem 1rem;
+  background-color: #A0E4CB;
+  border: 1px solid $borderColor;
+  box-shadow: 0 0 .5rem 1px $borderColor;
+
+  button {
+    font-size: large;
+    margin: 0.5rem;
+    cursor: pointer;
+    border: none;
+    padding: .5rem 1rem;
+    background-color: #EAFDFC;
+    box-shadow: 0.2rem 0.2rem 0.5rem 0 darken($backgroundColor, 50%);
+  
+    &:hover {
+      box-shadow: none;
+      transform: translate(2px, 2px);
+      color: #EAFDFC;
+      background-color: black;
+    }
+  }
+}
+
+#input-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  // top: 25%;
+  // left: 23%;
+  align-self: center;
+  background-color: $backgroundColor;
+  min-width: 50%;
+  height: 50%;
+  padding: 1.5rem;
+  border: solid 2px $borderColor;
+  // box-shadow: 0 0 0.4rem 0 $backgroundColor;
+  box-shadow: 0.1rem 0.1rem 0.5rem 2px darken($borderColor, 10%);
+  z-index: 5;
+
+  label {
+    font-size: large;
+  }
+}
+
+.inputDisplay {
+  text-align: center;
+  // border: 1px solid $borderColor;
+  width: 50%;
+  margin: 1rem 0 1rem 0;
+  padding: 0.5rem;
+
+  input, textarea {
+    font-family: 'Arial';
+    border-radius: 0;
+    margin: .2rem auto .7rem auto;
+    padding: 0.2rem;
+    resize: none;
+  }
+}
+
+.clue-input-btns {
+  display: flex;
+
+  * {
+    margin: 0.3rem;
+  }
+
+  button {
+    margin: 0.5rem;
+    cursor: pointer;
+    border: none;
+    // padding: .5rem 1rem;
+    width: 10rem;
+    background-color: #EAFDFC;
+    box-shadow: 0.2rem 0.2rem 0.5rem 0 darken($backgroundColor, 50%);
+  }
+
+  button:hover {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+    color: #EAFDFC;
+    background-color: black;
+  }
+}
+
+
+#play-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 45%;
+  left: 25%;
+  background-color: #59C1BD;
+  width: 50%;
+  height: 50%;
+  border: solid 10px #0D4C92;
+  box-shadow: 0 0 3px 3px #0D4C92;
+  z-index: 5;
+}
+
+#play-modal > button {
+  width: 4rem;
+  margin: .5rem;
+  border: 3px solid #0D4C92;
+}
+
+.edit-scores-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 40%;
+  left: 25%;
+  background-color: #59C1BD;
+  width: 50%;
+  height: 50%;
+  border: solid 2px #0D4C92;
+  box-shadow: 0 0 5px 5px #0D4C92;
+  z-index: 5;
+}
+
+.edit-modal-player-list {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+.edit-modal-player-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  * {
+    margin: 0.4rem;
+  }
+}

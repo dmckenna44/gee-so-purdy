@@ -129,7 +129,7 @@ const HostGame = (props) => {
   return (
     <div id="playGameContainer">
       <a className="back-to-prof-link" href={`/profile/${userId}`}>← Back to Profile</a>
-      <p className="game-pw-display">Password: {password}</p>
+      <p className="game-pw-display">Passcode: {password}</p>
       <div className="overlay" hidden={!showEditModal}></div>
       <h2>{currGame.name}</h2>
          <EditScoresModal hidden={!showEditModal} handleModal={handleEditModal} />
@@ -159,18 +159,20 @@ const HostGame = (props) => {
             <button className="open-response-btn" onClick={toggleBuzzers}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
           </div>
           <div className="judge-response">
-            <p>Active Player: {activePlayer ? activePlayer : 'none'}</p>
-            { activePlayer ? <p>Time to Respond: <Timer seconds={5}/> </p> : null }
+            <p>{activePlayer ? `Answering: ${activePlayer}` : ''}</p>
+            { activePlayer ? <Timer seconds={5}/> : null }
             { buzzersActive ?  <Timer seconds={5}/> : null }
             {/* <p>Responded Correctly?</p> */}
             {/* <p>Time to Respond: { activePlayer ? <Timer /> : null }</p> */}
           </div>
-          <div className="judge-response-btns">
-            <button onClick={(e) => sendResponse(e, true)}>Correct</button>
-            <button onClick={(e) => sendResponse(e, false)}>Incorrect</button>
-
-          </div>
-
+          {
+            activePlayer ?          
+              <div className="judge-response-btns">
+                <button onClick={(e) => sendResponse(e, true)}>Correct</button>
+                <button onClick={(e) => sendResponse(e, false)}>Incorrect</button>
+              </div> : 
+              null
+          }
          </div>
     </div>
   )

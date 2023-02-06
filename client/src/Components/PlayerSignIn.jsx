@@ -40,38 +40,21 @@ const PlayerSignIn = (props) => {
 
   return (
     <div className="player-signin-container">
+      <a className="back-to-prof-link" href="/">← Back to Home</a>
 
     <section className="accounts-container">
-        <h1>Play a Game</h1>
-        <h3>Enter the <em>Name</em> and <em>Password</em> of the Game You Want to Join</h3>
+        <h1>Play a Game!</h1>
+        <h3>Enter the <em>Name</em> and <em>Passcode</em> of the Game You Want to Join</h3>
         <form action="" className="player-signin">
           <label htmlFor="">Game Password</label>
-          <input type="text" placeholder="Game Password" required onChange={(e) => setGamePassword(e.target.value)}/>
+          <input type="text" placeholder="ex: EJQW" required onChange={(e) => setGamePassword(e.target.value)}/>
           <label htmlFor="">What's Your Name?</label>
-          <input type="text" placeholder="Your Name" required onChange={(e) => setPlayerName(e.target.value)}/>
+          <input type="text" placeholder="ex: Bob" required onChange={(e) => setPlayerName(e.target.value)}/>
           <button type="submit" onClick={handleSignin}>Enter Game</button>
         </form>
 
         <h3>{errorMsg ? 'All Fields Are Required!' : null}</h3>
       </section>
-
-
-
-      {/* <h1>Welcome to Gee-So-Purdy!</h1>
-      <div>
-        <form action="" className="player-signin">
-          <label htmlFor="">What's Your Name?</label>
-          <input type="text" onChange={(e) => setPlayerName(e.target.value)}/>
-          <label htmlFor="">Game Name</label>
-          <input type="text" onChange={(e) => setGameName(e.target.value)}/>
-          <label htmlFor="">Game Password</label>
-          <input type="text" onChange={(e) => setGamePassword(e.target.value)}/>
-          <button onClick={handleSignin}>Enter Game</button>
-        </form>
-      </div> */}
-
-
-
     </div>
   )
 }

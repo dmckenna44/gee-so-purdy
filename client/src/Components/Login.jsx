@@ -41,6 +41,7 @@ const Login = (props) => {
 
   return (
     <div id="login-page-container">
+      <a className="back-to-prof-link" href="/">← Back to Home</a>
       <section className="accounts-container">
         <h1>Sign In to Host or Create a Game</h1>
         <h3>Make Your Own Trivia Games to Play With Friends and Family!</h3>
