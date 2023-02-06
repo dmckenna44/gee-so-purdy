@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { SET_CURRENT_Q, SET_CURRENT_A, SET_CURRENT_INDEX } from "../constants/actionTypes";
 

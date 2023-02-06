@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import io, { Socket } from 'socket.io-client';
 import * as actions from '../constants/actionTypes.js';
 
-// const socket = io.connect('http://localhost:3001');
 import {socket} from '../apiRoutes.js';
 
 const Buzzer = (props) => {
@@ -12,7 +9,6 @@ const Buzzer = (props) => {
   const {roomID, playerName, activeClueValue, correctResponse, players, buzzersActive, activePlayer} = useSelector(state => state.game);
   const dispatch = useDispatch();
 
-  
   const ringIn = (e) => {
     e.preventDefault();
     if (buzzersActive && !activePlayer) {

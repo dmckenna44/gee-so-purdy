@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import io from 'socket.io-client';
 import { loadGames, randomGame } from '../reducers/gameReducer.js';
 import { SET_USERID, SET_GAME, SET_BUZZERS_ACTIVE } from "../constants/actionTypes.js";
 import BuildGameModal from "./BuildGameModal.jsx";
 import DeleteGameModal from "./DeleteGameModal.jsx";
 
-// const socket = io.connect('http://localhost:3001');
 import {socket} from '../apiRoutes.js';
 
 const Profile = props => {

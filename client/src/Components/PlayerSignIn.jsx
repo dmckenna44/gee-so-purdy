@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import io from 'socket.io-client';
 import * as actions from '../constants/actionTypes.js';
 
-// const socket = io.connect('http://localhost:3001');
 import {socket} from '../apiRoutes.js';
 
 const PlayerSignIn = (props) => {

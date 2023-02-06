@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import * as types from '../constants/actionTypes.js';
 import {socket} from '../apiRoutes.js';
 
 
