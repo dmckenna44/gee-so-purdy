@@ -26,6 +26,7 @@ gameController.updateGame = async (req, res, next) => {
 
   try {
     const foundGame = await Game.findOne({_id: game_id});
+    console.log('found game from update', foundGame)
     foundGame.clues = clues;
     const updatedGame = await foundGame.save();
     res.locals.updated = updatedGame;
