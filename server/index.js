@@ -26,12 +26,14 @@ app.set('trust proxy', 1);
 const port = process.env.port || 3001;
 const server = http.createServer(app);
 
-const io = new Server(server, {
-  cors: {
-    origin: 'https://gee-so-purdy.vercel.app/*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
-  }
-})
+// const io = new Server(server, {
+//   cors: {
+//     origin: 'https://gee-so-purdy.vercel.app/*',
+//     methods: ['GET', 'POST', 'PUT', 'DELETE']
+//   }
+// })
+
+const io = new Server(server);
 
 const clients = [];
 const rooms = [];
