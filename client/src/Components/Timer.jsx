@@ -1,16 +1,12 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-// import io from 'socket.io-client';
 import * as actions from '../constants/actionTypes.js';
-import PlayerColumn from "./PlayerColumn.jsx";
-import Buzzer from "./Buzzer.jsx";
-import socket from '../socket.js'
-
+import {socket} from '../apiRoutes.js';
 
 
 const Timer = (props) => {
-  const {seconds, host} = props;
+  
+  const {seconds} = props;
   const [secondsLeft, setSecondsLeft] = useState(seconds);
   const dispatch = useDispatch();
   const {roomID} = useSelector(state => state.game);

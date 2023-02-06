@@ -5,7 +5,7 @@ import io, { Socket } from 'socket.io-client';
 import * as actions from '../constants/actionTypes.js';
 
 // const socket = io.connect('http://localhost:3001');
-import socket from '../socket.js'
+import {socket} from '../apiRoutes.js';
 
 const Buzzer = (props) => {
 

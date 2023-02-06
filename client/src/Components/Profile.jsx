@@ -7,7 +7,8 @@ import { SET_USERID, SET_GAME, SET_BUZZERS_ACTIVE } from "../constants/actionTyp
 import BuildGameModal from "./BuildGameModal.jsx";
 import DeleteGameModal from "./DeleteGameModal.jsx";
 
-const socket = io.connect('http://localhost:3001');
+// const socket = io.connect('http://localhost:3001');
+import {socket} from '../apiRoutes.js';
 
 const Profile = props => {
   

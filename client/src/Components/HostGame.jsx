@@ -10,7 +10,8 @@ import EditScoresModal from "./EditScoresModal.jsx";
 import * as actions from "../constants/actionTypes.js";
 import { newGamePW } from "../utils.js";
 
-const socket = io.connect('http://localhost:3001', {'sync disconnect on unload': true});
+// const socket = io.connect('http://localhost:3001', {'sync disconnect on unload': true});
+import {socket} from '../apiRoutes.js';
 
 const HostGame = (props) => {
 
