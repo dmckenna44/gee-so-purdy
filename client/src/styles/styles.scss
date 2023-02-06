@@ -2,9 +2,10 @@
 @import 'variables.scss';
 @import 'containers.scss';
 @import 'buttons.scss';
+@import 'modals.scss';
 
 body {
-  background-color: #CFF5E7;
+  background-color: #EAFDFC;
   font-family: 'Josefin Sans';
   // border-radius: 5%;
 }
@@ -29,6 +30,7 @@ input {
 .hidden {
   display: none;
 }
+
 .overlay {
   position: fixed;
   width: 100%;
@@ -42,7 +44,10 @@ input {
   border-radius: 0;
 }
 
-
+.welcome-title {
+  font-family: 'Pacifico';
+  font-size: 4.5rem;
+}
 
 
 .account-form {
@@ -66,6 +71,10 @@ input {
   max-width: 150px;
   flex-wrap: wrap;
   word-wrap: normal;
+}
+
+.error-msg {
+  color: red;
 }
 
 .nav-bar {
@@ -98,16 +107,6 @@ input {
   padding: 0.6rem;
 }
 
-.inputDisplay {
-  text-align: center;
-  border: 5px solid #0D4C92;
-  width: 50%;
-  margin: 1rem 0 1rem 0;
-}
-
-.inputDisplay > input {
-  margin-bottom: .7rem;
-}
 
 .hourglass {
   width: 1.3rem;
@@ -151,7 +150,7 @@ input {
   100% {
     width: 100%;
     height: 100%;
-    padding: 30%;
+    padding: 20%;
   }
 }
 
@@ -165,7 +164,7 @@ input {
   background-color: $backgroundColor;
   border: 10px solid #0D4C92;
   animation: expand-clue .3s linear;
-  padding: 30%;
+  padding: 20%;
   box-shadow: 0 0 0.5rem 0 $borderColor;
 
 

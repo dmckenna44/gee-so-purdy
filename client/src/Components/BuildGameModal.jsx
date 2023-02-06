@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { saveGame } from '../reducers/gameReducer.js';
+import { saveGame, loadGames } from '../reducers/gameReducer.js';
 import * as actions from '../constants/actionTypes.js';
-import Board from "./Board.jsx";
+import Board from "./EditGame.jsx";
 
 
 const BuildGameModal = (props) => {
@@ -22,7 +22,10 @@ const BuildGameModal = (props) => {
 
   const showGameBuilder = (e) => {
     e.preventDefault();
-    dispatch(saveGame());
+    dispatch(saveGame())
+      .then(() => {
+        dispatch(loadGames(userId));
+      })
     navigate(`/buildgame/${currGame.name}`)
   }
 
@@ -37,8 +40,6 @@ const BuildGameModal = (props) => {
         <input type="number" name="numCategories" max={6} min={2} onChange={(e) => dispatch({type: actions.SET_NUM_CATEGORIES, payload: e.target.value})} />
         <label htmlFor="">How Many Questions per Category?</label>
         <input type="number" name="numQuestions" max={6} min={2} required={true} onChange={(e) => dispatch({type: actions.SET_NUM_QUESTIONS, payload: e.target.value})}/>
-        <label htmlFor="">Set a Password for Your Game</label>
-        <input type="text" required={true} onChange={(e) => dispatch({type: actions.SET_GAME_PW, payload: e.target.value})} />
         <button type="submit" onClick={showGameBuilder}>Ready to Go!</button>
       </form>
       <button onClick={handleModal}>Close</button>

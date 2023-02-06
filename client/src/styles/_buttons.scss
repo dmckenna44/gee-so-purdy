@@ -1,9 +1,10 @@
 button {
-  font-family: 'Josefin Sans';
-  padding: .3rem;
+  font-family: 'Cabin';
+  font-size: medium;
+  padding: .4rem;
   background-color: #59C1BD;
   border-radius: 3px;
-  border: 1.5px solid #0D4C92;
+  border: 1.5px solid $borderColor;
 
   &:hover {
     // background-color: #A0E4CB;
@@ -12,6 +13,17 @@ button {
     filter: brightness(0.85);
   }
 }
+
+// .close-btn {
+//   background-color: $borderColor;
+//   color: $backgroundColor;
+
+//   &:hover {
+//     background-color: $backgroundColor;
+//     color: black;
+//     // border: none;
+//   }
+// }
 
 #sign-up-link {
   text-decoration: underline;
@@ -32,6 +44,21 @@ button {
   width: 11rem;
   height: 4rem;
   font-size: large;
+
+  margin: 0.5rem;
+  cursor: pointer;
+  border: none;
+  // padding: .5rem 1rem;
+  width: 10rem;
+  background-color: #EAFDFC;
+  box-shadow: 0.2rem 0.2rem 0.5rem 0 darken($backgroundColor, 50%);
+
+  &:hover {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+    color: #EAFDFC;
+    background-color: black;
+  }
 }
 
 .category-card {
@@ -53,8 +80,9 @@ button {
   margin: 1rem 0 1rem 0;
   padding: 1rem;
   border: 5px solid #0D4C92;
-  width: 100px;
+  width: 7rem;
   color: #0D4C92;
+  // box-shadow: 0 0 .2rem .1rem darken($backgroundColor, 50%);
   // transition: 0.5s ease-in-out;
 
   &:hover {
@@ -62,7 +90,21 @@ button {
     color:#CFF5E7;
     border-color: #CFF5E7;
     cursor: pointer;
+    transform: scale(1.2);
+    transition: 0.2s transform ease-in-out;
   }
+}
+
+.clue-card-player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0 1rem 0;
+  padding: 1rem;
+  border: 5px solid #0D4C92;
+  width: 100px;
+  color: #0D4C92;
+  // transition: 0.5s ease-in-out;
 }
 
 .open-response-btn, .edit-scores-btn {
@@ -77,5 +119,34 @@ button {
 
 .buzzer-btn {
   padding: 1.5rem 3rem 1.5rem 3rem;
-  font-size: 1.4rem;
+  font-size: 1.4rem;  
+  margin: 0.5rem;
+  cursor: pointer;
+  border: .2rem solid $borderColor;
+  padding: 1rem 3rem;
+  background-color: #EAFDFC;
+  background-color: $borderColor;
+  color: white;
+  box-shadow: 0.1rem 0.1rem 0.2rem .1rem $borderColor;
+  
+
+  &:hover {
+    // color: blue;
+    box-shadow: none;
+    transform: translate(2px, 2px);
+    // color: #EAFDFC;
+    // background-color: black;
+  }
+}
+
+.game-pw-display {
+  position: absolute;
+  top: 4rem;
+  left: 1rem;
+}
+
+.logout-btn {
+  position: absolute;
+  top: 1rem;
+  right: 3rem;
 }

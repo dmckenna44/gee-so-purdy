@@ -234,6 +234,7 @@ export const saveGame = () => async (dispatch, getState) => {
 export const updateGame = () => async (dispatch, getState) => {
   const game = getState().game;
   const currentGame = game.userGames.find(g => g.name === game.name);
+  console.log('user games from update thunk', game.userGames)
   console.log('game from update thunk', currentGame)
 
   const formattedClues = game.clues.map((clueArr, i) => {
@@ -249,7 +250,7 @@ export const updateGame = () => async (dispatch, getState) => {
 
   const formattedGame = {
     user_id: game.userId,
-    game_id: currentGame._id,
+    game_id: currentGame?._id,
     name: game.name,
     clues: formattedClues
   }

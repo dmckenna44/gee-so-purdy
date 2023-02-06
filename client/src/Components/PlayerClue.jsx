@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 
 
 const PlayerClue = (props) => {
 
-  const {activeClueValue, roomID, clues} = useSelector(state => state.game)
+  const {clues} = useSelector(state => state.game)
   const currentClue = clues[props.column][props.index];
-  const dispatch = useDispatch();
-  const {handleModal} = props;
 
   return (
-    <div className={`clue-card ${currentClue.answered ? 'invisible' : ''}`} >
+    <div className={`clue-card-player ${currentClue.answered ? 'invisible' : ''}`} >
       
       <h2>{props.value}</h2>
 

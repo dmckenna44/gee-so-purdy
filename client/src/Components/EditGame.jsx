@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { updateGame, loadGames } from '../reducers/gameReducer.js';
 import { SET_GAME } from "../constants/actionTypes.js";
-import Column from './Column.jsx';
+import EditColumn from './EditColumn.jsx';
 import ClueInputModal from "./ClueInputModal.jsx";
 
 
-const Board = (props) => {
+const EditGame= (props) => {
 
   const {name} = useParams();
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ const Board = (props) => {
   // create an array of columns
   // each column will be an array with the category at index 0 and the clues as the rest of the elements
   const columns = clues.map((cat, i) => {
-    return <Column 
+    return <EditColumn 
         key={i} 
         index={i} 
         category={categories[i]} 
@@ -53,6 +53,8 @@ const Board = (props) => {
 
   return (
     <div className="game-editor-container">
+      <a className="back-to-prof-link" href={`/profile/${userId}`}>← Back to Profile</a>
+      <div className="overlay" hidden={!showModal}></div>
         <h1>{name}</h1>
       <div className="edit-game-board">
         <ClueInputModal hidden={!showModal} handleModal={handleModal} />
@@ -65,4 +67,4 @@ const Board = (props) => {
 }
 
 
-export default Board;
+export default EditGame;

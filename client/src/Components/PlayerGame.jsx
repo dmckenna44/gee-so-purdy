@@ -58,6 +58,7 @@ const PlayerGame = (props) => {
       }
       dispatch({type: actions.UPDATE_CLUE, payload: [data.index[0], data.index[1], newClue]});
       dispatch({type: actions.SET_CURRENT_Q, payload: data.question});
+      dispatch({type: actions.SET_CURRENT_A, payload: data.answer});
       dispatch({type: actions.SET_ACTIVE_CLUE, payload: true})
     })
 
@@ -95,7 +96,7 @@ const PlayerGame = (props) => {
     {/* <div className="overlay" hidden={!showModal}></div> */}
     <h2>{currentGame.name}</h2>
        {/* <CluePlayModal hidden={!showModal}  handleModal={handleModal}/> */}
-       <div className="playGameBoard">
+       <div className="playGameBoard player-game">
        {activeClue ? <ActiveClue/> : columns}
         {/* {columns} */}
        </div>

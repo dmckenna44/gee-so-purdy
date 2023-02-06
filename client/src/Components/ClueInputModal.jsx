@@ -27,17 +27,21 @@ const ClueInputModal = (props) => {
 
   if (hidden) return null;
   return (
-    <div id='input-modal' className="hidden">
+    <div id='input-modal'>
+      <h2>Add a New Clue</h2>
       <div className="inputDisplay">
-        <p>Question</p>
-        <input type="text" id="input-question" value={currentQuestion} onChange={(e) => dispatch({type: SET_CURRENT_Q, payload: e.target.value})}/>
+        <h3>Question</h3>
+        {/* <input type="text" id="input-question" value={currentQuestion} onChange={(e) => dispatch({type: SET_CURRENT_Q, payload: e.target.value})}/> */}
+        <textarea id="input-question" rows={5} cols={40} value={currentQuestion} onChange={(e) => dispatch({type: SET_CURRENT_Q, payload: e.target.value})}/>
       </div>
       <div className="inputDisplay">
-        <p>Answer</p>
+        <h3>Answer</h3>
         <input type="text" id="input-answer" value={currentAnswer} onChange={(e) => dispatch({type: SET_CURRENT_A, payload: e.target.value})} />
       </div>
-    <button type="button" onClick={submitClue}>Submit</button>
-    <button onClick={handleModal}>Close</button>
+      <div className="clue-input-btns">
+        <button type="button" onClick={submitClue}>Submit</button>
+        <button className="close-btn" onClick={handleModal}>Close</button>
+      </div>
   </div>
   )
 }

@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import { useSelector } from "react-redux";
-import CluePlay from './CluePlay.jsx';
+import HostClue from './HostClue.jsx';
 
-const ColumnPlay = (props) => {
+const HostColumn = (props) => {
 
   const {handleModal} = props;
   
   const clueList = props.questions.map((clue, i) => {
-    return <CluePlay 
+    return <HostClue
         key={i}  
         column={props.index}
         index={i} 
@@ -29,4 +29,4 @@ const ColumnPlay = (props) => {
   )
 }
 
-export default ColumnPlay;
+export default HostColumn;

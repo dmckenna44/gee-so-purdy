@@ -3,15 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import io from 'socket.io-client';
 import CluePlayModal from "./CluePlayModal.jsx";
-import ColumnPlay from "./ColumnPlay.jsx";
+import HostColumn from "./HostColumn.jsx";
 import Timer from "./Timer.jsx";
 import ActiveClue from "./ActiveClue.jsx";
 import EditScoresModal from "./EditScoresModal.jsx";
 import * as actions from "../constants/actionTypes.js";
+import { newGamePW } from "../utils.js";
 
 const socket = io.connect('http://localhost:3001', {'sync disconnect on unload': true});
 
-const Game = (props) => {
+const HostGame = (props) => {
 
   const { name } = useParams();
   const dispatch = useDispatch();
@@ -29,14 +30,8 @@ const Game = (props) => {
       console.log('response from create game', response)
       dispatch({type: actions.UPDATE_PLAYERS, payload: response.players})
       dispatch({type: actions.SET_ROOM_ID, payload: response.id});
+      dispatch({type: actions.SET_GAME_PW, payload: response.pw});
     });
-    // socket.emit('get_players', currGame, (response) => {
-      //   console.log(response);
-      //   if (response.found) {
-        //     const newPlayers = response.newPlayerList.map(p => p.name);
-        //     dispatch({type: actions.UPDATE_PLAYERS, payload: newPlayers});
-        //   }
-        // });
   }, [currGame]);
       
   useEffect(() => {
@@ -76,12 +71,11 @@ const Game = (props) => {
     
   }, [socket, dispatch])
       
-  const { players, roomID, buzzersActive, activePlayer, activeClue, clues} = useSelector(state => state.game);
-  const thisGame = useSelector(state => state.game);
-  console.log(thisGame)
+  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, clues, password} = useSelector(state => state.game);
   console.log('players from store: ', players)
   console.log('room id from store: ', roomID)
   console.log('clues from store: ', clues)
+  console.log('password from store: ', password)
   console.log('current game', currGame)
 
   const [showModal, setShowModal] = useState(false);
@@ -113,7 +107,7 @@ const Game = (props) => {
   }
 
   const columns = currGame.clues.map((clue, i) => {
-    return <ColumnPlay 
+    return <HostColumn 
         key={i} 
         index={i} 
         category={clue.category} 
@@ -127,15 +121,15 @@ const Game = (props) => {
     return (
       <div className="player-info" key={i}>
         <p className="player-name-display">{p.name}</p> 
-        
         <p className="player-score-display" style={{color: p.score >= 0 ? 'black' : 'red'}}>${p.score}</p> 
-        
       </div>
     )
   })
 
   return (
     <div id="playGameContainer">
+      <a className="back-to-prof-link" href={`/profile/${userId}`}>← Back to Profile</a>
+      <p className="game-pw-display">Passcode: {password}</p>
       <div className="overlay" hidden={!showEditModal}></div>
       <h2>{currGame.name}</h2>
          <EditScoresModal hidden={!showEditModal} handleModal={handleEditModal} />
@@ -165,25 +159,27 @@ const Game = (props) => {
             <button className="open-response-btn" onClick={toggleBuzzers}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
           </div>
           <div className="judge-response">
-            <p>Active Player: {activePlayer ? activePlayer : 'none'}</p>
-            { activePlayer ? <p>Time to Respond: <Timer seconds={5}/> </p> : null }
+            <p>{activePlayer ? `Answering: ${activePlayer}` : ''}</p>
+            { activePlayer ? <Timer seconds={5}/> : null }
             { buzzersActive ?  <Timer seconds={5}/> : null }
             {/* <p>Responded Correctly?</p> */}
             {/* <p>Time to Respond: { activePlayer ? <Timer /> : null }</p> */}
           </div>
-          <div className="judge-response-btns">
-            <button onClick={(e) => sendResponse(e, true)}>Correct</button>
-            <button onClick={(e) => sendResponse(e, false)}>Incorrect</button>
-
-          </div>
-
+          {
+            activePlayer ?          
+              <div className="judge-response-btns">
+                <button onClick={(e) => sendResponse(e, true)}>Correct</button>
+                <button onClick={(e) => sendResponse(e, false)}>Incorrect</button>
+              </div> : 
+              null
+          }
          </div>
     </div>
   )
 } 
 
 
-export default Game;
+export default HostGame;
 
 
 /* 
