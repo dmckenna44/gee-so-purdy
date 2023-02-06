@@ -1,4 +1,5 @@
 import * as types from '../constants/actionTypes';
+import { baseUrl } from "../apiRoutes";
 import getTrivia from '../random';
 
 const initialState = {
@@ -216,7 +217,7 @@ export const saveGame = () => async (dispatch, getState) => {
   }
 
   try {
-    const addedGame = await fetch('http://localhost:3001/games', {
+    const addedGame = await fetch(`${baseUrl}/games`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -263,7 +264,7 @@ export const updateGame = () => async (dispatch, getState) => {
       },
       body: JSON.stringify(formattedGame)
     }
-    fetch(`http://localhost:3001/games`, options)
+    fetch(`${baseUrl}/games`, options)
       .then(res => res.json())
       .then(data => console.log('response from update ', data))
   } catch (err) {
@@ -272,7 +273,7 @@ export const updateGame = () => async (dispatch, getState) => {
 }
 
 export const loadGames = (userid) => async (dispatch, getState) => {
-  const response = await fetch(`http://localhost:3001/games/${userid}`, {
+  const response = await fetch(`${baseUrl}/games/${userid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
