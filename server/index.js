@@ -11,7 +11,6 @@ const newGamePW = require('./utils.js')
 
 const userController = require('./controllers/userController.js')
 const gameController = require('./controllers/gameController.js');
-const { response } = require('express');
 
 const app = express();
 
@@ -193,10 +192,7 @@ io.on('connection', socket => {
 // ----------------------------- API ROUTES ------------------------------------- //
 ////////////////////////////////////////////////////////////////////////////////////
 
-app.get('/', (req, res) => {
-  res.json({test: 'hello'});
-  // res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'));
-})
+
 
 app.post('/login', cors(), userController.verifyUser, (req, res) => {
   res.status(200).json(res.locals.user);
@@ -225,6 +221,24 @@ app.get('/games/:userid', gameController.getGames, (req, res) => {
 // app.post('/:userId/games/:gameId', userController.verifyUser, gameController.setGame, (req, res) => {
 //   res.status(200);
 // })
+
+///////////////////////////////////////////////////////////////////////////
+// ---------------------- Global Routes --------------------------------- //
+//////////////////////////////////////////////////////////////////////////
+app.get('/', (req, res) => {
+  res.json({test: 'hello'});
+  // res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'));
+})
+
+app.get('/*', (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'));
+  return;
+})
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500).send({ error: err });
+});
 
 
 
