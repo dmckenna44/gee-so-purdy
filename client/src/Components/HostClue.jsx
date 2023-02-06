@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import * as types from '../constants/actionTypes.js';
 import io from 'socket.io-client';
 
-const socket = io.connect('http://localhost:3001')
+// const socket = io.connect('http://localhost:3001')
+import {socket} from '../apiRoutes.js';
 
 const HostClue = (props) => {
   // console.log('props from clue play', props)

@@ -1,5 +1,4 @@
 import React from "react";
-import io from 'socket.io-client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar.jsx';
 import Welcome from './Welcome.jsx';
@@ -13,8 +12,6 @@ import Signup from "./Signup.jsx";
 import PlayerSignIn from "./PlayerSignIn.jsx";
 import PlayerGame from "./PlayerGame.jsx";
 
-
-const socket = io.connect('http://localhost:3001');
 
 function App() {
 

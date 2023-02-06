@@ -7,7 +7,7 @@ import PlayerColumn from "./PlayerColumn.jsx";
 import Buzzer from "./Buzzer.jsx";
 import Timer from "./Timer.jsx";
 import ActiveClue from "./ActiveClue.jsx";
-import socket from '../socket.js'
+import {socket} from '../apiRoutes.js';
 
 // const socket = io.connect('http://localhost:3001', {'sync disconnect on unload': true});
 
