@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { saveGame, loadGames } from '../reducers/gameReducer.js';
 import * as actions from '../constants/actionTypes.js';
-import Board from "./EditGame.jsx";
+
 
 
 const BuildGameModal = (props) => {

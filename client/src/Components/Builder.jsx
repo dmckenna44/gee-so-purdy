@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { saveGame } from '../reducers/gameReducer.js';
-import * as actions from '../actions/actions.js';
 import Board from "./EditGame.jsx";
 
 

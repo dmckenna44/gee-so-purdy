@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import getTrivia from "../random.js";
-import { randomGame } from "../reducers/gameReducer.js";
 import HostColumn from "./HostColumn.jsx";
 
 const RandomGame = (props) => {
