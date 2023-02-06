@@ -22,9 +22,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@vercel/node": "^2.8.15",
     "nodemon": "^2.0.20",
-    "sass": "^1.57.1",
-    "vercel": "^28.13.0"
+    "sass": "^1.57.1"
   }
 }
