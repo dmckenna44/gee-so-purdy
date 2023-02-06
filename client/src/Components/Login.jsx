@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { baseUrl } from "../apiRoutes";
 
 const Login = (props) => {
 
@@ -28,7 +29,7 @@ const Login = (props) => {
       },
       body: JSON.stringify({ username: username, password: password })
     }
-    const response = await fetch('http://localhost:3001/login', options)
+    const response = await fetch(`${baseUrl}/login`, options)
     const user = await response.json()
     console.log(user)
     if (user.found) {

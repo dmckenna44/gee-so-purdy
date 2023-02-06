@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { baseUrl } from "../apiRoutes";
 
 const Signup = (props) => {
 
@@ -39,7 +40,7 @@ const Signup = (props) => {
     };
     if (username && password) {
       try {
-        const response = await fetch('http://localhost:3001/signup', options);
+        const response = await fetch(`${baseUrl}/signup`, options);
         const newUser = await response.json();
         console.log(newUser);
         dispatch({type: 'SET_USERNAME', payload: newUser.username});

@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { baseUrl } from "../apiRoutes";
 
 const DeleteGameModal = (props) => {
 
@@ -19,7 +20,7 @@ const DeleteGameModal = (props) => {
       })
     }
 
-    const deleted = await fetch('http://localhost:3001/games', options);
+    const deleted = await fetch(`${baseUrl}/games`, options);
     const deletedGame = await deleted.json();
     console.log('deleted game response', deletedGame)
     // navigate(0);
