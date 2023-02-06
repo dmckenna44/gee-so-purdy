@@ -1,0 +1,20 @@
+{
+  "name": "gee-so-purdy",
+  "version": "1.0.0",
+  "description": "A build-your-own trivia game app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmckenna44/gee-so-purdy.git"
+  },
+  "author": "Dillon McKenna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmckenna44/gee-so-purdy/issues"
+  },
+  "homepage": "https://github.com/dmckenna44/gee-so-purdy#readme"
+}
