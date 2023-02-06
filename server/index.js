@@ -28,7 +28,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: [/\.gee-so-purdy\.vercel\.app$/],
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE']
   }
 })
