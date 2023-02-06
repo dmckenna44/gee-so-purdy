@@ -44,6 +44,11 @@ input {
   border-radius: 0;
 }
 
+.welcome-title {
+  font-family: 'Pacifico';
+  font-size: 4.5rem;
+}
+
 
 .account-form {
   display: flex;
@@ -66,6 +71,10 @@ input {
   max-width: 150px;
   flex-wrap: wrap;
   word-wrap: normal;
+}
+
+.error-msg {
+  color: red;
 }
 
 .nav-bar {

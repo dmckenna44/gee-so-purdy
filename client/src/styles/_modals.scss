@@ -159,14 +159,35 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 40%;
-  left: 25%;
-  background-color: #59C1BD;
-  width: 50%;
+  align-self: center;
+  background-color: $backgroundColor;
+  min-width: 40%;
   height: 50%;
-  border: solid 2px #0D4C92;
-  box-shadow: 0 0 5px 5px #0D4C92;
+  padding: 1.5rem;
+  // border: solid 2px $borderColor;
+  box-shadow: 0.1rem 0.1rem 0.5rem 2px darken($backgroundColor, 30%);
   z-index: 5;
+
+  button {
+    margin: 0.5rem;
+    cursor: pointer;
+    border: none;
+    padding: .5rem 1rem;
+    // width: 10rem;
+    background-color: #EAFDFC;
+    box-shadow: 0.2rem 0.2rem 0.5rem 0 darken($backgroundColor, 50%);
+  }
+
+  button:hover {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+    color: #EAFDFC;
+    background-color: black;
+  }
+
+  label {
+    font-size: large;
+  }
 }
 
 .edit-modal-player-list {
@@ -182,5 +203,12 @@
 
   * {
     margin: 0.4rem;
+  }
+
+  button:hover {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+    color: black;
+    background-color: $backgroundColor;
   }
 }

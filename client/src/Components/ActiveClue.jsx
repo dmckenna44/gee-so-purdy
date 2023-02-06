@@ -21,10 +21,11 @@ const ActiveClue = () => {
   }
 
   return (
-    <div className="active-clue-expand" onClick={resetActiveClue}>
+    <div className="active-clue-expand">
       <h3>{currentQuestion}</h3>
       <h3>{ answerVisible ? currentAnswer : null}</h3>
       <button onClick={showAnswer} style={{display: `${playerName ? 'none' : 'block'}`}}>Show Answer</button>
+      <button onClick={resetActiveClue} style={{display: `${playerName ? 'none' : 'block'}`}}>Done</button>
     </div>
   )
 }

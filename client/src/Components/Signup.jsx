@@ -10,17 +10,26 @@ const Signup = (props) => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [requiredMsg, setRequiredMsg] = useState('');
+  const [userExistsMsg, setUserExistsMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   const nameChange = e => {
     setUsername(e.target.value);
+    setRequiredMsg('');
+    setUserExistsMsg('');
   }
 
   const passwordChange = e => {
     setPassword(e.target.value);
+    setRequiredMsg('');
+    setUserExistsMsg('');
   }
 
   const signUp = async (e) => {
     e.preventDefault();
+    setShowLoader(true);
     const options = {
       method: 'POST',
       headers: {
@@ -28,13 +37,22 @@ const Signup = (props) => {
       },
       body: JSON.stringify({ username: username, password: password })
     };
-    const response = await fetch('http://localhost:3001/signup', options);
-    const newUser = await response.json();
-    console.log(newUser);
-    if (newUser) {
-      console.log(newUser)
-      // dispatch({type: 'SET_USERNAME', payload: newUser.username});
-      navigate(`/profile/${newUser._id.toString()}`);
+    if (username && password) {
+      try {
+        const response = await fetch('http://localhost:3001/signup', options);
+        const newUser = await response.json();
+        console.log(newUser);
+        dispatch({type: 'SET_USERNAME', payload: newUser.username});
+        setShowLoader(false);
+        setSuccessMsg('You\'re signed up! Redirecting to profile page');
+        navigate(`/profile/${newUser._id.toString()}`);
+      } catch(err) {
+        setShowLoader(false);
+        setUserExistsMsg('Username already exists! Try another.');
+      }
+    } else {
+      setShowLoader(false);
+      setRequiredMsg('Both fields are required!');
     }
   
   }
@@ -53,6 +71,11 @@ const Signup = (props) => {
           <input type="password" name="newPassword" onChange={passwordChange}/>
           <button type="button" onClick={signUp} >Sign Up</button>
         </form>
+        <p className="error-msg">{requiredMsg}</p>
+        <p className="error-msg">{userExistsMsg}</p>
+        {showLoader ? <div className="hourglass"></div> : null}
+        <p>{successMsg}</p>
+        
       </section>
     </div>
   )

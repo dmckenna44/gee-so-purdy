@@ -58,6 +58,7 @@ const PlayerGame = (props) => {
       }
       dispatch({type: actions.UPDATE_CLUE, payload: [data.index[0], data.index[1], newClue]});
       dispatch({type: actions.SET_CURRENT_Q, payload: data.question});
+      dispatch({type: actions.SET_CURRENT_A, payload: data.answer});
       dispatch({type: actions.SET_ACTIVE_CLUE, payload: true})
     })
 
