@@ -24,17 +24,17 @@ app.use(cors());
 app.set('trust proxy', 1);
 
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.resolve(__dirname, '../client/build')));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/build/index.html"))
-});
-} else {
-  app.get("/", (req, res) => {
-    res.send("Hello from the backend");
-  });
-}
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "../client/build/index.html"))
+// });
+// } else {
+//   app.get("/", (req, res) => {
+//     res.send("Hello from the backend");
+//   });
+// }
 
 const server = http.createServer(app);
 
@@ -245,6 +245,18 @@ app.get('/api/games/:userid', gameController.getGames, (req, res) => {
 //   res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'));
 //   return;
 // })
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.resolve(__dirname, '../client/build')));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/build/index.html"))
+});
+} else {
+  app.get("/", (req, res) => {
+    res.send("Hello from the backend");
+  });
+}
 
 app.use((err, req, res, next) => {
   console.log(err);
