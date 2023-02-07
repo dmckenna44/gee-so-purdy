@@ -7,8 +7,6 @@ button {
   border: 1.5px solid $borderColor;
 
   &:hover {
-    // background-color: #A0E4CB;
-    // color: #0D4C92;
     cursor: pointer;
     filter: brightness(0.85);
   }
@@ -34,18 +32,7 @@ button {
   }
 }
 
-.back-to-prof-link {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  text-decoration: underline;
-  cursor: pointer;
 
-  &:hover {
-    text-shadow: .1rem .1rem .1rem $borderColor;
-    color: blue;
-  }
-}
 
 #btnSaveGame {
   width: 11rem;
@@ -152,16 +139,26 @@ button {
   left: 1rem;
 }
 
-.logout-btn {
+.back-to-prof-link {
   position: absolute;
   top: 1rem;
-  right: 3rem;
-
+  left: 1rem;
   text-decoration: underline;
   cursor: pointer;
 
   &:hover {
-    text-shadow: .1rem .1rem .1rem $borderColor;
-    color: blue;
+    color: $borderColor;
+  }
+}
+
+.logout-btn {
+  position: absolute;
+  top: 1rem;
+  right: 3rem;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    color: $borderColor;
   }
 }

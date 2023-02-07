@@ -48,10 +48,10 @@ const HostGame = (props) => {
       dispatch({type: actions.UPDATE_PLAYERS, payload: data});
     });
     
-    socket.on('receive_clue_value', (data) => {
-      console.log('data from receive clue value: ', data);
-      dispatch({type: actions.SET_ACTIVE_CLUE_VALUE, payload: data});
-    });
+    // socket.on('receive_clue_value', (data) => {
+    //   console.log('data from receive clue value: ', data);
+    //   dispatch({type: actions.SET_ACTIVE_CLUE_VALUE, payload: data});
+    // });
     
     socket.on('receive_buzzer_change', data => {
       dispatch({type: actions.SET_BUZZERS_ACTIVE, payload: data.buzzersActive});
@@ -68,7 +68,7 @@ const HostGame = (props) => {
     
   }, [socket, dispatch])
       
-  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, clues, password} = useSelector(state => state.game);
+  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, activeClueValue, password} = useSelector(state => state.game);
 
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setEditModal] = useState(false);
@@ -91,7 +91,7 @@ const HostGame = (props) => {
 
   const sendResponse = (e, correct) => {
     e.preventDefault();
-    socket.emit('send_new_scores', {roomID: roomID, playerName: activePlayer, value: 200, correct: correct});
+    socket.emit('send_new_scores', {roomID: roomID, playerName: activePlayer, value: activeClueValue, correct: correct});
     socket.emit('send_active_player', {roomID: roomID, name: ''});
   }
 

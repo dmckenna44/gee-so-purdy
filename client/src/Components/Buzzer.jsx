@@ -11,7 +11,7 @@ const Buzzer = (props) => {
 
   const ringIn = (e) => {
     e.preventDefault();
-    if (buzzersActive && !activePlayer && canAnswer) {
+    if (buzzersActive && !activePlayer) {
       // add active player score to the store
       // send an event to the host so they can update the score/go to the next clue
       // add playerName to store to track each player on the player side, use activePlayer for the host
@@ -23,7 +23,7 @@ const Buzzer = (props) => {
     }
   }
 
-  if(!buzzersActive) return null;
+  if(!buzzersActive || !canAnswer) return null;
   return (
     <div className="buzzer-container">
       <button className="buzzer-btn" onClick={ringIn}>Ring In!</button>
