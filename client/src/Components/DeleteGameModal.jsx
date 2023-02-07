@@ -1,12 +1,15 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { loadGames } from "../reducers/gameReducer";
 import { baseUrl } from "../apiRoutes";
 
 const DeleteGameModal = (props) => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const {hidden, handleDelete, gameId} = props;
+  const {hidden, handleDelete, gameId, userId} = props;
 
   const deleteGame = async (e) => {
     e.preventDefault();
@@ -23,6 +26,7 @@ const DeleteGameModal = (props) => {
     const deleted = await fetch(`${baseUrl}/api/games`, options);
     const deletedGame = await deleted.json();
     console.log('deleted game response', deletedGame)
+    dispatch(loadGames(userId));
     // navigate(0);
     handleDelete(e, '')
   }
