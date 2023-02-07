@@ -15,11 +15,9 @@ const gameSchema = new mongoose.Schema({
     answers: [String]
   }],
   password: {
-    type: String,
-    required: true
+    type: String
   }
 })
-
 
 const Game = mongoose.model('game', gameSchema);
 

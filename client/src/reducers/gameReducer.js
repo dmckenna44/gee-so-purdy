@@ -212,8 +212,7 @@ export const saveGame = () => async (dispatch, getState) => {
   const formattedGame = {
     user_id: game.userId,
     name: game.name,
-    clues: formattedClues,
-    password: game.password
+    clues: formattedClues
   }
 
   try {

@@ -4,13 +4,12 @@ const Game = require('../models/Game.js');
 const gameController = {};
 
 gameController.setGame = async (req, res, next) => {
-  const { user_id, name, clues, password } = req.body;
+  const { user_id, name, clues } = req.body;
 
   const game = new Game({
     user_id: user_id,
     name: name,
-    clues: clues,
-    password: password
+    clues: clues
   })
 
   const newGame = await game.save(); 
@@ -21,7 +20,7 @@ gameController.setGame = async (req, res, next) => {
 }
 
 gameController.updateGame = async (req, res, next) => {
-  const {user_id, game_id, name, clues} = req.body;
+  const { game_id, clues} = req.body;
   console.log(clues);
 
   try {
