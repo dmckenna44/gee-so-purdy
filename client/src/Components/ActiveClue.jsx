@@ -10,12 +10,14 @@ const ActiveClue = () => {
 
   const resetActiveClue = (e) => {
     e.stopPropagation();
+    socket.emit('send_reset_buzzers', {roomID: roomID});
     if (!playerName) socket.emit('send_deactivate_clue', {roomID: roomID})
   }
 
   const showAnswer = (e) => {
     e.stopPropagation();
     setAnswerVisible(true);
+    socket.emit('send_reset_buzzers', {roomID: roomID});
   }
 
   return (

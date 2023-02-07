@@ -25,4 +25,4 @@ export const SET_CORRECT_RESPONSE = 'SET_CORRECT_RESPONSE';
 export const SET_BUZZERS_ACTIVE = 'SET_BUZZERS_ACTIVE';
 export const SET_TIMER = 'SET_TIMER';
 export const SET_ACTIVE_CLUE = 'SET_ACTIVE_CLUE';
-// export const CLUE_ANSWERED
+export const SET_CAN_ANSWER = 'SET_CAN_ANSWER';

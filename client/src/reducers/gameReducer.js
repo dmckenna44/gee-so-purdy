@@ -15,6 +15,7 @@ const initialState = {
   activeClueValue: 0,
   correctResponse: false,
   buzzersActive: false,
+  canAnswer: true,
   userGames: [],
   currentQuestion: '',
   currentAnswer: '',
@@ -89,6 +90,11 @@ const gameReducer = (state = initialState, action) => {
     case types.SET_ACTIVE_CLUE_VALUE:
       return Object.assign({}, state, {
         activeClueValue: action.payload
+      })
+
+    case types.SET_CAN_ANSWER:
+      return Object.assign({}, state, {
+        canAnswer: action.payload
       })
 
     case types.SET_CORRECT_RESPONSE:

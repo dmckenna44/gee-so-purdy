@@ -126,9 +126,9 @@ const HostGame = (props) => {
          <div className="playGameBoard">
           {activeClue ? < ActiveClue/> : columns}
          </div>
-         <h2><em>Players</em></h2>
+         {/* <h2><em>{playerList.length ? 'Players' : 'No players yet'}</em></h2> */}
          <div className="player-list">
-          {playerList}
+          {playerList.length ? playerList : 'No players yet'}
          </div>
          <br />
          <div className="host-options">
