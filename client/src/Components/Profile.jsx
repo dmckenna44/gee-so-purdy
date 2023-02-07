@@ -95,7 +95,7 @@ const Profile = props => {
         </section> */}
       </div>
       <BuildGameModal hidden={modalHidden} handleModal={handleModal}/>
-      <DeleteGameModal hidden={deleteHidden} handleDelete={handleDelete} gameId={gameId}/>
+      <DeleteGameModal hidden={deleteHidden} handleDelete={handleDelete} gameId={gameId} userId={userid}/>
 
       <div id="savedGameList">
         <h2>Your Saved Games</h2>
