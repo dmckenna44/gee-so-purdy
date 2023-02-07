@@ -25,16 +25,13 @@ const DeleteGameModal = (props) => {
 
     const deleted = await fetch(`${baseUrl}/api/games`, options);
     const deletedGame = await deleted.json();
-    console.log('deleted game response', deletedGame)
     dispatch(loadGames(userId));
-    // navigate(0);
     handleDelete(e, '')
   }
   
   if (hidden) return null;
   return (
     <div className="delete-game-modal">
-      {/* <p className="close-modal-btn" >Close</p> */}
       <h1>Are You Sure You Want to Delete This Game?</h1>
       <div className="topic-page-btns">
         <button onClick={deleteGame}>Delete</button>

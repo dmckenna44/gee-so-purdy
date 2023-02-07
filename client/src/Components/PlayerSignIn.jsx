@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import * as actions from '../constants/actionTypes.js';
 
 import {socket} from '../apiRoutes.js';
 
 const PlayerSignIn = (props) => {
-
-  const { userGames, password, name } = useSelector(state => state.game);
-  console.log('player sign in state', userGames, password, name)
 
   const [playerName, setPlayerName] = useState('');
   const [gamePassword, setGamePassword] = useState('');
@@ -21,9 +18,7 @@ const PlayerSignIn = (props) => {
     if (playerName !== '' && gamePassword !== '') {
       showErrorMsg(false);
       socket.emit('join_room', {password: gamePassword, player: playerName}, (response) => {
-        console.log(response)
         if (response.found) {
-          console.log('response from player sign in', response)
           dispatch({type: actions.SET_GAME, payload: response.room.game});
           dispatch({type: actions.SET_ROOM_ID, payload: response.room.id});
           dispatch({type: actions.SET_PLAYER_NAME, payload: playerName})

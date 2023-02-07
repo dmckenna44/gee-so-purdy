@@ -10,32 +10,27 @@ import {socket} from '../apiRoutes.js';
 
 const PlayerGame = (props) => {
 
-  const {name, players, password, roomID, activePlayer, activeClue} = useSelector(state => state.game);
-  console.log('players from playergame', players)
+  const { players, activePlayer, activeClue} = useSelector(state => state.game);
   const dispatch = useDispatch();
 
   useEffect(() => {
     // Receive updated player list after a new player joins
     socket.on('player_joined', (data) => {
-      console.log('data from player joined event: ', data)
       dispatch({type: actions.UPDATE_PLAYERS, payload: data.newPlayerList});
     })
 
     // Receive updated player list after a player leaves
     socket.on('player_left', (data) => {
-      console.log('data from player left event: ', data)
       dispatch({type: actions.UPDATE_PLAYERS, payload: data.newPlayerList});
     })
 
     // Get updated player scores after a clue is responded to
     socket.on('receive_new_scores', (data) => {
-      console.log('data from receive new scores: ', data);
       dispatch({type: actions.UPDATE_PLAYERS, payload: data});
     })
 
     // Get the value of the currently selected clue
     socket.on('receive_clue_value', (data) => {
-      console.log('data from receive clue value: ', data);
       dispatch({type: actions.SET_ACTIVE_CLUE_VALUE, payload: data});
     })
 
@@ -66,7 +61,6 @@ const PlayerGame = (props) => {
   }, [socket, dispatch])
 
   const currentGame = useSelector(state => state.game);
-  // console.log('game from playergame', currentGame)
 
   const columns = currentGame.clues.map((clue, i) => {
     return <PlayerColumn
@@ -81,21 +75,16 @@ const PlayerGame = (props) => {
     return (
       <div className="player-info" key={i}>
         <p className="player-name-display">{player.name}</p> 
-        
         <p className="player-score-display" style={{color: player.score >= 0 ? 'black' : 'red'}}>${player.score}</p> 
-        
       </div>
     )
   })
 
   return (
     <div id="playGameContainer">
-    {/* <div className="overlay" hidden={!showModal}></div> */}
     <h2>{currentGame.name}</h2>
-       {/* <CluePlayModal hidden={!showModal}  handleModal={handleModal}/> */}
        <div className="playGameBoard player-game">
        {activeClue ? <ActiveClue/> : columns}
-        {/* {columns} */}
        </div>
        <h2><em>Players</em></h2>
          <div className="player-list">

@@ -1,5 +1,3 @@
-const { createSecureServer } = require('http2');
-const mongoose = require('mongoose');
 const User = require('../models/User.js');
 const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 12;

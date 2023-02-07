@@ -7,11 +7,8 @@ const ClueInputModal = (props) => {
 
   const {handleModal, hidden} = props;
   const dispatch = useDispatch();
-  const { currentIndex, currentQuestion, currentAnswer } = useSelector(state => state.game)
-  // console.log('from input modal: ', currentIndex, currentQuestion, currentAnswer);
-  console.log('state from input modal: question', currentQuestion, 'answer', currentAnswer)
+  const { currentIndex, currentQuestion, currentAnswer } = useSelector(state => state.game);
   
-
   const submitClue = (e) => {
     const newClue = {
       question: currentQuestion,
@@ -21,8 +18,7 @@ const ClueInputModal = (props) => {
     dispatch({type: SET_CURRENT_Q, payload: ''});
     dispatch({type: SET_CURRENT_A, payload: ''});
     handleModal(e);
-  }
-
+  };
 
 
   if (hidden) return null;

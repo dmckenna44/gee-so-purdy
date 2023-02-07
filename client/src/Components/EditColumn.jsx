@@ -6,7 +6,6 @@ import EditClue from './EditClue.jsx';
 const EditColumn = (props) => {
   const {category, clues, index, handleModal} = props;
   const dispatch = useDispatch();
-  console.log('props from column', clues)
 
   const clueList = clues.map((clue, i) => {
     return <EditClue 

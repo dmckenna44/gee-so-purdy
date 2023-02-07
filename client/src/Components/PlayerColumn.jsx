@@ -4,8 +4,6 @@ import PlayerClue from "./PlayerClue.jsx";
 
 
 const PlayerColumn = (props) => {
-
-  // console.log('props from player column', props)
   
   const clueList = props.clues.map((clue, i) => {
     return <PlayerClue

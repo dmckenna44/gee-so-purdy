@@ -6,7 +6,7 @@ import {socket} from '../apiRoutes.js';
 
 const Buzzer = (props) => {
 
-  const {roomID, playerName, activeClueValue, correctResponse, players, buzzersActive, activePlayer} = useSelector(state => state.game);
+  const {roomID, playerName, buzzersActive, activePlayer} = useSelector(state => state.game);
   const dispatch = useDispatch();
 
   const ringIn = (e) => {
@@ -21,8 +21,6 @@ const Buzzer = (props) => {
       socket.emit('send_buzzer_change', {roomID: roomID, active: !buzzersActive});
       dispatch({type: actions.SET_BUZZERS_ACTIVE, payload: !buzzersActive});
       // socket.emit('send_new_scores', {roomID: roomID, playerName: playerName, value: 200, correct: correctResponse})
-      console.log('active player from buzzer', activePlayer)
-      console.log('players from store', players)
     }
   }
 

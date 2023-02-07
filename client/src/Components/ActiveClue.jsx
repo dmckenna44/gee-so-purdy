@@ -6,7 +6,6 @@ const ActiveClue = () => {
 
   const [answerVisible, setAnswerVisible] = useState(false);
   const {currentQuestion, currentAnswer, roomID, playerName} = useSelector(state => state.game);
-  console.log('q from active clue', currentQuestion, 'a from active clue', currentAnswer)
   const dispatch = useDispatch();
 
   const resetActiveClue = (e) => {

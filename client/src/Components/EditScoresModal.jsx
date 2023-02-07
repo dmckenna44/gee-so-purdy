@@ -17,11 +17,11 @@ const EditScoresModal = (props) => {
         <button onClick={(e) => {sendScore(score, player.name)}}>Update</button>
       </div>
     )
-  })
-  console.log('edit modal openedddddddddddddddddddddd')
+  });
+
   const sendScore = (score, name) => {
       socket.emit('send_updated_score', {roomID: roomID, playerName: name, value: score});
-  }
+  };
 
 
   if (hidden) return null;

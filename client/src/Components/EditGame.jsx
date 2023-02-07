@@ -15,10 +15,7 @@ const EditGame= (props) => {
   const { userId, userGames, clues, categories } = useSelector(state => state.game);
   
   useEffect(() => {
-    // const currGame = userGames.find(game => game.name === name);
     dispatch(loadGames(userId));
-    // dispatch({type: SET_GAME, payload: currGame});
-    console.log('clues from board', clues);
   }, [dispatch, userId])
 
   const [showModal, setShowModal] = useState(false);

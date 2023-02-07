@@ -9,14 +9,13 @@ const CluePlayModal = (props) => {
 
   const showAnswer = (e) => {
     setHideAnswer(false);
-  }
+  };
+
   useEffect(() => {
     setHideAnswer(true);
-  }, [hidden])
+  }, [hidden]);
 
   const { currentQuestion, currentAnswer } = useSelector(state => state.game);
-
-  console.log('q + a', currentAnswer, currentQuestion)
 
   if (hidden) return null;
   return (

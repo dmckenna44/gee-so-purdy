@@ -25,9 +25,7 @@ const HostGame = (props) => {
   
   useEffect(() => {
     dispatch({type: actions.SET_GAME, payload: currGame});
-    console.log('useEffect in Game component called');
     socket.emit('create_room', currGame, response => {
-      console.log('response from create game', response)
       dispatch({type: actions.UPDATE_PLAYERS, payload: response.players})
       dispatch({type: actions.SET_ROOM_ID, payload: response.id});
       dispatch({type: actions.SET_GAME_PW, payload: response.pw});
@@ -35,7 +33,6 @@ const HostGame = (props) => {
   }, [currGame]);
       
   useEffect(() => {
-    // socket.emit('send_message', )
     socket.on('player_joined', (data) => {
       console.log('data from player joined event: ', data)
       dispatch({type: actions.UPDATE_PLAYERS, payload: data.newPlayerList});
@@ -72,19 +69,12 @@ const HostGame = (props) => {
   }, [socket, dispatch])
       
   const { userId, players, roomID, buzzersActive, activePlayer, activeClue, clues, password} = useSelector(state => state.game);
-  console.log('players from store: ', players)
-  console.log('room id from store: ', roomID)
-  console.log('clues from store: ', clues)
-  console.log('password from store: ', password)
-  console.log('current game', currGame)
 
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setEditModal] = useState(false);
 
   const handleModal = (e) => {
     e.preventDefault();
-    console.log('button clicked')
-    console.log(showModal)
     setShowModal(!showModal);
   }
 
@@ -101,7 +91,6 @@ const HostGame = (props) => {
 
   const sendResponse = (e, correct) => {
     e.preventDefault();
-    console.log('active player from game', activePlayer);
     socket.emit('send_new_scores', {roomID: roomID, playerName: activePlayer, value: 200, correct: correct});
     socket.emit('send_active_player', {roomID: roomID, name: ''});
   }

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { baseUrl } from "../apiRoutes";
 
 const Signup = (props) => {
 
   const navigate = useNavigate();
-  const { userid } = useParams();
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState('');
@@ -42,7 +41,6 @@ const Signup = (props) => {
       try {
         const response = await fetch(`${baseUrl}/api/signup`, options);
         const newUser = await response.json();
-        console.log(newUser);
         dispatch({type: 'SET_USERNAME', payload: newUser.username});
         setShowLoader(false);
         setSuccessMsg('You\'re signed up! Redirecting to profile page');

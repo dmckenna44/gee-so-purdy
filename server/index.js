@@ -16,7 +16,6 @@ const app = express();
 
 const PORT = process.env.PORT || 3001;
 
-// app.use(express.static(path.resolve(__dirname, '../client')));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -61,7 +60,6 @@ io.on('connection', socket => {
   clients.push(socket.id)
 
   socket.on('create_room', (data, cb) => {
-    // console.log('create room data', data)
     const newRoom = {
       id: uuidv4(),
       pw: newGamePW(),
@@ -69,13 +67,11 @@ io.on('connection', socket => {
       players: []
     }
     rooms.push(newRoom);
-    console.log('rooms list from create_room', rooms)
     socket.join(newRoom);
     cb(newRoom)
   })
 
   socket.on('join_room', (data, cb) => {
-    console.log('join room data', data);
     // I'm mutating the room before emitting the event...
     const response = {};
     rooms.forEach(room => {
@@ -85,7 +81,6 @@ io.on('connection', socket => {
         const newPlayer = {name: data.player, score: 0, id: socket.id};
         room.players.push(newPlayer)
         socket.join(room)
-        console.log('client list', io.sockets.adapter.rooms.get(room))
         io.to(room).emit('player_joined', {newPlayerList: room.players});
       }
     })
@@ -93,12 +88,9 @@ io.on('connection', socket => {
   })
 
   socket.on('get_players', (data, cb) => {
-    // console.log('get players data:', data);
-    console.log('rooms list from get_players', rooms)
     const response = {};
     rooms.forEach(room => {
       if (room.game.name === data.name && room.game.password === data.password) {
-        // console.log('room from host check', room)
         response.found = true;
         response.playerList = room.players;
       }
@@ -107,11 +99,9 @@ io.on('connection', socket => {
   })
 
   socket.on('send_new_scores', (data, cb) => {
-    console.log('data from adjust scores', data)
     // receive player name and new score from client and adjust in the room state
     const {roomID, playerName, value, correct} = data;
     const currentRoom = rooms.find(room => room.id === roomID);
-    console.log('current room', currentRoom)
     currentRoom.players.forEach(player => {
       if (player.name === playerName) {
         player.score += correct ? +value : -value;
@@ -179,10 +169,8 @@ io.on('connection', socket => {
         socket.leave(room);
       }
     })
-    console.log('data from disconnect', data)
-  })
-
-})
+  });
+});
 
 ////////////////////////////////////////////////////////////////////////////////////
 // ------------------------------------------------------------------------------ //
@@ -195,44 +183,31 @@ io.on('connection', socket => {
 
 app.post('/api/login', cors(), userController.verifyUser, (req, res) => {
   res.status(200).json(res.locals.user);
-})
+});
 
 app.post('/api/signup', cors(), userController.createUser, (req, res) => {
   res.status(200).json(res.locals.newUser);
-})
+});
 
 app.post('/api/games', gameController.setGame, (req, res) => {
   res.status(200).json(res.locals.newGame);
-})
+});
 
 app.put('/api/games', gameController.updateGame, (req, res) => {
   res.status(200).json(res.locals.updated);
-})
+});
 
 app.delete('/api/games', gameController.deleteGame, (req, res) => {
   res.status(200).json(res.locals.deleted);
-})
+});
 
 app.get('/api/games/:userid', gameController.getGames, (req, res) => {
   res.status(200).json(res.locals.games);
-})
-
-// app.post('/:userId/games/:gameId', userController.verifyUser, gameController.setGame, (req, res) => {
-//   res.status(200);
-// })
+});
 
 ///////////////////////////////////////////////////////////////////////////
 // ---------------------- Global Routes --------------------------------- //
 //////////////////////////////////////////////////////////////////////////
-// app.get('/', (req, res) => {
-//   res.json({test: 'hello'});
-//   // res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'));
-// })
-
-// app.get('/*', (req, res) => {
-//   res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'));
-//   return;
-// })
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.resolve(__dirname, '../client/build')));
@@ -251,5 +226,3 @@ app.use((err, req, res, next) => {
   res.status(500).send({ error: err });
 });
 
-
-// app.listen(3000, () => console.log('Server listening on port 3000'));

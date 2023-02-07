@@ -33,9 +33,6 @@ const Profile = props => {
     dispatch({type: SET_GAME, payload: userGames.find(game => game.name === name)});
     navigate(`/buildgame/${name}`)
   }
-
-  console.log('links', userGames);
-  console.log('username', username);
   
   const gameLinks = userGames.length ? userGames.map((game, i) => {
     return (
@@ -53,7 +50,6 @@ const Profile = props => {
   }) : [];
   
   useEffect(() => {
-    console.log('useEffect called in profile, id: ', userid)
     dispatch({type: SET_USERID, payload: userid});
     dispatch(loadGames(userid));
   }, [])
@@ -75,7 +71,6 @@ const Profile = props => {
   const handleModal = (e) => {
     e.preventDefault();
     toggleModal(!modalHidden);
-    console.log(modalHidden)
   }
 
   return (
