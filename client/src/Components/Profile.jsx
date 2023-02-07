@@ -59,7 +59,7 @@ const Profile = props => {
   useEffect(() => {
     dispatch({type: SET_USERID, payload: userid});
     dispatch(loadGames(userid));
-  }, [dispatch, userGames])
+  }, [])
 
   const setRandomGame = () => {
     dispatch(randomGame());
