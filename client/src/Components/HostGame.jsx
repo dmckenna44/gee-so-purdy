@@ -136,20 +136,9 @@ const HostGame = (props) => {
          <CluePlayModal hidden={!showModal}  handleModal={handleModal}/>
          <div className="playGameBoard">
           {activeClue ? < ActiveClue/> : columns}
-          {/* <ActiveClue /> */}
          </div>
          <h2><em>Players</em></h2>
          <div className="player-list">
-          <div className="player-info" >
-            <p>Neal</p> 
-        
-            <p>$200</p> 
-          </div>
-          <div className="player-info" >
-            <p>Gia</p> 
-        
-            <p>$200</p> 
-          </div>
           {playerList}
          </div>
          <br />
@@ -162,8 +151,6 @@ const HostGame = (props) => {
             <p>{activePlayer ? `Answering: ${activePlayer}` : ''}</p>
             { activePlayer ? <Timer seconds={5}/> : null }
             { buzzersActive ?  <Timer seconds={5}/> : null }
-            {/* <p>Responded Correctly?</p> */}
-            {/* <p>Time to Respond: { activePlayer ? <Timer /> : null }</p> */}
           </div>
           {
             activePlayer ?          

@@ -156,4 +156,12 @@ button {
   position: absolute;
   top: 1rem;
   right: 3rem;
+
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    text-shadow: .1rem .1rem .1rem $borderColor;
+    color: blue;
+  }
 }

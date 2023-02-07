@@ -59,7 +59,7 @@ const Profile = props => {
   useEffect(() => {
     dispatch({type: SET_USERID, payload: userid});
     dispatch(loadGames(userid));
-  }, [userid, userGames])
+  }, [dispatch, userGames])
 
   const setRandomGame = () => {
     dispatch(randomGame());
@@ -81,14 +81,10 @@ const Profile = props => {
     console.log(modalHidden)
   }
 
-  const logOut = (e) => {
-    
-  }
-
   return (
     
     <div id="profileContainer">
-      <a href="/" className="logout-btn" onClick={logOut}>Logout</a>
+      <p className="logout-btn" onClick={() => navigate('/')}>Logout</p>
       <div className="overlay" hidden={modalHidden && deleteHidden}></div>
       <h1>Gee-So-Purdy</h1>
       <h1>Welcome, {username}!</h1>
@@ -97,10 +93,9 @@ const Profile = props => {
         <section id='goToBuilder'>
           <button onClick={handleModal}>Create a New Game</button>
         </section>
-        <section>
-          {/* <button onClick={() => navigate(`/playgame/${userid}/random`)}>Random Game</button> */}
+        {/* <section>
           <button onClick={setRandomGame}>Random Game</button>
-        </section>
+        </section> */}
       </div>
       <BuildGameModal hidden={modalHidden} handleModal={handleModal}/>
       <DeleteGameModal hidden={deleteHidden} handleDelete={handleDelete} gameId={gameId}/>

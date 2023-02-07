@@ -38,7 +38,7 @@ const PlayerSignIn = (props) => {
 
   return (
     <div className="player-signin-container">
-      <a className="back-to-prof-link" href="/">← Back to Home</a>
+      <p className="back-to-prof-link" onClick={() => navigate('/')}>← Back to Home</p>
 
     <section className="accounts-container">
         <h1>Play a Game!</h1>
