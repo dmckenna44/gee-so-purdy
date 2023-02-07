@@ -273,12 +273,13 @@ export const updateGame = () => async (dispatch, getState) => {
 
 export const loadGames = (userid) => async (dispatch, getState) => {
   // await fetch(`${baseUrl}/api/games`
-  const response = await fetch(`${baseUrl}/api/games/${userid}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  })
+  // const response = await fetch(`${baseUrl}/api/games/${userid}`, {
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  // })
+  const response = await fetch(`${baseUrl}/api/games/${userid}`);
   const games = await response.json();
   console.log('games from load games', games)
   dispatch({type: types.LOAD_GAMES, payload: games});

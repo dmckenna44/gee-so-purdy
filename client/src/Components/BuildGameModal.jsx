@@ -24,6 +24,7 @@ const BuildGameModal = (props) => {
     e.preventDefault();
     dispatch(saveGame())
       .then(() => {
+        console.log('user id from build game modal: ', userId)
         dispatch(loadGames(userId));
       })
     navigate(`/buildgame/${currGame.name}`)

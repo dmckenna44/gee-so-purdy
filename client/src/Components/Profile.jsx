@@ -53,7 +53,7 @@ const Profile = props => {
   }) : [];
   
   useEffect(() => {
-    console.log('useEffect called in profile')
+    console.log('useEffect called in profile, id: ', userid)
     dispatch({type: SET_USERID, payload: userid});
     dispatch(loadGames(userid));
   }, [])
