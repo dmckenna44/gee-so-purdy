@@ -13,12 +13,8 @@ const Profile = props => {
   const { userid, name } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userGames = useSelector(
-    (state) => state.game.userGames
-  );
-  const username = useSelector(
-    (state) => state.game.username
-  );
+
+  const {userGames, username } = useSelector((state) => state.game);
 
   const [modalHidden, toggleModal] = useState(true);
   const [deleteHidden, toggleDelete] = useState(true);
@@ -86,7 +82,7 @@ const Profile = props => {
     <div id="profileContainer">
       <p className="logout-btn" onClick={() => navigate('/')}>Logout</p>
       <div className="overlay" hidden={modalHidden && deleteHidden}></div>
-      <h1>Gee-So-Purdy</h1>
+      <h1 className="welcome-title">Gee-So-Purdy</h1>
       <h1>Welcome, {username}!</h1>
       <hr style={{background: 'black', height: '2px', width: '75%'}}/>
       <div className="profile-options">

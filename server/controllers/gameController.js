@@ -41,6 +41,7 @@ gameController.getGames = async (req, res, next) => {
   Game.find({user_id: userid})
     .exec().
     then(games => {
+      console.log('games from getGames', games)
       res.locals.games = games;
       return next()
     })

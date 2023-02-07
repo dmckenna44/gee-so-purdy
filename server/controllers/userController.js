@@ -7,12 +7,10 @@ const SALT_ROUNDS = 12;
 const userController = {};
 
 userController.createUser = async (req, res, next) => {
-  console.log('request body from createUser', req.body)
   const { username, password } = req.body;
   try {
     const encryptedPassword = await bcrypt.hash(password, SALT_ROUNDS)
     const newUser = await User.create({username: username, password: encryptedPassword});
-    console.log('new user', newUser)
     if (newUser) res.locals.newUser = newUser;
     return next();
   } catch (err) {
@@ -20,11 +18,9 @@ userController.createUser = async (req, res, next) => {
   }
 }
 
-
 userController.verifyUser = async (req, res, next) => {
   try {
     const { username, password } = req.body
-    console.log('verifyUser query', req.body);
     const user = await User.findOne({username: username});
     const match = await bcrypt.compare(password, user.password);
     if(match) {

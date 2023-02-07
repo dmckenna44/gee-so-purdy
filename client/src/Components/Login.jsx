@@ -31,7 +31,6 @@ const Login = (props) => {
     }
     const response = await fetch(`${baseUrl}/api/login`, options)
     const user = await response.json()
-    console.log(user)
     if (user.found) {
       dispatch({type: 'SET_USERNAME', payload: user.user.username});
       navigate(`/profile/${user.user._id.toString()}`);
