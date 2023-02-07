@@ -40,7 +40,7 @@ const Signup = (props) => {
     };
     if (username && password) {
       try {
-        const response = await fetch(`${baseUrl}/signup`, options);
+        const response = await fetch(`${baseUrl}/api/signup`, options);
         const newUser = await response.json();
         console.log(newUser);
         dispatch({type: 'SET_USERNAME', payload: newUser.username});

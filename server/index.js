@@ -14,15 +14,29 @@ const gameController = require('./controllers/gameController.js');
 
 const app = express();
 
+const PORT = process.env.PORT || 3001;
 
-app.use(express.static(path.resolve(__dirname, '../client')));
+// app.use(express.static(path.resolve(__dirname, '../client')));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors());
 app.set('trust proxy', 1);
 
-const port = process.env.port || 3001;
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.resolve(__dirname, '../client/build')));
+
+  app.get("/", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/build/index.html"))
+});
+} else {
+  app.get("/", (req, res) => {
+    res.send("Hello from the backend");
+  });
+}
+
+
 const server = http.createServer(app);
 
 const io = new Server(server, {
@@ -46,7 +60,7 @@ mongoose.connect(mongoUri, {
 })
   .then(() => {
     console.log('Connected to gee-so-purdy DB');
-    server.listen(port, () => console.log(`server listening on port ${port}, rooms: ${rooms}`))
+    server.listen(PORT, () => console.log(`server listening on port ${PORT}, rooms: ${rooms}`))
 
   })
   .catch(err => console.log(err));
@@ -192,29 +206,27 @@ io.on('connection', socket => {
 // ----------------------------- API ROUTES ------------------------------------- //
 ////////////////////////////////////////////////////////////////////////////////////
 
-
-
-app.post('/login', cors(), userController.verifyUser, (req, res) => {
+app.post('/api/login', cors(), userController.verifyUser, (req, res) => {
   res.status(200).json(res.locals.user);
 })
 
-app.post('/signup', cors(), userController.createUser, (req, res) => {
+app.post('/api/signup', cors(), userController.createUser, (req, res) => {
   res.status(200).json(res.locals.newUser);
 })
 
-app.post('/games', gameController.setGame, (req, res) => {
+app.post('/api/games', gameController.setGame, (req, res) => {
   res.status(200).json(res.locals.newGame);
 })
 
-app.put('/games', gameController.updateGame, (req, res) => {
+app.put('/api/games', gameController.updateGame, (req, res) => {
   res.status(200).json(res.locals.updated);
 })
 
-app.delete('/games', gameController.deleteGame, (req, res) => {
+app.delete('/api/games', gameController.deleteGame, (req, res) => {
   res.status(200).json(res.locals.deleted);
 })
 
-app.get('/games/:userid', gameController.getGames, (req, res) => {
+app.get('/api/games/:userid', gameController.getGames, (req, res) => {
   res.status(200).json(res.locals.games);
 })
 
@@ -225,15 +237,15 @@ app.get('/games/:userid', gameController.getGames, (req, res) => {
 ///////////////////////////////////////////////////////////////////////////
 // ---------------------- Global Routes --------------------------------- //
 //////////////////////////////////////////////////////////////////////////
-app.get('/', (req, res) => {
-  res.json({test: 'hello'});
-  // res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'));
-})
+// app.get('/', (req, res) => {
+//   res.json({test: 'hello'});
+//   // res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'));
+// })
 
-app.get('/*', (req, res) => {
-  res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'));
-  return;
-})
+// app.get('/*', (req, res) => {
+//   res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'));
+//   return;
+// })
 
 app.use((err, req, res, next) => {
   console.log(err);

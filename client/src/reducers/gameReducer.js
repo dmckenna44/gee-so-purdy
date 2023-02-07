@@ -217,7 +217,7 @@ export const saveGame = () => async (dispatch, getState) => {
   }
 
   try {
-    const addedGame = await fetch(`${baseUrl}/games`, {
+    const addedGame = await fetch(`${baseUrl}/api/games`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -264,7 +264,7 @@ export const updateGame = () => async (dispatch, getState) => {
       },
       body: JSON.stringify(formattedGame)
     }
-    fetch(`${baseUrl}/games`, options)
+    fetch(`${baseUrl}/api/games`, options)
       .then(res => res.json())
       .then(data => console.log('response from update ', data))
   } catch (err) {
@@ -273,13 +273,14 @@ export const updateGame = () => async (dispatch, getState) => {
 }
 
 export const loadGames = (userid) => async (dispatch, getState) => {
-  const response = await fetch(`${baseUrl}/games/${userid}`, {
+  const response = await fetch(`${baseUrl}/api/games/${userid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
     },
   })
   const games = await response.json();
+  console.log('games from load games', games)
   dispatch({type: types.LOAD_GAMES, payload: games});
 }
 

@@ -41,7 +41,7 @@ const Profile = props => {
   console.log('links', userGames);
   console.log('username', username);
   
-  const gameLinks = userGames.map((game, i) => {
+  const gameLinks = userGames.length ? userGames.map((game, i) => {
     return (
       <div className="game-list-choice" key={i}>
         <h4 className="game-list-name">{game.name}</h4>
@@ -54,12 +54,12 @@ const Profile = props => {
         </div>
       </div>
     )
-  })
+  }) : [];
   
   useEffect(() => {
     dispatch({type: SET_USERID, payload: userid});
     dispatch(loadGames(userid));
-  }, [dispatch, userid, userGames])
+  }, [userid, userGames])
 
   const setRandomGame = () => {
     dispatch(randomGame());

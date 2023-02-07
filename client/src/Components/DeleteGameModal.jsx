@@ -20,7 +20,7 @@ const DeleteGameModal = (props) => {
       })
     }
 
-    const deleted = await fetch(`${baseUrl}/games`, options);
+    const deleted = await fetch(`${baseUrl}/api/games`, options);
     const deletedGame = await deleted.json();
     console.log('deleted game response', deletedGame)
     // navigate(0);
