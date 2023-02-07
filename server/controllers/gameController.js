@@ -21,7 +21,7 @@ gameController.setGame = async (req, res, next) => {
 
 gameController.updateGame = async (req, res, next) => {
   const { game_id, clues} = req.body;
-  console.log(clues);
+  console.log('clues from update game', clues, 'id from update game: ', game_id);
 
   try {
     const foundGame = await Game.findOne({_id: game_id});
@@ -38,13 +38,24 @@ gameController.updateGame = async (req, res, next) => {
 
 gameController.getGames = async (req, res, next) => {
   const userid = req.params.userid;
-  Game.find({user_id: userid})
-    .exec().
-    then(games => {
-      console.log('games from getGames', games)
-      res.locals.games = games;
-      return next()
-    })
+
+  try {
+    const foundGames = await Game.find({user_id: userid});
+    console.log('found games from get games: ', foundGames);
+    res.locals.games = foundGames;
+    return next();
+
+  } catch (err) {
+    return next(err);
+  }
+
+  // Game.find({user_id: userid})
+  //   .exec().
+  //   then(games => {
+  //     console.log('games from getGames', games)
+  //     res.locals.games = games;
+  //     return next()
+  //   })
 }
 
 gameController.deleteGame = async (req, res, next) => {

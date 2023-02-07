@@ -14,7 +14,7 @@ const Profile = props => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const {userGames, username } = useSelector((state) => state.game);
+  const { userGames, username } = useSelector((state) => state.game);
 
   const [modalHidden, toggleModal] = useState(true);
   const [deleteHidden, toggleDelete] = useState(true);
@@ -53,6 +53,7 @@ const Profile = props => {
   }) : [];
   
   useEffect(() => {
+    console.log('useEffect called in profile')
     dispatch({type: SET_USERID, payload: userid});
     dispatch(loadGames(userid));
   }, [])

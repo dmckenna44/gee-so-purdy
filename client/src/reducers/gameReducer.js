@@ -272,6 +272,7 @@ export const updateGame = () => async (dispatch, getState) => {
 }
 
 export const loadGames = (userid) => async (dispatch, getState) => {
+  // await fetch(`${baseUrl}/api/games`
   const response = await fetch(`${baseUrl}/api/games/${userid}`, {
     method: 'GET',
     headers: {
