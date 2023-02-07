@@ -60,7 +60,7 @@ const Signup = (props) => {
 
   return (
     <div id="signup-page-container">
-      <a className="back-to-prof-link" href="/login" >← Back to Login</a>
+      <p className="back-to-prof-link" onClick={() => {navigate(`/login`)}} >← Back to Login</p>
 
       <section className="accounts-container">
         <h1>Welcome to Gee-So-Purdy!</h1>

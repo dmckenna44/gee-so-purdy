@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CluePlayModal from "./CluePlayModal.jsx";
 import HostColumn from "./HostColumn.jsx";
 import Timer from "./Timer.jsx";
@@ -15,6 +15,7 @@ const HostGame = (props) => {
 
   const { name } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const currGame = useSelector(
       state => state.game.userGames.find(game => {
@@ -127,7 +128,7 @@ const HostGame = (props) => {
 
   return (
     <div id="playGameContainer">
-      <a className="back-to-prof-link" href={`/profile/${userId}`}>← Back to Profile</a>
+      <p className="back-to-prof-link" onClick={() => navigate(`/profile/${userId}`)}>← Back to Profile</p>
       <p className="game-pw-display">Passcode: {password}</p>
       <div className="overlay" hidden={!showEditModal}></div>
       <h2>{currGame.name}</h2>

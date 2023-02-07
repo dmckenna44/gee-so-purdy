@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { updateGame, loadGames } from '../reducers/gameReducer.js';
 import { SET_GAME } from "../constants/actionTypes.js";
 import EditColumn from './EditColumn.jsx';
@@ -11,6 +11,7 @@ const EditGame= (props) => {
 
   const {name} = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { userId, userGames, clues, categories } = useSelector(state => state.game);
   
   useEffect(() => {
@@ -53,7 +54,7 @@ const EditGame= (props) => {
 
   return (
     <div className="game-editor-container">
-      <a className="back-to-prof-link" href={`/profile/${userId}`}>← Back to Profile</a>
+      <p className="back-to-prof-link" onClick={() => navigate(`/profile/${userId}`)}>← Back to Profile</p>
       <div className="overlay" hidden={!showModal}></div>
         <h1>{name}</h1>
       <div className="edit-game-board">
