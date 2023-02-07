@@ -13,7 +13,7 @@ import {socket} from '../apiRoutes.js';
 
 const HostGame = (props) => {
 
-  const { name } = useParams();
+  const { name, userid } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,6 +22,7 @@ const HostGame = (props) => {
         return game.name === name
       })
   );
+  
   
   useEffect(() => {
     dispatch({type: actions.SET_GAME, payload: currGame});

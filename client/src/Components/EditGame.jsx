@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateGame, loadGames } from '../reducers/gameReducer.js';
-import { SET_GAME } from "../constants/actionTypes.js";
+import { SET_GAME_NAME } from "../constants/actionTypes.js";
 import EditColumn from './EditColumn.jsx';
 import ClueInputModal from "./ClueInputModal.jsx";
 
@@ -12,7 +12,7 @@ const EditGame= (props) => {
   const {name} = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { userId, userGames, clues, categories } = useSelector(state => state.game);
+  const { userId, userGames, clues, categories, gameId } = useSelector(state => state.game);
   
   useEffect(() => {
     dispatch(loadGames(userId));
@@ -53,7 +53,9 @@ const EditGame= (props) => {
     <div className="game-editor-container">
       <p className="back-to-prof-link" onClick={() => navigate(`/profile/${userId}`)}>← Back to Profile</p>
       <div className="overlay" hidden={!showModal}></div>
-        <h1>{name}</h1>
+        {/* <h1>{name}</h1> */}
+        <input type="text" required placeholder={name} onChange={(e) => dispatch({type: SET_GAME_NAME, payload: e.target.value})}></input>
+
       <div className="edit-game-board">
         <ClueInputModal hidden={!showModal} handleModal={handleModal} />
         { columns }

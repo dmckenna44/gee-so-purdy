@@ -134,3 +134,8 @@ export const setCanAnswerActionCreator = bool => ({
   type: types.SET_CAN_ANSWER,
   payload: bool
 })
+
+export const setGameIdActionCreator = id => ({
+  type: types.SET_GAME_ID,
+  payload: id
+})
