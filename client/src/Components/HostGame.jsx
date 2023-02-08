@@ -8,20 +8,21 @@ import ActiveClue from "./ActiveClue.jsx";
 import EditScoresModal from "./EditScoresModal.jsx";
 import * as actions from "../constants/actionTypes.js";
 
-// const socket = io.connect('http://localhost:3001', {'sync disconnect on unload': true});
 import {socket} from '../apiRoutes.js';
 
 const HostGame = (props) => {
 
-  const { name, userid } = useParams();
+  const { gameid } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const currGame = useSelector(
       state => state.game.userGames.find(game => {
-        return game.name === name
+        return game._id === gameid
       })
   );
+
+  console.log('current game from HostGame: ', currGame)
   
   useEffect(() => {
     dispatch({type: actions.SET_GAME, payload: currGame});
@@ -47,11 +48,6 @@ const HostGame = (props) => {
       console.log('data from receive new scores: ', data);
       dispatch({type: actions.UPDATE_PLAYERS, payload: data});
     });
-    
-    // socket.on('receive_clue_value', (data) => {
-    //   console.log('data from receive clue value: ', data);
-    //   dispatch({type: actions.SET_ACTIVE_CLUE_VALUE, payload: data});
-    // });
     
     socket.on('receive_buzzer_change', data => {
       dispatch({type: actions.SET_BUZZERS_ACTIVE, payload: data.buzzersActive});
@@ -126,7 +122,6 @@ const HostGame = (props) => {
          <div className="playGameBoard">
           {activeClue ? < ActiveClue/> : columns}
          </div>
-         {/* <h2><em>{playerList.length ? 'Players' : 'No players yet'}</em></h2> */}
          <div className="player-list">
           {playerList.length ? playerList : 'No players yet'}
          </div>
