@@ -370,6 +370,7 @@ export const randomGame = () => async (dispatch, getState) => {
     })
     const returnedGame = await addedGame.json();
     console.log('response from save game POST', returnedGame);
+    await dispatch(loadGames(game.userId))
 
   } catch (err) {
     console.log('error in save game thunk', err)
@@ -377,7 +378,6 @@ export const randomGame = () => async (dispatch, getState) => {
   
   console.log('randGame', randGame);
   // dispatch({type: types.SET_RAND_GAME, payload: randGame});
-  dispatch(loadGames(game.userId))
   console.log('game after random func', getState().game);
 }
 
