@@ -129,3 +129,13 @@ export const setActiveClueActionCreator = bool => ({
   type: types.SET_ACTIVE_CLUE,
   payload: bool
 })
+
+export const setCanAnswerActionCreator = bool => ({
+  type: types.SET_CAN_ANSWER,
+  payload: bool
+})
+
+export const setGameIdActionCreator = id => ({
+  type: types.SET_GAME_ID,
+  payload: id
+})

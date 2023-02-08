@@ -79,7 +79,7 @@
   margin: 2rem 0 3rem 0;
   padding: 1rem;
   width: 75%;
-  border: 1px solid black;
+  // border: 1px solid black;
 }
 
 .playGameBoard {
@@ -372,7 +372,7 @@
     margin: 0.5rem;
     cursor: pointer;
     border: none;
-    padding: 1rem;
+    padding: 0.5rem;
     background-color: #EAFDFC;
     box-shadow: 0.1rem 0.1rem 0.1rem .1rem darken($backgroundColor, 50%);
   }

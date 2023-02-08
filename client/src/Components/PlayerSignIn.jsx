@@ -39,10 +39,10 @@ const PlayerSignIn = (props) => {
         <h1>Play a Game!</h1>
         <h3>Enter the <em>Name</em> and <em>Passcode</em> of the Game You Want to Join</h3>
         <form action="" className="player-signin">
-          <label htmlFor="">Game Password</label>
-          <input type="text" placeholder="ex: EJQW" required onChange={(e) => setGamePassword(e.target.value)}/>
           <label htmlFor="">What's Your Name?</label>
           <input type="text" placeholder="ex: Bob" required onChange={(e) => setPlayerName(e.target.value)}/>
+          <label htmlFor="">Game Password</label>
+          <input type="text" placeholder="ex: EJQW" required onChange={(e) => setGamePassword(e.target.value)}/>
           <button type="submit" onClick={handleSignin}>Enter Game</button>
         </form>
 

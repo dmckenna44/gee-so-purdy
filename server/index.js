@@ -155,7 +155,12 @@ io.on('connection', socket => {
     const {roomID, name} = data;
     const currentRoom = rooms.find(room => room.id === roomID);
     io.to(currentRoom).emit('receive_active_player', {activePlayer: name});
+  })
 
+  socket.on('send_reset_buzzers', data => {
+    const {roomID, canAnswer} = data;
+    const currentRoom = rooms.find(room => room.id === roomID);
+    io.to(currentRoom).emit('receive_reset_buzzers', true);
   })
 
   socket.on('disconnect', (data) => {

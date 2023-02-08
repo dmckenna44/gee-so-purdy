@@ -61,7 +61,7 @@ const Signup = (props) => {
       <p className="back-to-prof-link" onClick={() => {navigate(`/login`)}} >← Back to Login</p>
 
       <section className="accounts-container">
-        <h1>Welcome to Gee-So-Purdy!</h1>
+        <h1 className="welcome-title">Gee-So-Purdy!</h1>
         <h3>Create a New Account</h3>
         <form action="submit" className="account-form">
           <label htmlFor="">Username</label>

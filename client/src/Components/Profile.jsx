@@ -30,6 +30,7 @@ const Profile = props => {
 
   const editGame = (e, name)  => {
     e.preventDefault();
+    console.log(userGames)
     dispatch({type: SET_GAME, payload: userGames.find(game => game.name === name)});
     navigate(`/buildgame/${name}`)
   }
@@ -55,11 +56,14 @@ const Profile = props => {
   }, [])
 
   const setRandomGame = () => {
-    dispatch(randomGame());
+    dispatch(randomGame())
+      .then(() => {
+        navigate(`/playgame/${userid}/random`);
+      })
     // console.log('state after? random func', currGame)
-    setTimeout(() => {
-      navigate(`/playgame/random`);
-    }, 2500)
+    // setTimeout(() => {
+    //   navigate(`/playgame/${userid}/random`);
+    // }, 2500)
   }
 
   const handleDelete = (e, id) => {
@@ -85,9 +89,9 @@ const Profile = props => {
         <section id='goToBuilder'>
           <button onClick={handleModal}>Create a New Game</button>
         </section>
-        {/* <section>
+        <section>
           <button onClick={setRandomGame}>Random Game</button>
-        </section> */}
+        </section>
       </div>
       <BuildGameModal hidden={modalHidden} handleModal={handleModal}/>
       <DeleteGameModal hidden={deleteHidden} handleDelete={handleDelete} gameId={gameId} userId={userid}/>

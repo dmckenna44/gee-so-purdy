@@ -17,7 +17,7 @@ const HostClue = (props) => {
     dispatch({type: types.SET_CURRENT_Q, payload: props.question});
     dispatch({type: types.SET_CURRENT_A, payload: props.answer});
     setClueAnswered();
-    socket.emit('update_clue_value', {roomID: roomID, value: activeClueValue})
+    // socket.emit('update_clue_value', {roomID: roomID, value: props.value})
     socket.emit('update_clue_visibility', {roomID: roomID, question: props.question, answer: props.answer, index: [props.column, props.index] ,answered: true});
   }
 

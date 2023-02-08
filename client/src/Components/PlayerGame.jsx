@@ -58,6 +58,10 @@ const PlayerGame = (props) => {
       dispatch({type: actions.SET_ACTIVE_CLUE, payload: false})
     })
 
+    socket.on('receive_reset_buzzers', data => {
+      dispatch({type: actions.SET_CAN_ANSWER, payload: true});
+    })
+
   }, [socket, dispatch])
 
   const currentGame = useSelector(state => state.game);

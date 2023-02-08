@@ -23,6 +23,7 @@ input {
 
 .content {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -47,6 +48,8 @@ input {
 .welcome-title {
   font-family: 'Pacifico';
   font-size: 4.5rem;
+  text-shadow: .1rem .1rem .1rem black;
+  color: $borderColor;
 }
 
 
@@ -89,8 +92,6 @@ input {
   padding: 0;
 }
 
-
-
 #question-display {
   text-align: center;
   border: 5px solid #0D4C92;
@@ -129,11 +130,9 @@ input {
 }
 
 .embiggen {
-  // transition-property: scale;
   transition: all 0.5s ease-in-out;
   width: 100%;
   height: 100%;
-  // translate: 0 2rem;
 }
 
 .invisible {
@@ -171,5 +170,26 @@ input {
   * {
     margin: 0.5rem auto 0.5rem auto;
   }
+
+  button {
+    padding: .5rem 1rem; 
+    margin: 0.5rem;
+    cursor: pointer;
+    border: none;
+    background-color: #EAFDFC;
+    box-shadow: 0.1rem 0.1rem 0.1rem .1rem darken($backgroundColor, 20%);
+    
+    &:hover {
+      box-shadow: none;
+      transform: translate(2px, 2px);
+    }
+  }
+  
+}
+
+.footer {
+  position: absolute;
+  bottom: 1rem;
+  align-self: center;
 }
 

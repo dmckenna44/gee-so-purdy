@@ -11,6 +11,7 @@ import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
 import PlayerSignIn from "./PlayerSignIn.jsx";
 import PlayerGame from "./PlayerGame.jsx";
+import Footer from "./Footer.jsx";
 
 
 function App() {
@@ -35,10 +36,11 @@ function App() {
             <Route path="/playgame/:userid/:name" element={<HostGame />}/>
             <Route path="/play/:name" element={<PlayerGame />}/>
             <Route path="/buildgame/:name" element={<Board />}/>
-            <Route path="/playgame/random" element={<RandomGame />}/>
+            <Route path="/playgame/random" element={<HostGame />}/>
             <Route path="*" />
           </Routes>
         </div>
+        {/* <Footer /> */}
       </div>
     </Router>
   )

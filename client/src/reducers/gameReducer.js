@@ -6,6 +6,7 @@ const initialState = {
   userId: null,
   username: '',
   name: '',
+  gameId: '',
   categories: [],
   clues: [],
   players: [],
@@ -15,7 +16,9 @@ const initialState = {
   activeClueValue: 0,
   correctResponse: false,
   buzzersActive: false,
+  canAnswer: true,
   userGames: [],
+  randomGame: null,
   currentQuestion: '',
   currentAnswer: '',
   currentIndex: null,
@@ -43,6 +46,11 @@ const gameReducer = (state = initialState, action) => {
     case types.SET_GAME_NAME:
       return Object.assign({}, state, {
         name: action.payload
+      })
+
+    case types.SET_GAME_ID:
+      return Object.assign({}, state, {
+        gameId: action.payload
       })
 
     case types.SET_GAME_PW:
@@ -91,6 +99,11 @@ const gameReducer = (state = initialState, action) => {
         activeClueValue: action.payload
       })
 
+    case types.SET_CAN_ANSWER:
+      return Object.assign({}, state, {
+        canAnswer: action.payload
+      })
+
     case types.SET_CORRECT_RESPONSE:
       return Object.assign({}, state, {
         correctResponse: action.payload
@@ -117,7 +130,7 @@ const gameReducer = (state = initialState, action) => {
       return Object.assign({}, state, newState)
 
     case types.SET_GAME:
-      const { name, clues } = action.payload;
+      const { name, clues, _id } = action.payload;
       const newCategories = clues.map(clue => clue.category);
       const newClues = [];
       clues.forEach(clue => {
@@ -129,6 +142,7 @@ const gameReducer = (state = initialState, action) => {
       newState.name = name;
       newState.categories = newCategories;
       newState.clues = newClues;
+      newState.gameId = _id;
 
       return Object.assign({}, state, newState)
 
@@ -139,7 +153,7 @@ const gameReducer = (state = initialState, action) => {
     
     case types.SET_RAND_GAME:
       return Object.assign({}, state, {
-        clues: action.payload
+        randomGame: action.payload
       })
 
     case types.SET_ACTIVE_PLAYER: 
@@ -233,7 +247,7 @@ export const saveGame = () => async (dispatch, getState) => {
 
 export const updateGame = () => async (dispatch, getState) => {
   const game = getState().game;
-  const currentGame = game.userGames.find(g => g.name === game.name);
+  const currentGame = game.userGames.find(g => g._id === game.gameId);
   console.log('user games from update thunk', game.userGames)
   console.log('game from update thunk', currentGame)
 
@@ -272,13 +286,6 @@ export const updateGame = () => async (dispatch, getState) => {
 }
 
 export const loadGames = (userid) => async (dispatch, getState) => {
-  // await fetch(`${baseUrl}/api/games`
-  // const response = await fetch(`${baseUrl}/api/games/${userid}`, {
-  //   method: 'GET',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  // })
   const response = await fetch(`${baseUrl}/api/games/${userid}`);
   const games = await response.json();
   console.log('games from load games', games)
@@ -352,22 +359,27 @@ export const randomGame = () => async (dispatch, getState) => {
    return finalClues;
   }
   const randGame = await getTrivia();
+  const game = getState().game;
+  try {
+    const addedGame = await fetch(`${baseUrl}/api/games`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({user_id: game.userId, name: 'random', clues: randGame})
+    })
+    const returnedGame = await addedGame.json();
+    console.log('response from save game POST', returnedGame);
+
+  } catch (err) {
+    console.log('error in save game thunk', err)
+  }
   
   console.log('randGame', randGame);
-  dispatch({type: types.SET_RAND_GAME, payload: randGame});
+  // dispatch({type: types.SET_RAND_GAME, payload: randGame});
+  dispatch(loadGames(game.userId))
   console.log('game after random func', getState().game);
 }
 
-// export const createUser = () => async (dispatch, getState) => {
-//   const userId = getState().game.user;
-
-//   await fetch('http://localhost:3000/users'), {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: 
-//   }
-// }
 
 export default gameReducer;
