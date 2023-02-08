@@ -7,13 +7,6 @@ gameController.setGame = async (req, res, next) => {
   const { user_id, name, clues } = req.body;
   
   try {
-    const foundGame = await Game.findOne({name: name});
-    if (foundGame) {
-      foundGame.clues = clues;
-      const updatedGame = await foundGame.save();
-      res.locals.newGame = updatedGame;
-      return next();
-    } else {
       const game = new Game({
         user_id: user_id,
         name: name,
@@ -23,11 +16,9 @@ gameController.setGame = async (req, res, next) => {
       res.locals.newGame = newGame;
       console.log('Game set success')
       return next();
-    }
-  } catch (err) {
+    } catch (err) {
     return next(err)
   }
-
 }
 
 gameController.updateGame = async (req, res, next) => {

@@ -6,6 +6,7 @@ import EditClue from './EditClue.jsx';
 const EditColumn = (props) => {
   const {category, clues, index, handleModal} = props;
   const dispatch = useDispatch();
+  const handleFocus = (e) => e.target.select();
 
   const clueList = clues.map((clue, i) => {
     return <EditClue 
@@ -28,7 +29,7 @@ const EditColumn = (props) => {
     <div className="column">
       <div className="category-card">
         <label htmlFor="">Category Name</label>
-        <input type="text" value={category} onChange={setCategoryName}/>
+        <input type="text" onFocus={handleFocus} value={category} onChange={setCategoryName}/>
       </div>
       {clueList}
     </div>

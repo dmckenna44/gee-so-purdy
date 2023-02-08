@@ -10,7 +10,7 @@ import {socket} from '../apiRoutes.js';
 
 const Profile = props => {
   
-  const { userid, name } = useParams();
+  const { userid } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,20 +19,21 @@ const Profile = props => {
   const [modalHidden, toggleModal] = useState(true);
   const [deleteHidden, toggleDelete] = useState(true);
   const [gameId, setGameId] = useState('');
+  const [showLoader, setShowLoader] = useState(false);
 
   
-  const playGame = (e, name)  => {
+  const playGame = (e, id)  => {
     e.preventDefault();
     dispatch({type: SET_BUZZERS_ACTIVE, payload: false});
-    dispatch({type: SET_GAME, payload: userGames.find(game => game.name === name)});
-    navigate(`/playgame/${userid}/${name}`)
+    dispatch({type: SET_GAME, payload: userGames.find(game => game._id === id)});
+    navigate(`/playgame/${userid}/${id}`)
   }
 
-  const editGame = (e, name)  => {
+  const editGame = (e, id)  => {
     e.preventDefault();
     console.log(userGames)
-    dispatch({type: SET_GAME, payload: userGames.find(game => game.name === name)});
-    navigate(`/buildgame/${name}`)
+    dispatch({type: SET_GAME, payload: userGames.find(game => game._id === id)});
+    navigate(`/buildgame/${id}`)
   }
   
   const gameLinks = userGames.length ? userGames.map((game, i) => {
@@ -40,9 +41,9 @@ const Profile = props => {
       <div className="game-list-choice" key={i}>
         <h4 className="game-list-name">{game.name}</h4>
         <div className="game-list-options">
-          <h4 onClick={(e) => {playGame(e, game.name)}}>Play</h4>
+          <h4 onClick={(e) => {playGame(e, game._id)}}>Play</h4>
           <h3>|</h3>
-          <h4 onClick={(e) => {editGame(e, game.name)}}>Edit</h4>
+          <h4 onClick={(e) => {editGame(e, game._id)}}>Edit</h4>
           <h3>|</h3>
           <h4 onClick={(e) => handleDelete(e, game._id)}>Delete</h4>
         </div>
@@ -56,14 +57,14 @@ const Profile = props => {
   }, [])
 
   const setRandomGame = () => {
+    setShowLoader(true);
     dispatch(randomGame())
-      .then(() => {
-        navigate(`/playgame/${userid}/random`);
+      .then((response) => {
+        console.log('response from randomGame: ', response);
+        dispatch({type: SET_GAME, payload: response})
+        setShowLoader(false);
+        navigate(`/playgame/${userid}/${response._id}`)
       })
-    // console.log('state after? random func', currGame)
-    // setTimeout(() => {
-    //   navigate(`/playgame/${userid}/random`);
-    // }, 2500)
   }
 
   const handleDelete = (e, id) => {
@@ -90,7 +91,7 @@ const Profile = props => {
           <button onClick={handleModal}>Create a New Game</button>
         </section>
         <section>
-          <button onClick={setRandomGame}>Random Game</button>
+          {showLoader ? <div className="hourglass"></div> : <button onClick={setRandomGame}>Random Game</button>}
         </section>
       </div>
       <BuildGameModal hidden={modalHidden} handleModal={handleModal}/>

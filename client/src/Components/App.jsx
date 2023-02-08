@@ -3,10 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar.jsx';
 import Welcome from './Welcome.jsx';
 import Profile from './Profile.jsx';
-import Builder from './Builder.jsx';
-import Board from "./EditGame.jsx";
+import EditGame from "./EditGame.jsx";
 import HostGame from './HostGame.jsx';
-import RandomGame from "./Random.jsx";
 import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
 import PlayerSignIn from "./PlayerSignIn.jsx";
@@ -31,12 +29,10 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/playerlogin" element={<PlayerSignIn />} />
-
             <Route path="/profile/:userid" element={<Profile />}/>
-            <Route path="/playgame/:userid/:name" element={<HostGame />}/>
+            <Route path="/playgame/:userid/:gameid" element={<HostGame />}/>
             <Route path="/play/:name" element={<PlayerGame />}/>
-            <Route path="/buildgame/:name" element={<Board />}/>
-            <Route path="/playgame/random" element={<HostGame />}/>
+            <Route path="/buildgame/:name" element={<EditGame />}/>
             <Route path="*" />
           </Routes>
         </div>
