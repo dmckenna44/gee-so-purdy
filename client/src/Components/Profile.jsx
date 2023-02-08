@@ -56,11 +56,14 @@ const Profile = props => {
   }, [])
 
   const setRandomGame = () => {
-    dispatch(randomGame());
+    dispatch(randomGame())
+      .then(() => {
+        navigate(`/playgame/${userid}/random`);
+      })
     // console.log('state after? random func', currGame)
-    setTimeout(() => {
-      navigate(`/playgame/${userid}/random`);
-    }, 2500)
+    // setTimeout(() => {
+    //   navigate(`/playgame/${userid}/random`);
+    // }, 2500)
   }
 
   const handleDelete = (e, id) => {

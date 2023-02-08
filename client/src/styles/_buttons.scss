@@ -61,10 +61,11 @@ button {
   align-items: center;
   margin: .5rem 0 0 0;
   max-width: 150px;
-}
+  min-height: 3rem;
 
-.category-card > input {
-  text-align: center;
+  input {
+    text-align: center;
+  }
 }
 
 .clue-card {
