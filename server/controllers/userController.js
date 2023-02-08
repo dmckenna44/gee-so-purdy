@@ -20,14 +20,16 @@ userController.verifyUser = async (req, res, next) => {
   try {
     const { username, password } = req.body
     const user = await User.findOne({username: username});
-    const match = await bcrypt.compare(password, user.password);
-    if(match) {
-      res.locals.user = {
-        found: true,
-        user: user
-      }
-      return next()
-    } else return next({err: 'No such user found'})
+    if (user) {
+      const match = await bcrypt.compare(password, user.password);
+      if(match) {
+        res.locals.user = {
+          found: true,
+          user: user
+        }
+        return next()
+      } else return next({err: 'Incorrect password'})
+    } else return next({err: 'No user'})
   } catch (err) {
     return next(err)
   }
