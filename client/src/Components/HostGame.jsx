@@ -23,7 +23,6 @@ const HostGame = (props) => {
       })
   );
   
-  
   useEffect(() => {
     dispatch({type: actions.SET_GAME, payload: currGame});
     socket.emit('create_room', currGame, response => {
