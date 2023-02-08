@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { updateGame, loadGames } from '../reducers/gameReducer.js';
 import { SET_GAME_NAME } from "../constants/actionTypes.js";
 import EditColumn from './EditColumn.jsx';
@@ -9,10 +9,9 @@ import ClueInputModal from "./ClueInputModal.jsx";
 
 const EditGame= (props) => {
 
-  const {name} = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { userId, userGames, clues, categories, gameId } = useSelector(state => state.game);
+  const { userId, clues, categories, name } = useSelector(state => state.game);
   
   useEffect(() => {
     dispatch(loadGames(userId));
@@ -20,6 +19,9 @@ const EditGame= (props) => {
 
   const [showModal, setShowModal] = useState(false);
   const [btnText, setBtnText] = useState('Save Game');
+  const [showLoader, setShowLoader] = useState(false);
+
+  const handleFocus = (e) => e.target.select();
 
   const handleModal = (e) => {
     e.preventDefault();
@@ -27,8 +29,10 @@ const EditGame= (props) => {
   }
 
   const saveToDB = () => {
+    setShowLoader(true);
     dispatch(updateGame())
       .then(res => {
+        setShowLoader(false);
         setBtnText('Game Saved!')
         setTimeout(() => {
           setBtnText('Save Game')
@@ -53,15 +57,14 @@ const EditGame= (props) => {
     <div className="game-editor-container">
       <p className="back-to-prof-link" onClick={() => navigate(`/profile/${userId}`)}>← Back to Profile</p>
       <div className="overlay" hidden={!showModal}></div>
-        {/* <h1>{name}</h1> */}
-        <input type="text" required placeholder={name} onChange={(e) => dispatch({type: SET_GAME_NAME, payload: e.target.value})}></input>
+        <input type="text" required value={name} onFocus={handleFocus} onChange={(e) => dispatch({type: SET_GAME_NAME, payload: e.target.value})}></input>
 
       <div className="edit-game-board">
         <ClueInputModal hidden={!showModal} handleModal={handleModal} />
         { columns }
-
       </div>
-      <button id="btnSaveGame" onClick={saveToDB}>{btnText}</button>
+      { showLoader ? <div className="hourglass"></div> : <button id="btnSaveGame" onClick={saveToDB}>{btnText}</button> }
+
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import * as types from '../constants/actionTypes';
 import { baseUrl } from "../apiRoutes";
-import getTrivia from '../random';
+
 
 const initialState = {
   userId: null,
@@ -239,7 +239,6 @@ export const saveGame = () => async (dispatch, getState) => {
     })
     const returnedGame = await addedGame.json();
     console.log('response from save game POST', returnedGame);
-
   } catch (err) {
     console.log('error in save game thunk', err)
   }
@@ -248,8 +247,6 @@ export const saveGame = () => async (dispatch, getState) => {
 export const updateGame = () => async (dispatch, getState) => {
   const game = getState().game;
   const currentGame = game.userGames.find(g => g._id === game.gameId);
-  console.log('user games from update thunk', game.userGames)
-  console.log('game from update thunk', currentGame)
 
   const formattedClues = game.clues.map((clueArr, i) => {
     const questions = clueArr.map(clue => clue.question);
@@ -332,7 +329,6 @@ export const randomGame = () => async (dispatch, getState) => {
   
   const getTrivia = async () => {
    const catChoices = createNameList();
-    console.log('choicelength', catChoices.length)
    for (let i = 0; i < catChoices.length; i++) {
      const category = catChoices[i]
      const clueObj = {};
@@ -371,14 +367,12 @@ export const randomGame = () => async (dispatch, getState) => {
     const returnedGame = await addedGame.json();
     console.log('response from save game POST', returnedGame);
     await dispatch(loadGames(game.userId))
-
+    return returnedGame;
   } catch (err) {
     console.log('error in save game thunk', err)
   }
   
-  console.log('randGame', randGame);
-  // dispatch({type: types.SET_RAND_GAME, payload: randGame});
-  console.log('game after random func', getState().game);
+  console.log('state after random func', getState().game);
 }
 
 

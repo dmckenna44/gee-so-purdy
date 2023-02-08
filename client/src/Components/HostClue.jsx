@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as types from '../constants/actionTypes.js';
 
@@ -6,19 +6,22 @@ import {socket} from '../apiRoutes.js';
 
 const HostClue = (props) => {
 
+  const {column, index, value, question, answer} = props;
+  const { roomID, clues} = useSelector(state => state.game);
   const dispatch = useDispatch();
-  const {activeClueValue, roomID, clues} = useSelector(state => state.game);
-  const currentClue = clues[props.column][props.index];
+  const state = useSelector(state => state.game);
+  console.log('state from host clue: ', state);
 
+  const currentClue = clues[column][index];
 
   const showClue = (e) => {
-    dispatch({type: types.SET_ACTIVE_CLUE_VALUE, payload: props.value});
+    dispatch({type: types.SET_ACTIVE_CLUE_VALUE, payload: value});
     dispatch({type: types.SET_ACTIVE_CLUE, payload: true});
-    dispatch({type: types.SET_CURRENT_Q, payload: props.question});
-    dispatch({type: types.SET_CURRENT_A, payload: props.answer});
+    dispatch({type: types.SET_CURRENT_Q, payload: question});
+    dispatch({type: types.SET_CURRENT_A, payload: answer});
     setClueAnswered();
     // socket.emit('update_clue_value', {roomID: roomID, value: props.value})
-    socket.emit('update_clue_visibility', {roomID: roomID, question: props.question, answer: props.answer, index: [props.column, props.index], answered: true});
+    socket.emit('update_clue_visibility', {roomID: roomID, question: question, answer: answer, index: [column, index], answered: true});
   }
 
   const setClueAnswered = (e) => {
@@ -27,12 +30,12 @@ const HostClue = (props) => {
       answer: props.answer,
       answered: true
     }
-    dispatch({type: types.UPDATE_CLUE, payload: [props.column, props.index, newClue]});
+    dispatch({type: types.UPDATE_CLUE, payload: [column, index, newClue]});
   }
 
   return (
-    <div className={`clue-card ${currentClue.answered ? 'invisible' : ''}`} onClick={showClue} >
-      <h2 onClick={showClue}>{props.value}</h2>
+    <div className={`clue-card ${currentClue?.answered ? 'invisible' : ''}`} onClick={showClue} >
+      <h2 onClick={showClue}>{value}</h2>
     </div>
   )
 }

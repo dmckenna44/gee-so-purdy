@@ -1,19 +1,18 @@
-import React, {useState} from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 import HostClue from './HostClue.jsx';
 
 const HostColumn = (props) => {
 
-  const {handleModal} = props;
+  const {handleModal, category, index, questions, answers} = props;
   
-  const clueList = props.questions.map((clue, i) => {
+  const clueList = questions.map((clue, i) => {
     return <HostClue
         key={i}  
-        column={props.index}
+        column={index}
         index={i} 
         value={(i+1)*100} 
         question={clue} 
-        answer={props.answers[i]}
+        answer={answers[i]}
         handleModal={handleModal} 
       />
   })
@@ -21,7 +20,7 @@ const HostColumn = (props) => {
   return (
     <div className="column">
       <div className="category-card">
-        <h2>{props.category}</h2>
+        <h2>{category}</h2>
       </div>
       {clueList}
 
