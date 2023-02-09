@@ -139,3 +139,7 @@ export const setGameIdActionCreator = id => ({
   type: types.SET_GAME_ID,
   payload: id
 })
+
+export const clearGameActionCreator = () => ({
+  type: types.CLEAR_GAME,
+})

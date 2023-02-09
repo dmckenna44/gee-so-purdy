@@ -9,8 +9,6 @@ const HostClue = (props) => {
   const {column, index, value, question, answer} = props;
   const { roomID, clues} = useSelector(state => state.game);
   const dispatch = useDispatch();
-  const state = useSelector(state => state.game);
-  console.log('state from host clue: ', state);
 
   const currentClue = clues[column][index];
 
