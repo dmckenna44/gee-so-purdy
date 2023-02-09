@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../constants/actionTypes.js';
 import PlayerColumn from "./PlayerColumn.jsx";
@@ -61,6 +61,10 @@ const PlayerGame = (props) => {
     socket.on('receive_reset_buzzers', data => {
       dispatch({type: actions.SET_CAN_ANSWER, payload: true});
     })
+
+    return () => {
+      dispatch({type: actions.CLEAR_GAME});
+    }
 
   }, [socket, dispatch])
 

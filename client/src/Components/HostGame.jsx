@@ -21,8 +21,6 @@ const HostGame = (props) => {
         return game._id === gameid
       })
   );
-
-  console.log('current game from HostGame: ', currGame)
   
   useEffect(() => {
     dispatch({type: actions.SET_GAME, payload: currGame});
@@ -31,6 +29,10 @@ const HostGame = (props) => {
       dispatch({type: actions.SET_ROOM_ID, payload: response.id});
       dispatch({type: actions.SET_GAME_PW, payload: response.pw});
     });
+
+    return () => {
+      dispatch({type: actions.CLEAR_GAME});
+    }
   }, [currGame]);
       
   useEffect(() => {

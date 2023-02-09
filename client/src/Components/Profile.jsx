@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { loadGames, randomGame } from '../reducers/gameReducer.js';
-import { SET_USERID, SET_GAME, SET_BUZZERS_ACTIVE } from "../constants/actionTypes.js";
+import { SET_USERID, SET_GAME, SET_BUZZERS_ACTIVE, SET_PLAYER_NAME, CLEAR_GAME } from "../constants/actionTypes.js";
 import BuildGameModal from "./BuildGameModal.jsx";
 import DeleteGameModal from "./DeleteGameModal.jsx";
 
@@ -53,7 +53,12 @@ const Profile = props => {
   
   useEffect(() => {
     dispatch({type: SET_USERID, payload: userid});
+    dispatch({type: SET_PLAYER_NAME, payload: ''});
     dispatch(loadGames(userid));
+
+    return () => {
+      dispatch({type: CLEAR_GAME, payload: true});
+    }
   }, [])
 
   const setRandomGame = () => {

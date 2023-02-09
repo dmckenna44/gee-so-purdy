@@ -18,7 +18,6 @@ const initialState = {
   buzzersActive: false,
   canAnswer: true,
   userGames: [],
-  randomGame: null,
   currentQuestion: '',
   currentAnswer: '',
   currentIndex: null,
@@ -150,11 +149,6 @@ const gameReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         userGames: action.payload
       }) 
-    
-    case types.SET_RAND_GAME:
-      return Object.assign({}, state, {
-        randomGame: action.payload
-      })
 
     case types.SET_ACTIVE_PLAYER: 
       return Object.assign({}, state, {
@@ -162,16 +156,19 @@ const gameReducer = (state = initialState, action) => {
       })
     
     case types.SET_ACTIVE_CLUE:
+      // payload: boolean to hide/display ActiveClue
       return Object.assign({}, state, {
         activeClue: action.payload
       })
 
     case types.SET_TIMER:
+      // payload: boolean to hide/display timer
       return Object.assign({}, state, {
         timer: action.payload
       })
 
     case types.SET_PLAYER_NAME:
+      // payload: player name (string), for non-hosts
       return Object.assign({}, state, {
         playerName: action.payload
       })
@@ -184,11 +181,13 @@ const gameReducer = (state = initialState, action) => {
       })
 
     case types.UPDATE_PLAYERS:
+      // payload: updated array of player names
       return Object.assign({}, state, {
         players: action.payload
     })  
 
     case types.REMOVE_PLAYER:
+      // payload: name of player to remove
       newPlayers = state.players.filter(p => p !== action.payload);
       return Object.assign({}, state, {
         players: newPlayers
@@ -197,6 +196,28 @@ const gameReducer = (state = initialState, action) => {
     case types.SET_ROOM_ID:
       return Object.assign({}, state, {
         roomID: action.payload
+      })
+
+    case types.CLEAR_GAME:
+      return Object.assign({}, state, {
+        name: '',
+        gameId: '',
+        categories: [],
+        clues: [],
+        players: [],
+        playerName: '',
+        activePlayer: '',
+        activeClue: false,
+        activeClueValue: 0,
+        correctResponse: false,
+        buzzersActive: false,
+        canAnswer: true,
+        currentQuestion: '',
+        currentAnswer: '',
+        currentIndex: null,
+        password: '',
+        roomID: '',
+        timer: false
       })
 
     case types.CREATE_USER:
