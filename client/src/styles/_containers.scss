@@ -96,6 +96,13 @@
 
   .player-game {
     pointer-events: none;
+    color: red;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .player-game {
+    width: 50vw;
   }
 }
 

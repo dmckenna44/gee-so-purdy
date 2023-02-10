@@ -217,8 +217,44 @@
     margin-bottom: .5rem;
    }
 
+   h1 {
+    align-self: center;
+   }
    button {
     align-self: center;
    }
 
+}
+
+.active-clue-expand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: $backgroundColor;
+  border: 10px solid #0D4C92;
+  animation: expand-clue .3s linear;
+  padding: 20%;
+  box-shadow: 0 0 0.5rem 0 $borderColor;
+
+
+  * {
+    margin: 0.5rem auto 0.5rem auto;
+  }
+
+  button {
+    padding: .5rem 1rem; 
+    margin: 0.5rem;
+    cursor: pointer;
+    border: none;
+    background-color: #EAFDFC;
+    box-shadow: 0.1rem 0.1rem 0.1rem .1rem darken($backgroundColor, 20%);
+    
+    &:hover {
+      box-shadow: none;
+      transform: translate(2px, 2px);
+    }
+  }
 }

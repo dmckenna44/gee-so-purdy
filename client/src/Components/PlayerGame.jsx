@@ -90,14 +90,18 @@ const PlayerGame = (props) => {
 
   return (
     <div id="playGameContainer">
-      <h2>{currentGame.name}</h2>
+      <h2 className="player-game-title">{currentGame.name}</h2>
       <div className="playGameBoard player-game">
         {activeClue ? <ActiveClue/> : columns}
       </div>
-      <h2><em>Players</em></h2>
-      <div className="player-list">
-        {playerList}
-      </div>
+      
+      {
+      !currentGame.buzzersActive ? 
+            <div className="player-list">
+              {playerList}
+            </div> :
+            null  
+      }
       <Buzzer />
       {activePlayer ? <Timer seconds={5}/> : null}
   </div>
