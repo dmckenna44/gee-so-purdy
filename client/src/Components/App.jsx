@@ -32,7 +32,7 @@ function App() {
             <Route path="/profile/:userid" element={<Profile />}/>
             <Route path="/playgame/:userid/:gameid" element={<HostGame />}/>
             <Route path="/play/:name" element={<PlayerGame />}/>
-            <Route path="/buildgame/:name" element={<EditGame />}/>
+            <Route path="/buildgame/:id" element={<EditGame />}/>
             <Route path="*" />
           </Routes>
         </div>
