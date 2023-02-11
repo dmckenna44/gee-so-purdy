@@ -31,7 +31,7 @@ const Profile = props => {
 
   const editGame = (e, id)  => {
     e.preventDefault();
-    console.log(userGames)
+    console.log('game id', id);
     dispatch({type: SET_GAME, payload: userGames.find(game => game._id === id)});
     navigate(`/buildgame/${id}`)
   }

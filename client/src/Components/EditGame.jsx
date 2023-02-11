@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { updateGame, loadGames } from '../reducers/gameReducer.js';
-import { SET_GAME_NAME, CLEAR_GAME } from "../constants/actionTypes.js";
+import { SET_GAME_NAME, CLEAR_GAME, SET_GAME } from "../constants/actionTypes.js";
 import EditColumn from './EditColumn.jsx';
 import ClueInputModal from "./ClueInputModal.jsx";
 
@@ -11,11 +11,14 @@ const EditGame= (props) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { userId, clues, categories, name } = useSelector(state => state.game);
+  const {id} = useParams();
+  const { userId, clues, categories, name, userGames } = useSelector(state => state.game);
+  const state = useSelector(state => state.game);
+  console.log('state from edit game', state);
   
   useEffect(() => {
     dispatch(loadGames(userId));
-
+    dispatch({type: SET_GAME, payload: userGames.find(game => game._id === id)});
     return () => {
       dispatch({type: CLEAR_GAME});
     }
