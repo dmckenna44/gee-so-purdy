@@ -121,11 +121,9 @@ const gameReducer = (state = initialState, action) => {
     case types.UPDATE_CLUE:
       const [column, row, clue] = action.payload;
       console.log(column, row, clue);
-      console.log('update payload', action.payload);
       newState = {...state};
       newState.clues[column][row] = clue;
-      console.log('copy of state', newState);
-
+  
       return Object.assign({}, state, newState)
 
     case types.SET_GAME:
@@ -260,6 +258,7 @@ export const saveGame = () => async (dispatch, getState) => {
     })
     const returnedGame = await addedGame.json();
     console.log('response from save game POST', returnedGame);
+    return returnedGame;
   } catch (err) {
     console.log('error in save game thunk', err)
   }

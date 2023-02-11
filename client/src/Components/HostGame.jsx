@@ -21,9 +21,6 @@ const HostGame = (props) => {
         return game._id === gameid
       })
   );
-
-  const state = useSelector(state => state.game);
-  console.log('state from host game', state);
   
   useEffect(() => {
     dispatch({type: actions.SET_GAME, payload: currGame});

@@ -55,10 +55,6 @@ const Profile = props => {
     dispatch({type: SET_USERID, payload: userid});
     dispatch({type: SET_PLAYER_NAME, payload: ''});
     dispatch(loadGames(userid));
-
-    return () => {
-      dispatch({type: CLEAR_GAME, payload: true});
-    }
   }, [])
 
   const setRandomGame = () => {

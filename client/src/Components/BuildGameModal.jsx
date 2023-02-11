@@ -23,10 +23,11 @@ const BuildGameModal = (props) => {
   const showGameBuilder = (e) => {
     e.preventDefault();
     dispatch(saveGame())
-      .then(() => {
+      .then((response) => {
         dispatch(loadGames(userId));
+        dispatch({type: actions.SET_GAME, payload: response})
+        navigate(`/buildgame/${response._id}`)
       })
-    navigate(`/buildgame/${currGame.name}`)
   }
 
   if (hidden) return null;

@@ -13,12 +13,15 @@ const EditGame= (props) => {
   const navigate = useNavigate();
   const {id} = useParams();
   const { userId, clues, categories, name, userGames } = useSelector(state => state.game);
-  const state = useSelector(state => state.game);
-  console.log('state from edit game', state);
+  
+  const currGame = userGames.find(game => game._id === id)
   
   useEffect(() => {
-    dispatch(loadGames(userId));
-    dispatch({type: SET_GAME, payload: userGames.find(game => game._id === id)});
+    dispatch(loadGames(userId))
+      .then(() => {
+        dispatch({type: SET_GAME, payload: currGame});
+      })
+
     return () => {
       dispatch({type: CLEAR_GAME});
     }
