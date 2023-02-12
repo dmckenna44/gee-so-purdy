@@ -1,5 +1,14 @@
 @media screen and (max-width: 600px){
 
+  #welcome-options {
+    flex-direction: column;
+    text-align: center;
+
+    h1 {
+      display: none;
+    }
+  }
+
   #playGameContainer {
     display: flex;
     flex-direction: column;
@@ -7,7 +16,7 @@
     align-items: center;
     margin: 0 0 3rem 0;
     padding: 1rem;
-    width: 100%;
+    width: 600px;
     // border: 1px solid black;
   }
 

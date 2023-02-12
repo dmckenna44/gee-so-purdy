@@ -163,6 +163,12 @@ io.on('connection', socket => {
     io.to(currentRoom).emit('receive_reset_buzzers', true);
   })
 
+  socket.on('send_toggle_answer', data => {
+    const {roomID, show} = data;
+    const currentRoom = rooms.find(room => room.id === roomID);
+    io.to(currentRoom).emit('receive_toggle_answer', {show: show});
+  })
+
   socket.on('disconnect', (data) => {
     console.log('disconnected socket id: ', socket.id);
     rooms.forEach(room => {

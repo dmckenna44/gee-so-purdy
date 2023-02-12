@@ -17,6 +17,7 @@ const initialState = {
   correctResponse: false,
   buzzersActive: false,
   canAnswer: true,
+  answerVisible: false,
   userGames: [],
   currentQuestion: '',
   currentAnswer: '',
@@ -159,6 +160,11 @@ const gameReducer = (state = initialState, action) => {
       // payload: boolean to hide/display ActiveClue
       return Object.assign({}, state, {
         activeClue: action.payload
+      })
+
+    case types.SET_SHOW_ANSWER:
+      return Object.assign({}, state, {
+        answerVisible: action.payload
       })
 
     case types.SET_TIMER:

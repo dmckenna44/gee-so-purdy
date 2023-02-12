@@ -62,6 +62,10 @@ const PlayerGame = (props) => {
       dispatch({type: actions.SET_CAN_ANSWER, payload: true});
     })
 
+    socket.on('receive_toggle_answer', data => {
+      dispatch({type: actions.SET_SHOW_ANSWER, payload: data.show});
+    })
+
     return () => {
       dispatch({type: actions.CLEAR_GAME});
     }
@@ -81,7 +85,7 @@ const PlayerGame = (props) => {
 
   const playerList = players.map((player, i) => {
     return (
-      <div className="player-info" key={i}>
+      <div className={`player-info ${activePlayer === player.name ? 'timed-player' : ''}`} key={i}>
         <p className="player-name-display">{player.name}</p> 
         <p className="player-score-display" style={{color: player.score >= 0 ? 'black' : 'red'}}>${player.score}</p> 
       </div>
