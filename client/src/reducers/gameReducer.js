@@ -17,6 +17,7 @@ const initialState = {
   correctResponse: false,
   buzzersActive: false,
   canAnswer: true,
+  answerVisible: false,
   userGames: [],
   currentQuestion: '',
   currentAnswer: '',
@@ -120,10 +121,9 @@ const gameReducer = (state = initialState, action) => {
 
     case types.UPDATE_CLUE:
       const [column, row, clue] = action.payload;
-      console.log(column, row, clue);
+
       newState = {...state};
       newState.clues[column][row] = clue;
-  
       return Object.assign({}, state, newState)
 
     case types.SET_GAME:
@@ -157,6 +157,11 @@ const gameReducer = (state = initialState, action) => {
       // payload: boolean to hide/display ActiveClue
       return Object.assign({}, state, {
         activeClue: action.payload
+      })
+
+    case types.SET_SHOW_ANSWER:
+      return Object.assign({}, state, {
+        answerVisible: action.payload
       })
 
     case types.SET_TIMER:
@@ -307,9 +312,15 @@ export const loadGames = (userid) => async (dispatch, getState) => {
   const games = await response.json();
   console.log('games from load games', games)
   dispatch({type: types.LOAD_GAMES, payload: games});
-}
+} 
 
-export const randomGame = () => async (dispatch, getState) => {
+export const randomGame = (numCat, numQ) => async (dispatch, getState) => {
+  const game = getState().game;
+  console.log('state from random game thunk', game);
+
+  console.log('random game arguments, numCat: ', numCat, 'numQ: ', numQ)
+  
+  const finalClues = [];
   const categoryChoices = {
     'artliterature': 'Art & Literature',
     'language': 'Language',
@@ -336,7 +347,7 @@ export const randomGame = () => async (dispatch, getState) => {
   const createNameList = function () {
     let cats = Object.keys(categoryChoices);
     const choiceList = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < numCat; i++) {
       const cat = cats[Math.floor(Math.random() * cats.length)];
       choiceList.push(cat);
       cats = arrayRemove(cats, cat);
@@ -345,7 +356,6 @@ export const randomGame = () => async (dispatch, getState) => {
     return choiceList;
   };
   
-  const finalClues = [];
   
   const getTrivia = async () => {
    const catChoices = createNameList();
@@ -355,7 +365,7 @@ export const randomGame = () => async (dispatch, getState) => {
      clueObj['category'] = categoryChoices[category];
      const qArr = [];
      const aArr = [];
-     const response = await fetch(`https://api.api-ninjas.com/v1/trivia?category=${category}&limit=5`, {
+     const response = await fetch(`https://api.api-ninjas.com/v1/trivia?category=${category}&limit=${numQ}`, {
        method: 'GET',
        headers: {
          'X-Api-Key': '9Rbb1WK7TcmSnqfbod1z+g==X3Oe21LmDSY26HOF'
@@ -374,15 +384,18 @@ export const randomGame = () => async (dispatch, getState) => {
    console.log('final clues', finalClues);
    return finalClues;
   }
+
   const randGame = await getTrivia();
-  const game = getState().game;
+  
+  
+
   try {
     const addedGame = await fetch(`${baseUrl}/api/games`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({user_id: game.userId, name: 'random', clues: randGame})
+      body: JSON.stringify({user_id: game.userId, name: game.name, clues: randGame})
     })
     const returnedGame = await addedGame.json();
     console.log('response from save game POST', returnedGame);

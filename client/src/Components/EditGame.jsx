@@ -7,7 +7,7 @@ import EditColumn from './EditColumn.jsx';
 import ClueInputModal from "./ClueInputModal.jsx";
 
 
-const EditGame= (props) => {
+const EditGame = (props) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const EditGame= (props) => {
       .then(() => {
         dispatch({type: SET_GAME, payload: currGame});
       })
-
+      
     return () => {
       dispatch({type: CLEAR_GAME});
     }

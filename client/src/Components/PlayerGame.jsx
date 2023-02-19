@@ -10,7 +10,7 @@ import {socket} from '../apiRoutes.js';
 
 const PlayerGame = (props) => {
 
-  const { players, activePlayer, activeClue} = useSelector(state => state.game);
+  const { players, activePlayer, playerName, activeClue, buzzersActive} = useSelector(state => state.game);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -62,6 +62,10 @@ const PlayerGame = (props) => {
       dispatch({type: actions.SET_CAN_ANSWER, payload: true});
     })
 
+    socket.on('receive_toggle_answer', data => {
+      dispatch({type: actions.SET_SHOW_ANSWER, payload: data.show});
+    })
+
     return () => {
       dispatch({type: actions.CLEAR_GAME});
     }
@@ -81,7 +85,7 @@ const PlayerGame = (props) => {
 
   const playerList = players.map((player, i) => {
     return (
-      <div className="player-info" key={i}>
+      <div className={`player-info ${activePlayer === player.name ? 'timed-player' : ''}`} key={i}>
         <p className="player-name-display">{player.name}</p> 
         <p className="player-score-display" style={{color: player.score >= 0 ? 'black' : 'red'}}>${player.score}</p> 
       </div>
@@ -90,16 +94,22 @@ const PlayerGame = (props) => {
 
   return (
     <div id="playGameContainer">
-      <h2>{currentGame.name}</h2>
+      <h2 className="player-game-title">{currentGame.name}</h2>
       <div className="playGameBoard player-game">
         {activeClue ? <ActiveClue/> : columns}
       </div>
-      <h2><em>Players</em></h2>
-      <div className="player-list">
-        {playerList}
-      </div>
+      
+      {
+      !currentGame.buzzersActive ? 
+            <div className="player-list">
+              {playerList}
+            </div> :
+            null  
+      }
       <Buzzer />
-      {activePlayer ? <Timer seconds={5}/> : null}
+      {activePlayer === playerName ? <Timer seconds={5}/> : null}
+      {activePlayer === playerName ? <div className="timer-bar"></div> : null}
+      {buzzersActive ? <Timer seconds={5}/> : null}
   </div>
   )
 }
