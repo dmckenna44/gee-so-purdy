@@ -38,7 +38,7 @@ const BuildGameModal = (props) => {
     e.preventDefault();
     dispatch(saveGame())
       .then((response) => {
-        dispatch(loadGames(userId));
+        dispatch(loadGames(currGame.userId));
         dispatch({type: actions.SET_GAME, payload: response})
         navigate(`/buildgame/${response._id}`)
       })
