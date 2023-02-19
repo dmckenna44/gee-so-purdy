@@ -34,7 +34,7 @@ const DeleteGameModal = (props) => {
     <div className="delete-game-modal">
       <h1>Are You Sure You Want to Delete This Game?</h1>
       <div className="topic-page-btns">
-        <button onClick={deleteGame}>Delete</button>
+        <button className="delete-btn" onClick={deleteGame}>Delete</button>
         <button onClick={handleDelete}>Go Back</button>
 
       </div>

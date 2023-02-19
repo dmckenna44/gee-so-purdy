@@ -10,9 +10,9 @@ const Welcome = (props) => {
       <h1>Welcome to <span className="welcome-title" style={{fontSize: '3rem'}}>Gee-So-Purdy!</span></h1>
       <h3>What do you want to do?</h3>
       <div id="welcome-options">
-        <h2 onClick={() => navigate('/login')}>Host/Create</h2>
+        <button onClick={() => navigate('/login')}>Host/Create</button>
         <h1>|</h1>
-        <h2 onClick={() => navigate('/playerlogin')}>Play</h2>
+        <button onClick={() => navigate('/playerlogin')}>Play</button>
       </div>
     </div>
   )

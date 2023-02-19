@@ -263,6 +263,7 @@ export const saveGame = () => async (dispatch, getState) => {
     })
     const returnedGame = await addedGame.json();
     console.log('response from save game POST', returnedGame);
+    return returnedGame;
   } catch (err) {
     console.log('error in save game thunk', err)
   }
@@ -313,9 +314,11 @@ export const loadGames = (userid) => async (dispatch, getState) => {
   dispatch({type: types.LOAD_GAMES, payload: games});
 } 
 
-export const randomGame = () => async (dispatch, getState) => {
+export const randomGame = (numCat, numQ) => async (dispatch, getState) => {
   const game = getState().game;
   console.log('state from random game thunk', game);
+
+  console.log('random game arguments, numCat: ', numCat, 'numQ: ', numQ)
   
   const finalClues = [];
   const categoryChoices = {
@@ -344,7 +347,7 @@ export const randomGame = () => async (dispatch, getState) => {
   const createNameList = function () {
     let cats = Object.keys(categoryChoices);
     const choiceList = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < numCat; i++) {
       const cat = cats[Math.floor(Math.random() * cats.length)];
       choiceList.push(cat);
       cats = arrayRemove(cats, cat);
@@ -362,7 +365,7 @@ export const randomGame = () => async (dispatch, getState) => {
      clueObj['category'] = categoryChoices[category];
      const qArr = [];
      const aArr = [];
-     const response = await fetch(`https://api.api-ninjas.com/v1/trivia?category=${category}&limit=5`, {
+     const response = await fetch(`https://api.api-ninjas.com/v1/trivia?category=${category}&limit=${numQ}`, {
        method: 'GET',
        headers: {
          'X-Api-Key': '9Rbb1WK7TcmSnqfbod1z+g==X3Oe21LmDSY26HOF'
@@ -392,7 +395,7 @@ export const randomGame = () => async (dispatch, getState) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({user_id: game.userId, name: 'random', clues: randGame})
+      body: JSON.stringify({user_id: game.userId, name: game.name, clues: randGame})
     })
     const returnedGame = await addedGame.json();
     console.log('response from save game POST', returnedGame);

@@ -125,12 +125,12 @@ const HostGame = (props) => {
       <p className="back-to-prof-link" onClick={() => navigate(`/profile/${userId}`)}>← Back to Profile</p>
       <div className={"host-config"}>
         <p className="game-pw-display">Passcode: {password}</p>
-        <p>Timer?</p>
-        <label class="switch">
+        {/* <p>Timer?</p> */}
+        {/* <label class="switch">
           <input type="checkbox" />
           <span class="slider round"></span>
           <span>On</span>
-        </label>
+        </label> */}
 
       </div>
       <div className="overlay" hidden={!showEditModal}></div>
