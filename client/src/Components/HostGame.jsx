@@ -120,7 +120,16 @@ const HostGame = (props) => {
   return (
     <div id="playGameContainer">
       <p className="back-to-prof-link" onClick={() => navigate(`/profile/${userId}`)}>← Back to Profile</p>
-      <p className="game-pw-display">Passcode: {password}</p>
+      <div className={"host-config"}>
+        <p className="game-pw-display">Passcode: {password}</p>
+        <p>Timer?</p>
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider round"></span>
+          <span>On</span>
+        </label>
+
+      </div>
       <div className="overlay" hidden={!showEditModal}></div>
       <h2>{currGame.name}</h2>
          <EditScoresModal hidden={!showEditModal} handleModal={handleEditModal} />
@@ -135,7 +144,11 @@ const HostGame = (props) => {
          <div className="host-options">
           <div className="host-btns">
             <button className="edit-scores-btn" onClick={handleEditModal}>Edit Scores</button>  
-            <button className="open-response-btn" onClick={toggleBuzzers}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
+            {
+              activeClue ?
+              <button className="open-response-btn" onClick={toggleBuzzers}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
+              : null
+            }
           </div>
           <div className="judge-response">
             <p>{activePlayer ? `Answering: ${activePlayer}` : ''}</p>

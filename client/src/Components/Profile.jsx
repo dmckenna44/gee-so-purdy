@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { loadGames } from '../reducers/gameReducer.js';
+import { loadGames, randomGame } from '../reducers/gameReducer.js';
 import { SET_USERID, SET_GAME, SET_BUZZERS_ACTIVE, SET_PLAYER_NAME } from "../constants/actionTypes.js";
 import BuildGameModal from "./BuildGameModal.jsx";
 import DeleteGameModal from "./DeleteGameModal.jsx";
-import HelpModal from "./HelpModal.jsx";
+import ProfileHelpModal from "./ProfileHelpModal.jsx";
 
 import {socket} from '../apiRoutes.js';
 
@@ -60,16 +60,16 @@ const Profile = props => {
     dispatch(loadGames(userid));
   }, [])
 
-  // const setRandomGame = () => {
-  //   setShowLoader(true);
-  //   dispatch(randomGame())
-  //     .then((response) => {
-  //       console.log('response from randomGame: ', response);
-  //       dispatch({type: SET_GAME, payload: response})
-  //       setShowLoader(false);
-  //       navigate(`/playgame/${userid}/${response._id}`)
-  //     })
-  // }
+  const setRandomGame = () => {
+    setShowLoader(true);
+    dispatch(randomGame())
+      .then((response) => {
+        console.log('response from randomGame: ', response);
+        dispatch({type: SET_GAME, payload: response})
+        setShowLoader(false);
+        navigate(`/playgame/${userid}/${response._id}`)
+      })
+  }
 
   const handleHelpModal = (e) => {
     e.preventDefault();
@@ -84,8 +84,9 @@ const Profile = props => {
 
   const handleBuildGameModal = (e, rand) => {
     e.preventDefault();
-    if (rand) setRandom(true);
-    toggleBuildGameModal(!buildGameModalHidden);
+    setRandomGame()
+    // if (rand) setRandom(true);
+    // toggleBuildGameModal(!buildGameModalHidden);
   }
 
   return (
@@ -108,7 +109,7 @@ const Profile = props => {
       </div>
       <BuildGameModal hidden={buildGameModalHidden} random={random} handleModal={handleBuildGameModal} />
       <DeleteGameModal hidden={deleteHidden} handleDelete={handleDeleteModal} gameId={gameId} userId={userid} />
-      <HelpModal hidden={helpModalHidden} handleModal={handleHelpModal} component={'profile'} />
+      <ProfileHelpModal hidden={helpModalHidden} handleModal={handleHelpModal} component={'profile'} />
 
       <div id="savedGameList">
         <h2>Your Saved Games</h2>

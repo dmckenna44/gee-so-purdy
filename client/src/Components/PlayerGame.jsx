@@ -10,7 +10,7 @@ import {socket} from '../apiRoutes.js';
 
 const PlayerGame = (props) => {
 
-  const { players, activePlayer, activeClue} = useSelector(state => state.game);
+  const { players, activePlayer, playerName, activeClue, buzzersActive} = useSelector(state => state.game);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -107,7 +107,9 @@ const PlayerGame = (props) => {
             null  
       }
       <Buzzer />
-      {activePlayer ? <Timer seconds={5}/> : null}
+      {activePlayer === playerName ? <Timer seconds={5}/> : null}
+      {activePlayer === playerName ? <div className="timer-bar"></div> : null}
+      {buzzersActive ? <Timer seconds={5}/> : null}
   </div>
   )
 }

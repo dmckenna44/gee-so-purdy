@@ -121,11 +121,8 @@ const gameReducer = (state = initialState, action) => {
 
     case types.UPDATE_CLUE:
       const [column, row, clue] = action.payload;
-      console.log(column, row, clue);
-      console.log('update payload', action.payload);
       newState = {...state};
       newState.clues[column][row] = clue;
-      console.log('copy of state', newState);
 
       return Object.assign({}, state, newState)
 
@@ -314,9 +311,13 @@ export const loadGames = (userid) => async (dispatch, getState) => {
   const games = await response.json();
   console.log('games from load games', games)
   dispatch({type: types.LOAD_GAMES, payload: games});
-}
+} 
 
 export const randomGame = () => async (dispatch, getState) => {
+  const game = getState().game;
+  console.log('state from random game thunk', game);
+  
+  const finalClues = [];
   const categoryChoices = {
     'artliterature': 'Art & Literature',
     'language': 'Language',
@@ -352,7 +353,6 @@ export const randomGame = () => async (dispatch, getState) => {
     return choiceList;
   };
   
-  const finalClues = [];
   
   const getTrivia = async () => {
    const catChoices = createNameList();
@@ -381,8 +381,11 @@ export const randomGame = () => async (dispatch, getState) => {
    console.log('final clues', finalClues);
    return finalClues;
   }
+
   const randGame = await getTrivia();
-  const game = getState().game;
+  
+  
+
   try {
     const addedGame = await fetch(`${baseUrl}/api/games`, {
       method: 'POST',
