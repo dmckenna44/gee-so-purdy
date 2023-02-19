@@ -1,27 +1,26 @@
+
 button {
   font-family: 'Cabin';
   font-size: medium;
+  margin: 0.5rem;
+  cursor: pointer;
   padding: .4rem;
-  background-color: #59C1BD;
-  border-radius: 3px;
-  border: 1.5px solid $borderColor;
-
-  &:hover {
-    cursor: pointer;
-    filter: brightness(0.85);
-  }
+  border: none;
+  background-color: #EAFDFC;
+  box-shadow: 0.2rem 0.2rem 0.2rem 0 darken($backgroundColor, 50%);
 }
 
-// .close-btn {
-//   background-color: $borderColor;
-//   color: $backgroundColor;
+button:hover {
+  // box-shadow: none;
+  transform: translate(2px, 2px);
+  box-shadow: 0.1rem 0.1rem 0.1rem 0 darken($backgroundColor, 50%);
+}
 
-//   &:hover {
-//     background-color: $backgroundColor;
-//     color: black;
-//     // border: none;
-//   }
-// }
+button:active {
+  box-shadow: none;
+  transform: translate(2px, 2px);
+  background-color: #0D4C92;
+}
 
 #sign-up-link {
   text-decoration: underline;
@@ -32,26 +31,20 @@ button {
   }
 }
 
-
-
 #btnSaveGame {
   width: 11rem;
   height: 4rem;
   font-size: large;
 
   margin: 0.5rem;
-  cursor: pointer;
-  border: none;
-  // padding: .5rem 1rem;
   width: 10rem;
   background-color: #EAFDFC;
   box-shadow: 0.2rem 0.2rem 0.5rem 0 darken($backgroundColor, 50%);
 
   &:hover {
     box-shadow: none;
-    transform: translate(2px, 2px);
     color: #EAFDFC;
-    background-color: black;
+    background-color: $borderColor;
   }
 }
 
@@ -119,7 +112,6 @@ button {
   cursor: pointer;
   border: .2rem solid $borderColor;
   padding: 1rem 3rem;
-  background-color: #EAFDFC;
   background-color: $borderColor;
   color: white;
   box-shadow: 0.1rem 0.1rem 0.2rem .1rem $borderColor;
@@ -133,12 +125,6 @@ button {
     // background-color: black;
   }
 }
-
-// .game-pw-display {
-//   position: absolute;
-//   top: 4rem;
-//   left: 1rem;
-// }
 
 .back-to-prof-link {
   position: absolute;
@@ -168,9 +154,7 @@ button {
   position: relative;
   align-self: flex-end;
   right: 1rem;
-  // color: white;s
   padding: .2rem;
-  // background-color: black;
   font-size: 1.5rem;
   font-weight: bolder;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

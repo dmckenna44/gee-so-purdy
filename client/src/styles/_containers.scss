@@ -4,9 +4,10 @@
   align-items: flex-start;
   justify-content: center;
   width: 50%;
-  margin: 2em;
+  margin: 2rem 2rem 1rem 2rem;
   padding: 1.5rem;
   border: 2px solid black;
+  // text-align: center;
   // border-radius: 5px;
 
   input {
@@ -16,13 +17,10 @@
 
   button {
     align-self: center;
-    margin-top: .5rem;
-    box-shadow: 0.2rem 0.2rem .3rem 1px darken($backgroundColor, 40%);
+  //   margin-top: .5rem;
+  //   box-shadow: 0.2rem 0.2rem .3rem 1px darken($backgroundColor, 40%);
   }
 
-  button:hover {
-    box-shadow: none;
-  }
 }
 
 
@@ -152,20 +150,8 @@
   }
 
   button {
-    margin: 0.5rem;
-    cursor: pointer;
-    border: none;
+    font-size: 1.15rem;
     padding: 1rem;
-    background-color: #EAFDFC;
-    box-shadow: 0.2rem 0.2rem 0.5rem 0 darken($backgroundColor, 50%);
-  }
-
-  button:hover {
-    // color: blue;
-    box-shadow: none;
-    transform: translate(2px, 2px);
-    // color: #EAFDFC;
-    // background-color: black;
   }
 }
 
@@ -202,25 +188,9 @@
   align-items: center;
   justify-content: center;
   margin-left: auto;
-  // font-family: 'Courier';
 
   h3:hover {
     cursor: default;
-  }
-
-  h4 {
-    margin: 0.5rem;
-    cursor: pointer;
-    padding: .4rem;
-    background-color: #EAFDFC;
-    box-shadow: 0.2rem 0.2rem 0.2rem 0 darken($backgroundColor, 50%);
-  }
-
-  h4:hover {
-    box-shadow: none;
-    transform: translate(2px, 2px);
-    // color: #EAFDFC;
-    // background-color: black;
   }
 }
 
@@ -256,23 +226,6 @@
   h3 {
     margin-bottom: 1rem;
   }
-
-  button {
-    margin: 0.5rem;
-    cursor: pointer;
-    border: none;
-    // padding: .5rem 1rem;
-    width: 10rem;
-    background-color: #EAFDFC;
-    box-shadow: 0.2rem 0.2rem 0.5rem 0 darken($backgroundColor, 50%);
-  }
-
-  button:hover {
-    box-shadow: none;
-    transform: translate(2px, 2px);
-    color: #EAFDFC;
-    background-color: black;
-  }
 }
 
 #welcome-options {
@@ -282,25 +235,11 @@
     margin: auto 0.5rem auto 0.5rem;
   }
 
-  h2 {
-    margin: 0.5rem;
-    cursor: pointer;
-    // border: 2px solid black;
-    padding: 1rem;
-    background-color: #EAFDFC;
-    box-shadow: 0.2rem 0.2rem 0.5rem 0 darken($backgroundColor, 50%);
-  }
-
-  h2:hover {
-    // color: blue;
-    box-shadow: none;
-    transform: translate(2px, 2px);
-    color: #EAFDFC;
-    background-color: black;
+  button {
+    padding: 1rem 2rem;
+    font-size: large;
   }
 }
-
-
 
 .player-signin {
   display: flex;
@@ -326,20 +265,7 @@
   box-shadow: 0.15rem 0.15rem 0.3rem 1px darken($backgroundColor, 20%);
 
   button {
-    margin: 0.5rem;
-    cursor: pointer;
-    border: none;
     padding: 1rem;
-    background-color: #EAFDFC;
-    box-shadow: 0.2rem 0.2rem 0.5rem 0 darken($backgroundColor, 50%);
-  }
-
-  button:hover {
-    // color: blue;
-    box-shadow: none;
-    transform: translate(2px, 2px);
-    color: #EAFDFC;
-    background-color: black;
   }
 }
 
@@ -380,7 +306,6 @@
   background-color: #FF6464;
   background: linear-gradient(to right, #FF6464  50%, transparent 50%);
   background-size: 200% 100%;
-
   transition: all 5s ease;
   background-position: right bottom;
 }
@@ -393,6 +318,7 @@
   animation-name: timePlayer;
   animation-duration: 5s;
   animation-fill-mode: forwards;
+  animation-timing-function: linear;
 }
 
 
@@ -403,26 +329,10 @@
   border: 2px solid $borderColor;
   padding: 0.3rem;
   min-width: 60%;
+  background-color: #CFF5E7;
 
   * {
     margin: 0.3rem;
-  }
-
-  button {
-    margin: 0.5rem;
-    cursor: pointer;
-    border: none;
-    padding: 0.5rem;
-    background-color: #EAFDFC;
-    box-shadow: 0.1rem 0.1rem 0.1rem .1rem darken($backgroundColor, 50%);
-  }
-
-  button:hover {
-    // color: blue;
-    box-shadow: none;
-    transform: translate(2px, 2px);
-    // color: #EAFDFC;
-    // background-color: black;
   }
 }
 

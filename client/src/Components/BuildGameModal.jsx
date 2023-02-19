@@ -9,6 +9,7 @@ import * as actions from '../constants/actionTypes.js';
 const BuildGameModal = (props) => {
 
   const {hidden, handleModal, random} = props;
+  console.log('random?: ', random)
 
   const dispatch = useDispatch();
   const currGame = useSelector(state => state.game);
@@ -19,9 +20,11 @@ const BuildGameModal = (props) => {
     if(currGame.questions && currGame.answers) dispatch({type: actions.SET_GAME, payload: currGame});
   }, [currGame])
 
-  const setRandomGame = () => {
+  const setRandomGame = (e) => {
+    e.preventDefault();
+    console.log('random game now...')
     setShowLoader(true);
-    dispatch(randomGame())
+    dispatch(randomGame(currGame.categories.length, currGame.clues[0].length))
       .then((response) => {
         console.log('response from randomGame: ', response);
         dispatch({type: actions.SET_GAME, payload: response})
@@ -34,10 +37,12 @@ const BuildGameModal = (props) => {
   const showGameBuilder = (e) => {
     e.preventDefault();
     dispatch(saveGame())
-      .then(() => {
+      .then((response) => {
         dispatch(loadGames(currGame.userId));
+        dispatch({type: actions.SET_GAME, payload: response});
+        console.log('response from save game thunk', response);
+        navigate(`/buildgame/${response._id}`)
       })
-    navigate(`/buildgame/${currGame.name}`)
   }
 
   if (hidden) return null;
@@ -51,7 +56,8 @@ const BuildGameModal = (props) => {
         <input type="number" name="numCategories" max={6} min={2} onChange={(e) => dispatch({type: actions.SET_NUM_CATEGORIES, payload: e.target.value})} />
         <label htmlFor="">How Many Questions per Category?</label>
         <input type="number" name="numQuestions" max={6} min={2} required={true} onChange={(e) => dispatch({type: actions.SET_NUM_QUESTIONS, payload: e.target.value})}/>
-        <button type="submit" onClick={random ? setRandomGame : showGameBuilder}>Ready to Go!</button>
+        
+        {showLoader ? <div className="hourglass"></div> : <button onClick={random ? setRandomGame : showGameBuilder}>Ready to Go!</button>}
       </form>
       <button onClick={handleModal}>Close</button>
     </div>
