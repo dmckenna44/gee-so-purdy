@@ -21,6 +21,7 @@ const EditGame = (props) => {
       .then(() => {
         dispatch({type: SET_GAME, payload: currGame});
       })
+      
     return () => {
       dispatch({type: CLEAR_GAME});
     }
