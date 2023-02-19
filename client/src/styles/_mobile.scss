@@ -1,0 +1,180 @@
+@media screen and (max-width: 600px){
+
+  #welcome-options {
+    flex-direction: column;
+    text-align: center;
+
+    h1 {
+      display: none;
+    }
+  }
+
+  #playGameContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 3rem 0;
+    padding: 1rem;
+    width: 600px;
+    // border: 1px solid black;
+  }
+
+  .player-game-title {
+    display: none;
+  }
+  
+  .playGameBoard {
+    display: flex;
+    // flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    // border: 10px solid #0D4C92;
+    min-width: 75%;
+    min-height: 45vh;
+    background-color:#A0E4CB;
+    padding: 0;
+    margin: .5rem;
+    box-shadow: 0 0 1rem 0 $borderColor;
+  }
+
+  .player-game {
+    width: 50vw;
+  }
+
+  .column {
+    display: flex;
+    // flex-direction: row;
+    align-items: center;
+  
+    text-align: center;
+    margin: 0 .5rem 0 .5rem;
+    // border: 2px solid black;
+  }
+
+  @keyframes expand-clue-mobile {
+    0% {
+      width: 1%;
+      height: 1%;
+      padding: 0;
+    }
+    100% {
+      width: 100%;
+      height: 100%;
+      // padding: 20%;
+    }
+  }
+
+  .active-clue-expand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: $backgroundColor;
+    border: 2px solid #0D4C92;
+    animation: expand-clue-mobile .3s linear;
+    padding: 5%;
+    margin: 0 .3rem 0 .3rem;
+    box-shadow: 0 0 0.5rem 0 $borderColor;
+    font-size: .7rem;
+    // * {
+    //   margin: 0.5rem auto 0.5rem auto;
+    // }
+  
+    button {
+      padding: .5rem 1rem; 
+      margin: 0.5rem;
+      cursor: pointer;
+      border: none;
+      background-color: #EAFDFC;
+      box-shadow: 0.1rem 0.1rem 0.1rem .1rem darken($backgroundColor, 20%);
+      
+      &:hover {
+        box-shadow: none;
+        transform: translate(2px, 2px);
+      }
+    }
+  }
+
+  .clue-card-player {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // margin: .5rem 0 .5rem 0;
+    margin: 0;
+    padding: .1rem;
+    // border: 5px solid #0D4C92;
+    border: none;
+    width: 7vw;
+    height: 1rem;
+    color: #0D4C92;
+    font-size: .7rem;
+    // transition: 0.5s ease-in-out;
+  }
+
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    max-width: 150px;
+    min-height: 2rem;
+    font-size: .7rem;
+  
+    input {
+      text-align: center;
+    }
+  }
+
+  .player-list {
+    display: flex;
+  }
+  
+  .player-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid $borderColor;
+    margin: 0.5rem;
+    padding: 0.2rem;
+    min-width: 3rem;
+    box-shadow: 0.1rem 0.1rem 0.1rem 0 $borderColor;
+  
+    p {
+      margin: 0.1rem;
+    }
+  }
+
+  .buzzer-container {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+  .buzzer-btn {
+    padding: 1.5rem 5rem 1.5rem 5rem;
+    font-size: 1.4rem;  
+    // align-self: center;
+    margin: 0.5rem;
+    cursor: pointer;
+    border: none;
+    padding: 1rem 3rem;
+    // background-color: $borderColor;
+    background-color:#A0E4CB;
+    color: black;
+    width: 75%;
+    // box-shadow: 0.1rem 0.1rem 0.2rem .1rem $borderColor;
+    // box-shadow: 0.2rem 0.2rem 0 .5rem darken($borderColor, 50%);
+    box-shadow: 0.1rem 0.1rem 0.1rem .1rem darken($backgroundColor, 50%);
+    
+  
+    &:hover {
+      box-shadow: none;
+      transform: translate(2px, 2px);
+    }
+  }
+}

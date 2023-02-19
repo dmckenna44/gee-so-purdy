@@ -64,7 +64,11 @@ const HostGame = (props) => {
     });
 
     socket.on('receive_deactivate_clue', data => {
-      dispatch({type: actions.SET_ACTIVE_CLUE, payload: false})
+      dispatch({type: actions.SET_ACTIVE_CLUE, payload: false});
+    })
+
+    socket.on('receive_toggle_answer', data => {
+      dispatch({type: actions.SET_SHOW_ANSWER, payload: data.show});
     })
     
   }, [socket, dispatch])
@@ -109,7 +113,7 @@ const HostGame = (props) => {
 
   const playerList = players.map((p, i) => {
     return (
-      <div className="player-info" key={i}>
+      <div className={`player-info ${activePlayer === p.name ? 'timed-player' : ''}`} key={i}>
         <p className="player-name-display">{p.name}</p> 
         <p className="player-score-display" style={{color: p.score >= 0 ? 'black' : 'red'}}>${p.score}</p> 
       </div>
@@ -119,7 +123,16 @@ const HostGame = (props) => {
   return (
     <div id="playGameContainer">
       <p className="back-to-prof-link" onClick={() => navigate(`/profile/${userId}`)}>← Back to Profile</p>
-      <p className="game-pw-display">Passcode: {password}</p>
+      <div className={"host-config"}>
+        <p className="game-pw-display">Passcode: {password}</p>
+        <p>Timer?</p>
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider round"></span>
+          <span>On</span>
+        </label>
+
+      </div>
       <div className="overlay" hidden={!showEditModal}></div>
       <h2>{currGame.name}</h2>
          <EditScoresModal hidden={!showEditModal} handleModal={handleEditModal} />
@@ -134,7 +147,11 @@ const HostGame = (props) => {
          <div className="host-options">
           <div className="host-btns">
             <button className="edit-scores-btn" onClick={handleEditModal}>Edit Scores</button>  
-            <button className="open-response-btn" onClick={toggleBuzzers}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
+            {
+              activeClue ?
+              <button className="open-response-btn" onClick={toggleBuzzers}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
+              : null
+            }
           </div>
           <div className="judge-response">
             <p>{activePlayer ? `Answering: ${activePlayer}` : ''}</p>

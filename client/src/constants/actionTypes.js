@@ -28,3 +28,4 @@ export const SET_ACTIVE_CLUE = 'SET_ACTIVE_CLUE';
 export const SET_CAN_ANSWER = 'SET_CAN_ANSWER';
 export const SET_GAME_ID = 'SET_GAME_ID';
 export const CLEAR_GAME = 'CLEAR_GAME';
+export const SET_SHOW_ANSWER = 'SET_SHOW_ANSWER';

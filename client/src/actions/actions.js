@@ -143,3 +143,8 @@ export const setGameIdActionCreator = id => ({
 export const clearGameActionCreator = () => ({
   type: types.CLEAR_GAME,
 })
+
+export const setShowAnswerActionCreator = (bool) => ({
+  type: types.SET_SHOW_ANSWER,
+  payload: bool
+})

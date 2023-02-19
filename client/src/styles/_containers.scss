@@ -96,6 +96,13 @@
 
   .player-game {
     pointer-events: none;
+    color: red;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .player-game {
+    width: 50vw;
   }
 }
 
@@ -349,10 +356,43 @@
   padding: 0.5rem;
   min-width: 7rem;
   box-shadow: 0.1rem 0.1rem 0.1rem 0 $borderColor;
+  // background: linear-gradient(to right, red 50%, blue 50%);
+  // background: linear-gradient(to right, #FF6464  50%, transparent 50%);
+  background-size: 200% 100%;
+  background-position: left bottom;
+  transition: background-position 5s ease;
 
   p {
     margin: 0.1rem;
   }
+}
+
+@keyframes timePlayer {
+  0% {
+    width: 100%
+  }
+  100% {
+    width: 0px;
+  }
+}
+
+.timed-player {
+  background-color: #FF6464;
+  background: linear-gradient(to right, #FF6464  50%, transparent 50%);
+  background-size: 200% 100%;
+
+  transition: all 5s ease;
+  background-position: right bottom;
+}
+
+.timer-bar {
+  width: 100%;
+  height: .5rem;
+  background-color: #FF6464;
+  overflow: hidden;
+  animation-name: timePlayer;
+  animation-duration: 5s;
+  animation-fill-mode: forwards;
 }
 
 
@@ -413,4 +453,10 @@
   // border: 2px solid black;
   background-color: $backgroundColor;
   box-shadow: 0.15rem 0.15rem 0.3rem 1px darken($backgroundColor, 20%);
+}
+
+.host-config {
+  position: absolute;
+  top: 4rem;
+  left: 1rem;
 }
