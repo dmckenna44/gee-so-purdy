@@ -8,7 +8,6 @@ const ProfileHelpModal = (props) => {
   if (hidden) return null;
   return (
     <div className="help-modal">
-      <h1><span className="welcome-title">Gee-So-Purdy</span></h1>
       <h1>Getting Started</h1>
       <section>
         <h3><em>Custom Game</em></h3>

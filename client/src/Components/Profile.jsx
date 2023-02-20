@@ -94,10 +94,11 @@ const Profile = props => {
     <div id="profileContainer">
       <p className="logout-btn" onClick={() => navigate('/')}>Logout</p>
       <div className="overlay" hidden={buildGameModalHidden && deleteHidden && helpModalHidden}></div>
-      <p className="help-btn" onClick={handleHelpModal}>?</p>
+      {/* <p className="help-btn" onClick={handleHelpModal}>?</p> */}
       <h1 className="welcome-title">Gee-So-Purdy</h1>
       <h1>Welcome, {username}!</h1>
       <hr style={{background: 'black', height: '2px', width: '75%'}}/>
+      <p className="help-btn" onClick={handleHelpModal}>- Getting Started -</p>
       <div className="profile-options">
         <section id='goToBuilder'>
           <button onClick={handleBuildGameModal}>Custom Game</button>

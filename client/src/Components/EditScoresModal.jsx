@@ -28,7 +28,7 @@ const EditScoresModal = (props) => {
   return (
     <div className="edit-scores-modal">
       <div className="edit-modal-player-list">
-        {playerList}  
+        {playerList.length ? playerList : 'No players yet'}  
       </div>
       <button onClick={handleModal}>Close</button>
     </div>

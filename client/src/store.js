@@ -1,10 +1,6 @@
-import { createStore } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
 import reducers from './reducers/index.js';
-import { applyMiddleware } from 'redux';
-import throttle from 'lodash';
 
 const loadState = () => {
   try {

@@ -30,7 +30,6 @@ const BuildGameModal = (props) => {
         dispatch({type: actions.SET_GAME, payload: response})
         setShowLoader(false);
         navigate(`/playgame/${currGame.userId}/${response._id}`)
-        // navigate(`/buildgame/${currGame.name}`)
       })
   }
 
