@@ -163,9 +163,16 @@ button:active {
     cursor: pointer;
     color: blue;
   }
-
 }
 
 .player-name-display {
   text-decoration: underline;
+}
+
+.game-pw-display {
+  font-size: 1.2rem;
+}
+
+.inactive-btn {
+  pointer-events: none;
 }
