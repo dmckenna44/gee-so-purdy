@@ -151,17 +151,24 @@ button:active {
 }
 
 .help-btn {
-  position: relative;
-  align-self: flex-end;
-  right: 1rem;
-  padding: .2rem;
-  font-size: 1.5rem;
-  font-weight: bolder;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  // position: relative;
+  // align-self: flex-end;
+  // right: 1rem;
+  padding: .5rem;
+  font-family: 'Cabin';
+  color: $borderColor;
+  // font-style: italic;
+  // text-decoration: underline;
+  // font-size: 1.5rem;
+  // font-weight: bolder;
+  // font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  box-shadow: none;
+  background-color: transparent;
 
   &:hover {
     cursor: pointer;
-    color: blue;
+    transform: translate(1px, 1px);
+    color: black;
   }
 }
 

@@ -20,7 +20,7 @@ const HostHelpModal = (props) => {
       </section>
       <section>
         <h3><em>3 - Click <span><button className="inactive-btn">Open Responses</button></span></em></h3>
-        <p>Clicking this button will let the players ring in if they want to try and answer the question.</p>
+        <p>Once a question is displayed, this button will let the players ring in if they want to try and answer the question.</p>
       </section>
       <section>
         <h3><em>4 - Choose <span><button className="inactive-btn">Correct</button></span> or <span><button className="inactive-btn">Incorrect</button></span></em></h3>
@@ -32,7 +32,8 @@ const HostHelpModal = (props) => {
       </section>
       <section>
         <h3><em> 6 - Click on <span><button className="inactive-btn">Done</button></span> to Keep Playing</em></h3>
-        <p>Clicking this button return to the game board, with any answered questions removed, so you can keep playing!</p>
+        <p>Click this button to return to the game board (with any answered questions removed) so you can keep playing!</p>
+        <p>If you need to adjust the scores for any reason, just click <span><button className="inactive-btn">Edit Scores</button></span>  </p>
       </section>
 
       <button onClick={handleModal}>Close</button>
