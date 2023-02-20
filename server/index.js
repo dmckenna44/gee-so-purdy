@@ -102,6 +102,7 @@ io.on('connection', socket => {
     // receive player name and new score from client and adjust in the room state
     const {roomID, playerName, value, correct} = data;
     const currentRoom = rooms.find(room => room.id === roomID);
+    console.log('value of score change', value);
     currentRoom.players.forEach(player => {
       if (player.name === playerName) {
         player.score += correct ? +value : -value;
@@ -112,10 +113,11 @@ io.on('connection', socket => {
 
   socket.on('send_updated_score', data => {
     const {roomID, playerName, value} = data;
+    console.log('value of score change', value);
     const currentRoom = rooms.find(room => room.id === roomID);
     currentRoom.players.forEach(player => {
       if (player.name === playerName) {
-        player.score = value;
+        player.score = Number(value);
       }
     })
     io.to(currentRoom).emit('receive_new_scores', currentRoom.players)

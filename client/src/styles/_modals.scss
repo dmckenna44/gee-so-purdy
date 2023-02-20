@@ -31,7 +31,7 @@
 }
 
 
-.build-game-modal, .help-modal {
+.build-game-modal, .help-modal, .edit-scores-modal {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -40,7 +40,7 @@
   align-self: center;
   z-index: 10;
   padding: 2rem 1rem 1rem 1rem;
-  background-color: #A0E4CB;
+  background-color: $backgroundColor;
   border: 1px solid $borderColor;
   box-shadow: 0 0 .5rem 1px $borderColor;
 
@@ -119,18 +119,9 @@
 }
 
 .edit-scores-modal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  align-self: center;
-  background-color: $backgroundColor;
   min-width: 40%;
   height: 50%;
   padding: 1.5rem;
-  box-shadow: 0.1rem 0.1rem 0.5rem 2px darken($backgroundColor, 30%);
-  z-index: 5;
 
   button {
     padding: .5rem 1rem;
@@ -154,13 +145,6 @@
 
   * {
     margin: 0.4rem;
-  }
-
-  button:hover {
-    box-shadow: none;
-    transform: translate(2px, 2px);
-    color: black;
-    background-color: $backgroundColor;
   }
 }
 
