@@ -121,9 +121,9 @@ const gameReducer = (state = initialState, action) => {
 
     case types.UPDATE_CLUE:
       const [column, row, clue] = action.payload;
+
       newState = {...state};
       newState.clues[column][row] = clue;
-
       return Object.assign({}, state, newState)
 
     case types.SET_GAME:

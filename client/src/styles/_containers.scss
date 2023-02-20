@@ -286,7 +286,7 @@
   // background: linear-gradient(to right, #FF6464  50%, transparent 50%);
   background-size: 200% 100%;
   background-position: left bottom;
-  transition: background-position 5s ease;
+  transition: background-position 5s linear;
 
   p {
     margin: 0.1rem;

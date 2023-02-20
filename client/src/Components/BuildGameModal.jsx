@@ -39,8 +39,7 @@ const BuildGameModal = (props) => {
     dispatch(saveGame())
       .then((response) => {
         dispatch(loadGames(currGame.userId));
-        dispatch({type: actions.SET_GAME, payload: response});
-        console.log('response from save game thunk', response);
+        dispatch({type: actions.SET_GAME, payload: response})
         navigate(`/buildgame/${response._id}`)
       })
   }
