@@ -6,7 +6,9 @@ import HostColumn from "./HostColumn.jsx";
 import Timer from "./Timer.jsx";
 import ActiveClue from "./ActiveClue.jsx";
 import EditScoresModal from "./EditScoresModal.jsx";
+import HostHelpModal from "./HostHelpModal.jsx";
 import * as actions from "../constants/actionTypes.js";
+import buzzerSound from '../buzzersound.wav';
 
 import {socket} from '../apiRoutes.js';
 
@@ -21,6 +23,8 @@ const HostGame = (props) => {
         return game._id === gameid
       })
   );
+
+  const [helpModalHidden, toggleHelpModal] = useState(true);
 
   const state = useSelector(state => state.game);
   console.log('state from host game', state);
@@ -59,7 +63,8 @@ const HostGame = (props) => {
     });
     
     socket.on('receive_active_player', data => {
-      console.log('active player from server', data.activePlayer)
+      const sound = new Audio(buzzerSound);
+      if (data.activePlayer) sound.play();
       dispatch({type: actions.SET_ACTIVE_PLAYER, payload: data.activePlayer});
     });
 
@@ -81,6 +86,11 @@ const HostGame = (props) => {
   const handleModal = (e) => {
     e.preventDefault();
     setShowModal(!showModal);
+  }
+
+  const handleHelpModal = (e) => {
+    e.preventDefault();
+    toggleHelpModal(!helpModalHidden);
   }
 
   const handleEditModal = (e) => {
@@ -123,8 +133,10 @@ const HostGame = (props) => {
   return (
     <div id="playGameContainer">
       <p className="back-to-prof-link" onClick={() => navigate(`/profile/${userId}`)}>← Back to Profile</p>
-      <div className={"host-config"}>
-        <p className="game-pw-display">Passcode: {password}</p>
+      <div className="overlay" hidden={helpModalHidden}></div>
+      <div className="host-config">
+        <p>Passcode: <span className="game-pw-display">{password}</span></p>
+        <button className="host-help-btn" onClick={handleHelpModal}>How To Play</button>
         {/* <p>Timer?</p> */}
         {/* <label class="switch">
           <input type="checkbox" />
@@ -137,6 +149,7 @@ const HostGame = (props) => {
       <h2>{currGame.name}</h2>
          <EditScoresModal hidden={!showEditModal} handleModal={handleEditModal} />
          <CluePlayModal hidden={!showModal}  handleModal={handleModal}/>
+         <HostHelpModal hidden={helpModalHidden} handleModal={handleHelpModal}/>
          <div className="playGameBoard">
           {activeClue ? < ActiveClue/> : columns}
          </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../constants/actionTypes.js';
+import buzzerSound from '../buzzersound.wav'
 
 import {socket} from '../apiRoutes.js';
 
@@ -15,6 +16,8 @@ const Buzzer = (props) => {
       // add active player score to the store
       // send an event to the host so they can update the score/go to the next clue
       // add playerName to store to track each player on the player side, use activePlayer for the host
+      // const sound = new Audio(buzzerSound);
+      // sound.play();
       dispatch({type: actions.SET_ACTIVE_PLAYER, payload: playerName});
       socket.emit('send_active_player', {roomID: roomID, name: playerName});
       socket.emit('send_buzzer_change', {roomID: roomID, active: !buzzersActive});

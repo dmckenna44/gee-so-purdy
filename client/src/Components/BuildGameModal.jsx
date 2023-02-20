@@ -30,7 +30,6 @@ const BuildGameModal = (props) => {
         dispatch({type: actions.SET_GAME, payload: response})
         setShowLoader(false);
         navigate(`/playgame/${currGame.userId}/${response._id}`)
-        // navigate(`/buildgame/${currGame.name}`)
       })
   }
 
@@ -38,7 +37,7 @@ const BuildGameModal = (props) => {
     e.preventDefault();
     dispatch(saveGame())
       .then((response) => {
-        dispatch(loadGames(userId));
+        dispatch(loadGames(currGame.userId));
         dispatch({type: actions.SET_GAME, payload: response})
         navigate(`/buildgame/${response._id}`)
       })
