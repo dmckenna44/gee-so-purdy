@@ -44,12 +44,9 @@
 
   .column {
     display: flex;
-    // flex-direction: row;
     align-items: center;
-  
     text-align: center;
     margin: 0 .5rem 0 .5rem;
-    // border: 2px solid black;
   }
 
   @keyframes expand-clue-mobile {
@@ -163,12 +160,9 @@
     cursor: pointer;
     border: none;
     padding: 1rem 3rem;
-    // background-color: $borderColor;
     background-color:#A0E4CB;
     color: black;
     width: 75%;
-    // box-shadow: 0.1rem 0.1rem 0.2rem .1rem $borderColor;
-    // box-shadow: 0.2rem 0.2rem 0 .5rem darken($borderColor, 50%);
     box-shadow: 0.1rem 0.1rem 0.1rem .1rem darken($backgroundColor, 50%);
     
   
