@@ -7,6 +7,7 @@ import Timer from "./Timer.jsx";
 import ActiveClue from "./ActiveClue.jsx";
 import EditScoresModal from "./EditScoresModal.jsx";
 import * as actions from "../constants/actionTypes.js";
+import buzzerSound from '../buzzersound.wav';
 
 import {socket} from '../apiRoutes.js';
 
@@ -59,7 +60,8 @@ const HostGame = (props) => {
     });
     
     socket.on('receive_active_player', data => {
-      console.log('active player from server', data.activePlayer)
+      const sound = new Audio(buzzerSound);
+      if (data.activePlayer) sound.play();
       dispatch({type: actions.SET_ACTIVE_PLAYER, payload: data.activePlayer});
     });
 

@@ -6,6 +6,7 @@ import Buzzer from "./Buzzer.jsx";
 import Timer from "./Timer.jsx";
 import ActiveClue from "./ActiveClue.jsx";
 import {socket} from '../apiRoutes.js';
+import buzzerSound from '../buzzersound.wav'
 
 
 const PlayerGame = (props) => {
@@ -39,6 +40,8 @@ const PlayerGame = (props) => {
     })
 
     socket.on('receive_active_player', data => {
+      const sound = new Audio(buzzerSound);
+      if (data.activePlayer !== "") sound.play();
       dispatch({type: actions.SET_ACTIVE_PLAYER, payload: data.activePlayer});
     })
 
