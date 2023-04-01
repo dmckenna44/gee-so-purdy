@@ -269,6 +269,22 @@ export const saveGame = () => async (dispatch, getState) => {
   }
 }
 
+export const saveGameProgress = () => async (dispatch, getState) => {
+  const game = getState().game;
+  const gameData = {
+    id: game.gameId,
+    name: game.name,
+    players: game.players,
+    clues: game.clues
+  }
+
+  
+}
+
+export const loadSavedGame = () => async (dispatch, getState) => {
+
+}
+
 export const updateGame = () => async (dispatch, getState) => {
   const game = getState().game;
   const currentGame = game.userGames.find(g => g._id === game.gameId);

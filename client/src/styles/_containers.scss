@@ -282,6 +282,7 @@
   margin: 0.5rem;
   padding: 0.5rem;
   min-width: 7rem;
+  font-family: 'Cabin';
   box-shadow: 0.1rem 0.1rem 0.1rem 0 $borderColor;
   // background: linear-gradient(to right, red 50%, blue 50%);
   // background: linear-gradient(to right, #FF6464  50%, transparent 50%);
@@ -292,6 +293,12 @@
   p {
     margin: 0.1rem;
   }
+}
+
+.player-score-display {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  font-size: 1.1rem;
 }
 
 @keyframes timePlayer {

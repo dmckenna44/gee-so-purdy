@@ -1,6 +1,5 @@
 const Game = require('../models/Game.js');
 
-
 const gameController = {};
 
 gameController.setGame = async (req, res, next) => {

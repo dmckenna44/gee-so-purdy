@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_CURRENT_Q, SET_CURRENT_A, UPDATE_CLUE } from '../constants/actionTypes';
+import tinymce from "tinymce";
 
 
 const ClueInputModal = (props) => {
@@ -21,6 +22,10 @@ const ClueInputModal = (props) => {
   };
 
   const handleFocus = (e) => e.target.select();
+
+  tinymce.init({
+    selector: '#input-question'
+  });
 
   if (hidden) return null;
   return (

@@ -151,29 +151,22 @@ button:active {
 }
 
 .help-btn {
-  // position: relative;
-  // align-self: flex-end;
-  // right: 1rem;
   padding: .5rem;
   font-family: 'Cabin';
-  color: $borderColor;
-  // font-style: italic;
-  // text-decoration: underline;
-  // font-size: 1.5rem;
-  // font-weight: bolder;
-  // font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: darken($borderColor, 10%);
   box-shadow: none;
   background-color: transparent;
 
   &:hover {
     cursor: pointer;
     transform: translate(1px, 1px);
-    color: black;
+    // color: black;
+    color: $borderColor;
   }
 }
 
 .player-name-display {
-  text-decoration: underline;
+  // text-decoration: underline;
 }
 
 .game-pw-display {
