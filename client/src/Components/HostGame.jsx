@@ -137,7 +137,7 @@ const HostGame = (props) => {
       <div className="host-config">
         <p>Passcode: <span className="game-pw-display">{password}</span></p>
         <button className="host-help-btn" onClick={handleHelpModal}>How To Play</button>
-        <button onClick={(e) => {console.log('current game state', state)}}>Save Game Progress</button>
+        {/* <button onClick={(e) => {console.log('current game state', state)}}>Save Game Progress</button> */}
         {/* <p>Timer?</p> */}
         {/* <label class="switch">
           <input type="checkbox" />
