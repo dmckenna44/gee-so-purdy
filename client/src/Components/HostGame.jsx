@@ -161,11 +161,11 @@ const HostGame = (props) => {
          <div className="host-options">
           <div className="host-btns">
             <button className="edit-scores-btn" onClick={handleEditModal}>Edit Scores</button>  
-            {
+            {/* {
               activeClue ?
               <button className="open-response-btn" onClick={toggleBuzzers}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
               : null
-            }
+            } */}
           </div>
           <div className="judge-response">
             <p>{activePlayer ? `Answering: ${activePlayer}` : ''}</p>
