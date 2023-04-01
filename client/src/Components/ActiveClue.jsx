@@ -8,6 +8,7 @@ const ActiveClue = () => {
   // const [answerVisible, setAnswerVisible] = useState(false);
   const { currentQuestion, currentAnswer, roomID, playerName, answerVisible, buzzersActive } = useSelector(state => state.game);
   const dispatch = useDispatch();
+  console.log('question', currentQuestion, 'answer', currentAnswer)
 
   const resetActiveClue = (e) => {
     e.stopPropagation();
@@ -32,8 +33,8 @@ const ActiveClue = () => {
 
   return (
     <div className="active-clue-expand">
-      <h3>{currentQuestion}</h3>
-      <h3><em>{ answerVisible ? currentAnswer : null}</em></h3>
+      <h3 className="active-question-display">{currentQuestion}</h3>
+      <h3 className="active-answer-display"><em>{ answerVisible ? currentAnswer : null}</em></h3>
       <button className="open-response-btn" onClick={toggleBuzzers} style={{display: `${playerName ? 'none' : 'block'}`}}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
       <button onClick={showAnswer} style={{display: `${playerName ? 'none' : 'block'}`}}>Show Answer</button>
       <button onClick={resetActiveClue} style={{display: `${playerName ? 'none' : 'block'}`}}>Done</button>
