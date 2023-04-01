@@ -27,7 +27,7 @@ const HostGame = (props) => {
   const [helpModalHidden, toggleHelpModal] = useState(true);
 
   const state = useSelector(state => state.game);
-  console.log('state from host game', state);
+  // console.log('state from host game', state);
   
   useEffect(() => {
     dispatch({type: actions.SET_GAME, payload: currGame});
@@ -137,6 +137,7 @@ const HostGame = (props) => {
       <div className="host-config">
         <p>Passcode: <span className="game-pw-display">{password}</span></p>
         <button className="host-help-btn" onClick={handleHelpModal}>How To Play</button>
+        {/* <button onClick={(e) => {console.log('current game state', state)}}>Save Game Progress</button> */}
         {/* <p>Timer?</p> */}
         {/* <label class="switch">
           <input type="checkbox" />
@@ -160,11 +161,11 @@ const HostGame = (props) => {
          <div className="host-options">
           <div className="host-btns">
             <button className="edit-scores-btn" onClick={handleEditModal}>Edit Scores</button>  
-            {
+            {/* {
               activeClue ?
               <button className="open-response-btn" onClick={toggleBuzzers}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
               : null
-            }
+            } */}
           </div>
           <div className="judge-response">
             <p>{activePlayer ? `Answering: ${activePlayer}` : ''}</p>
