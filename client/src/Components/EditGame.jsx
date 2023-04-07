@@ -51,6 +51,14 @@ const EditGame = (props) => {
       .catch(err => console.log(err))
   }
 
+  const addCategory = () => {
+
+  }
+
+  const addClueRow = () => {
+
+  }
+
   // create an array of columns
   // each column will be an array with the category at index 0 and the clues as the rest of the elements
   const columns = clues.map((cat, i) => {
@@ -67,6 +75,11 @@ const EditGame = (props) => {
     <div className="game-editor-container">
       <p className="back-to-prof-link" onClick={() => navigate(`/profile/${userId}`)}>← Back to Profile</p>
       <div className="overlay" hidden={!showModal}></div>
+        <div className="host-config">
+          <h3>Game Options</h3>
+          <button onClick={addCategory}>Add a Category</button>
+          <button onClick={addClueRow}>Add a Row of Clues</button>
+        </div>
         <input type="text" required value={name} onFocus={handleFocus} onChange={(e) => dispatch({type: SET_GAME_NAME, payload: e.target.value})}></input>
 
       <div className="edit-game-board">

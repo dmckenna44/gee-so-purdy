@@ -148,9 +148,9 @@ io.on('connection', socket => {
   })
 
   socket.on('send_buzzer_change', (data) => {
-    const {roomID, active} = data;
+    const {roomID, active, activePlayer} = data;
     const currentRoom = rooms.find(room => room.id === roomID);
-    io.to(currentRoom).emit('receive_buzzer_change', {buzzersActive: active});
+    io.to(currentRoom).emit('receive_buzzer_change', {buzzersActive: active, activePlayer: activePlayer});
   });
 
   socket.on('send_active_player', data => {
@@ -163,6 +163,12 @@ io.on('connection', socket => {
     const {roomID, canAnswer} = data;
     const currentRoom = rooms.find(room => room.id === roomID);
     io.to(currentRoom).emit('receive_reset_buzzers', true);
+  })
+  
+  socket.on('send_update_buzzers', data => {
+    const {roomID, activePlayer} = data;
+    const currentRoom = rooms.find(room => room.id === roomID);
+    io.to(currentRoom.emit('receive_update_buzzers', activePlayer))
   })
 
   socket.on('send_toggle_answer', data => {

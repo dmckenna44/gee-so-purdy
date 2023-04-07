@@ -100,14 +100,15 @@ const HostGame = (props) => {
 
   const toggleBuzzers = (e) => {
     e.preventDefault();
-    socket.emit('send_buzzer_change', {roomID: roomID, active: !buzzersActive});
+    socket.emit('send_buzzer_change', {roomID: roomID, active: !buzzersActive, activePlayer: activePlayer});
     dispatch({type: actions.SET_BUZZERS_ACTIVE, payload: !buzzersActive});
   }
 
   const sendResponse = (e, correct) => {
     e.preventDefault();
+    socket.emit('send_update_buzzers', {roomID: roomID, activePlayer: activePlayer})
     socket.emit('send_new_scores', {roomID: roomID, playerName: activePlayer, value: activeClueValue, correct: correct});
-    socket.emit('send_active_player', {roomID: roomID, name: ''});
+    socket.emit('send_active_player', {roomID: roomID, name: ''}); 
   }
 
   const columns = currGame.clues.map((clue, i) => {

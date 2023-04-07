@@ -36,9 +36,18 @@ const PlayerGame = (props) => {
     })
 
     socket.on('receive_buzzer_change', data => {
+      // host clicks open responses - buzzers active
+      // player rings in - buzzers inactive
+      // host clicks correct or incorrect - set canAnswer to false for the player that responded
       dispatch({type: actions.SET_BUZZERS_ACTIVE, payload: data.buzzersActive});
     })
 
+    socket.on('receive_update_buzzers', data => {
+      if(data.activePlayer === playerName) {
+        dispatch({type: actions.SET_CAN_ANSWER, payload: false})
+      }
+    })
+    
     socket.on('receive_active_player', data => {
       const sound = new Audio(buzzerSound);
       if (data.activePlayer !== "") sound.play();
@@ -112,7 +121,7 @@ const PlayerGame = (props) => {
       <Buzzer />
       {activePlayer === playerName ? <Timer seconds={5}/> : null}
       {activePlayer === playerName ? <div className="timer-bar"></div> : null}
-      {buzzersActive ? <Timer seconds={5}/> : null}
+      {buzzersActive ? <Timer seconds={5}/> : null} 
   </div>
   )
 }
