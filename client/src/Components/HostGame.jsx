@@ -106,8 +106,10 @@ const HostGame = (props) => {
 
   const sendResponse = (e, correct) => {
     e.preventDefault();
+    socket.emit('send_update_buzzers', {roomID: roomID, activePlayer: activePlayer});
     socket.emit('send_new_scores', {roomID: roomID, playerName: activePlayer, value: activeClueValue, correct: correct});
     socket.emit('send_active_player', {roomID: roomID, name: ''});
+    toggleBuzzers(e)
   }
 
   const columns = currGame.clues.map((clue, i) => {
@@ -134,18 +136,7 @@ const HostGame = (props) => {
     <div id="playGameContainer">
       <p className="back-to-prof-link" onClick={() => navigate(`/profile/${userId}`)}>← Back to Profile</p>
       <div className="overlay" hidden={helpModalHidden}></div>
-      <div className="host-config">
-        <p>Passcode: <span className="game-pw-display">{password}</span></p>
-        <button className="host-help-btn" onClick={handleHelpModal}>How To Play</button>
-        {/* <button onClick={(e) => {console.log('current game state', state)}}>Save Game Progress</button> */}
-        {/* <p>Timer?</p> */}
-        {/* <label class="switch">
-          <input type="checkbox" />
-          <span class="slider round"></span>
-          <span>On</span>
-        </label> */}
-
-      </div>
+  
       <div className="overlay" hidden={!showEditModal}></div>
       <h2>{currGame.name}</h2>
          <EditScoresModal hidden={!showEditModal} handleModal={handleEditModal} />
@@ -158,6 +149,18 @@ const HostGame = (props) => {
           {playerList.length ? playerList : 'No players yet'}
          </div>
          <br />
+         <div className="host-options-container">
+         <div className="host-config">
+            <p>Passcode: <span className="game-pw-display">{password}</span></p>
+            <button className="host-help-btn" onClick={handleHelpModal}>How To Play</button>
+            {/* <button onClick={(e) => {console.log('current game state', state)}}>Save Game Progress</button> */}
+            {/* <p>Timer?</p> */}
+            {/* <label class="switch">
+              <input type="checkbox" />
+              <span class="slider round"></span>
+              <span>On</span>
+            </label> */}
+         </div>
          <div className="host-options">
           <div className="host-btns">
             <button className="edit-scores-btn" onClick={handleEditModal}>Edit Scores</button>  
@@ -181,6 +184,9 @@ const HostGame = (props) => {
               null
           }
          </div>
+
+         </div>
+  
     </div>
   )
 } 

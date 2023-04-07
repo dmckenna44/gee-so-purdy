@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_CURRENT_Q, SET_CURRENT_A, UPDATE_CLUE } from '../constants/actionTypes';
+import { updateGame, loadGames } from '../reducers/gameReducer.js';
 import tinymce from "tinymce";
 
 
@@ -15,17 +16,14 @@ const ClueInputModal = (props) => {
       question: currentQuestion,
       answer: currentAnswer
     }
-    dispatch({type: UPDATE_CLUE, payload: [currentIndex[0], currentIndex[1], newClue]});
+    dispatch({type: UPDATE_CLUE, payload: [currentIndex[0], currentIndex[1], newClue]})
     dispatch({type: SET_CURRENT_Q, payload: ''});
     dispatch({type: SET_CURRENT_A, payload: ''});
+    dispatch(updateGame());
     handleModal(e);
   };
 
   const handleFocus = (e) => e.target.select();
-
-  tinymce.init({
-    selector: '#input-question'
-  });
 
   if (hidden) return null;
   return (
