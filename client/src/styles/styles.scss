@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cabin&family=Josefin+Sans&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin&family=Josefin+Sans:wght@400;700&family=Pacifico&display=swap');
 @import 'variables.scss';
 @import 'containers.scss';
 @import 'buttons.scss';
@@ -20,6 +20,7 @@ body {
 input {
   border-radius: 3px;
   padding: 1px;
+  // border: none;
 }
 
 .content {
@@ -215,4 +216,46 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.text-editor {
+  position: relative;
+  background-color: white;
+  text-align: left;
+  padding: .2rem .5rem;
+  font-family: Arial;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: .5rem;
+
+  button {
+    box-shadow: none;
+  }
+}
+
+#question-editor {
+  width: 100%;
+  height: 8rem;
+}
+
+#answer-editor {
+  width: 50%;
+  height: 1.5rem;
+  padding-bottom: .5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.ce-toolbar {
+  display: none !important;
+}
+
+.codex-editor, .codex-editor__redactor {
+  padding-bottom: 0 !important;
+  font-family: Arial;
+}
+
+.tox {
+  z-index: 5;
 }
