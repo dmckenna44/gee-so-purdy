@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import parse from 'html-react-parser';
+
 import {socket} from '../apiRoutes.js';
 import * as actions from '../constants/actionTypes.js';
 
@@ -33,8 +35,8 @@ const ActiveClue = () => {
 
   return (
     <div className="active-clue-expand">
-      <h3 className="active-question-display">{currentQuestion}</h3>
-      <h3 className="active-answer-display"><em>{ answerVisible ? currentAnswer : null}</em></h3>
+      <p className="active-question-display">{parse(currentQuestion)}</p>
+      <p className="active-answer-display"><em>{ answerVisible ? parse(currentAnswer) : null}</em></p>
       <button className="open-response-btn" onClick={toggleBuzzers} style={{display: `${playerName ? 'none' : 'block'}`}}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
       <button onClick={showAnswer} style={{display: `${playerName ? 'none' : 'block'}`}}>Show Answer</button>
       <button onClick={resetActiveClue} style={{display: `${playerName ? 'none' : 'block'}`}}>Done</button>

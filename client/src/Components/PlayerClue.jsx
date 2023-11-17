@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import parse from 'html-react-parser';
 
 
 const PlayerClue = (props) => {
