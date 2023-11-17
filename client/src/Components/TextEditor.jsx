@@ -8,10 +8,7 @@ import { SET_CURRENT_A, SET_CURRENT_Q } from "../constants/actionTypes";
 
 const TextEditor = ({type, id}) => {
 
-
-
   const ejInstance = useRef();
-  // const editorRef = useRef();
 
   const { currentQuestion, currentAnswer } = useSelector(state => state.game);
   const dispatch = useDispatch();

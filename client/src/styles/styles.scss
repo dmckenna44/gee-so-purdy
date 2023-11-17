@@ -239,12 +239,11 @@ input:checked + .slider:before {
 }
 
 #answer-editor {
-  width: 50%;
+  width: 60%;
   height: 1.5rem;
-  padding-bottom: .5rem;
   display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .ce-toolbar {
