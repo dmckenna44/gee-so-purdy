@@ -4,13 +4,14 @@ import parse from 'html-react-parser';
 
 import {socket} from '../apiRoutes.js';
 import * as actions from '../constants/actionTypes.js';
+import YouTubeEmbed from "./YoutubeEmbed.jsx";
 
 const ActiveClue = () => {
 
   // const [answerVisible, setAnswerVisible] = useState(false);
-  const { currentQuestion, currentAnswer, roomID, playerName, answerVisible, buzzersActive } = useSelector(state => state.game);
+  const { currentQuestion, currentAnswer, currentMediaURL, roomID, playerName, answerVisible, buzzersActive } = useSelector(state => state.game);
   const dispatch = useDispatch();
-  console.log('question', currentQuestion, 'answer', currentAnswer)
+  console.log('question', currentQuestion, 'answer', currentAnswer, 'url: ', currentMediaURL)
 
   const resetActiveClue = (e) => {
     e.stopPropagation();
@@ -35,6 +36,7 @@ const ActiveClue = () => {
 
   return (
     <div className="active-clue-expand">
+      {currentMediaURL ? <YouTubeEmbed url={currentMediaURL.slice(-11)} width="100%" height="50%"/> :''}
       <p className="active-question-display">{parse(currentQuestion)}</p>
       <p className="active-answer-display"><em>{ answerVisible ? parse(currentAnswer) : null}</em></p>
       <button className="open-response-btn" onClick={toggleBuzzers} style={{display: `${playerName ? 'none' : 'block'}`}}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>

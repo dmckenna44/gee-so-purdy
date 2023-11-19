@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const BSON = require('bson');
 
 const gameSchema = new mongoose.Schema({
   user_id: {
@@ -17,7 +18,8 @@ const gameSchema = new mongoose.Schema({
       mediaType: String,
       mediaLocation: String
     }],
-    answers: [String]
+    answers: [String],
+    urls: [String]
   }],
   password: {
     type: String

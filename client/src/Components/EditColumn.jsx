@@ -16,6 +16,7 @@ const EditColumn = (props) => {
         value={(i+1)*100} 
         question={clue.question} 
         answer={clue.answer} 
+        mediaURL={clue.mediaURL}
         handleModal={handleModal}
       />
   })

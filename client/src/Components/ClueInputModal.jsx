@@ -1,26 +1,36 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SET_CURRENT_Q, SET_CURRENT_A, UPDATE_CLUE } from '../constants/actionTypes';
+import { SET_CURRENT_Q, SET_CURRENT_A, SET_CURRENT_MEDIA_URL, UPDATE_CLUE } from '../constants/actionTypes';
 import { updateGame } from '../reducers/gameReducer.js';
 import TextEditor from "./TextEditor.jsx";
+import YouTubeEmbed from "./YoutubeEmbed.jsx";
+
 
 const ClueInputModal = (props) => {
 
   const {handleModal, hidden} = props;
   const dispatch = useDispatch();
-  const { currentIndex, currentQuestion, currentAnswer } = useSelector(state => state.game);
+  const { currentIndex, currentQuestion, currentAnswer, currentMediaURL, clues } = useSelector(state => state.game);
+
   const [image, setImage] = useState('');
-  const [mediaType, setMediaType] = useState('');
+  const [mediaType, setMediaType] = useState('image');
+  const [mediaURL, setMediaURL] = useState('');
+  const [mediaFile, setMediaFile] = useState();
   const [mediaInputDisplay, setMediaInputDisplay] = useState(false);
   
   const submitClue = (e) => {
     const newClue = {
       question: currentQuestion,
-      answer: currentAnswer
+      answer: currentAnswer,
+      mediaURL: currentMediaURL
     }
     dispatch({type: UPDATE_CLUE, payload: [currentIndex[0], currentIndex[1], newClue]})
+    console.log(clues)
+    console.log('media url: ', currentMediaURL)
     dispatch({type: SET_CURRENT_Q, payload: ''});
     dispatch({type: SET_CURRENT_A, payload: ''});
+    dispatch({type: SET_CURRENT_MEDIA_URL, payload: ''});
+    setMediaInputDisplay(false);
     dispatch(updateGame());
     handleModal(e);
   };
@@ -28,14 +38,16 @@ const ClueInputModal = (props) => {
   const addMediaClue = (e) => {
     e.preventDefault();
     setMediaInputDisplay(!mediaInputDisplay);
-    setMediaType('image');
+    // setMediaType('image');
   }
 
-  const setMediaFile = (e) => {
-    console.log('file upload', e.target.files);
-    const fileURL = URL.createObjectURL(e.target.files[0]);
-    console.log(fileURL)
-    setImage(fileURL);
+  const createMediaFile = (e) => {
+    // console.log('file upload', e.target.files);
+    // const fileURL = URL.createObjectURL(e.target.files[0]);
+    // console.log(fileURL)
+    // setImage(fileURL);
+    dispatch({type: SET_CURRENT_MEDIA_URL, payload: e.target.value})
+    setMediaURL(e.target.value);
   }
 
   const mediaPrompt = () => {
@@ -67,8 +79,8 @@ const ClueInputModal = (props) => {
             <option value="video">Video</option>
           </select>
           {mediaPrompt()}
-          {mediaType === 'image' || mediaType === 'video' ? <input type="text"></input> : ''}
-          <input type="file" onChange={setMediaFile} />
+          {mediaType === 'image' || mediaType === 'video' ? <input type="text" onChange={createMediaFile}></input> : ''}
+          {/* <input type="file" onChange={createMediaFile} /> */}
           {image ? <img src={image}/> : ''}
         </div> 
           :
@@ -77,7 +89,12 @@ const ClueInputModal = (props) => {
           <TextEditor type="question" id="question-editor" className="text-editor" />
         </div>
       }
-      <button onClick={addMediaClue}>{!mediaInputDisplay ? 'Add Picture/Video/Audio' : 'Cancel'}</button>
+      {currentMediaURL && <h3>Media</h3>}
+      {currentMediaURL && <YouTubeEmbed videoId={currentMediaURL.slice(-11)} width="100%" height="30%" />}
+      <div className="clue-input-btns">
+        <button onClick={addMediaClue}>{currentMediaURL ? 'Update Media' : 'Add Media'}</button>
+        {mediaInputDisplay && <button>Cancel</button>}
+      </div>
       <div className="inputDisplay">
         <h3>Answer</h3>
         <TextEditor type="answer" id="answer-editor" />

@@ -21,6 +21,7 @@ const initialState = {
   userGames: [],
   currentQuestion: '',
   currentAnswer: '',
+  currentMediaURL: '',
   currentIndex: null,
   password: '',
   roomID: '',
@@ -93,6 +94,11 @@ const gameReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         currentAnswer: action.payload
       })
+    
+      case types.SET_CURRENT_MEDIA_URL:
+        return Object.assign({}, state, {
+          currentMediaURL: action.payload
+        })
 
     case types.SET_ACTIVE_CLUE_VALUE:
       return Object.assign({}, state, {
@@ -132,7 +138,7 @@ const gameReducer = (state = initialState, action) => {
       const newClues = [];
       clues.forEach(clue => {
         const subArr = [];
-        clue.questions.forEach((q, i) => subArr.push({question: q, answer: clue.answers[i]}));
+        clue.questions.forEach((q, i) => subArr.push({question: q, answer: clue.answers[i], mediaURL: clue.urls[i]}));
         newClues.push(subArr)
       })
       newState = {...state};
@@ -277,8 +283,6 @@ export const saveGameProgress = () => async (dispatch, getState) => {
     players: game.players,
     clues: game.clues
   }
-
-  
 }
 
 export const loadSavedGame = () => async (dispatch, getState) => {
@@ -292,11 +296,13 @@ export const updateGame = () => async (dispatch, getState) => {
   const formattedClues = game.clues.map((clueArr, i) => {
     const questions = clueArr.map(clue => clue.question);
     const answers = clueArr.map(clue => clue.answer);
+    const urls = clueArr.map(clue => clue.mediaURL);
 
     return {
       category: game.categories[i],
       questions: questions,
-      answers: answers
+      answers: answers,
+      urls: urls
     }
   })
 
@@ -319,7 +325,7 @@ export const updateGame = () => async (dispatch, getState) => {
       .then(res => res.json())
       .then(data => console.log('response from update ', data))
   } catch (err) {
-    console.log(err)
+    console.log('Error when updating game: ', err)
   }
 }
 

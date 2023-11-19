@@ -55,6 +55,11 @@ export const setCurrentAnswerActionCreator = answer => ({
   payload: answer
 })
 
+export const setCurrentMediaURLActionCreator = answer => ({
+  type: types.SET_CURRENT_MEDIA_URL,
+  payload: answer
+})
+
 export const setCurrentIndexActionCreator = (column, row) => ({
   type: types.SET_CURRENT_A,
   payload: [column, row]

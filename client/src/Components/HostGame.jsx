@@ -119,6 +119,7 @@ const HostGame = (props) => {
         category={clue.category} 
         questions={clue.questions}
         answers={clue.answers} 
+        urls={clue.urls}
         handleModal={handleModal}
       />
   })

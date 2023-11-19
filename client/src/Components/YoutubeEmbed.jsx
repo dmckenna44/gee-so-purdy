@@ -1,15 +1,15 @@
 import React from "react";
 
-const YouTubeEmbed = ({embedId}) => {
+const YouTubeEmbed = ({videoId, width, height}) => {
 
 
   return (
     <div className="video-embed">
       <iframe
-        width="400"
-        height="400" 
-        src={embedId} 
-        frameborder="0"
+        width={width}
+        height={height}
+        src={`https://www.youtube.com/embed/${videoId}`}
+        frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
         title="Embedded video"
