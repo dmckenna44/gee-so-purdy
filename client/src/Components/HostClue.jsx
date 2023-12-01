@@ -13,6 +13,8 @@ const HostClue = (props) => {
 
   const currentClue = clues[column][index];
 
+  console.log('url from clue', mediaURL)
+
   const showClue = (e) => {
     dispatch({type: types.SET_ACTIVE_CLUE_VALUE, payload: value});
     dispatch({type: types.SET_ACTIVE_CLUE, payload: true});

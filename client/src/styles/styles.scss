@@ -5,6 +5,10 @@
 @import 'modals.scss';
 @import 'mobile.scss';
 
+html {
+  height: 100%;
+}
+
 body {
   background-color: #EAFDFC;
   font-family: 'Josefin Sans';
@@ -111,7 +115,9 @@ input {
 }
 
 .active-question-display {
+  text-align: center;
   white-space: pre-wrap;
+  width: 75%;
 }
 
 
@@ -257,4 +263,9 @@ input:checked + .slider:before {
 
 .tox {
   z-index: 5;
+}
+
+.video-embed {
+  width: 50%;
+  height: 15rem;
 }

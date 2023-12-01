@@ -16,6 +16,7 @@ const ClueInputModal = (props) => {
   const [mediaType, setMediaType] = useState('image');
   const [mediaURL, setMediaURL] = useState('');
   const [mediaFile, setMediaFile] = useState();
+  const [videoDesc, setVideoDesc] = useState('');
   const [mediaInputDisplay, setMediaInputDisplay] = useState(false);
   
   const submitClue = (e) => {
@@ -42,25 +43,29 @@ const ClueInputModal = (props) => {
   }
 
   const createMediaFile = (e) => {
+    const videoID = e.target.value.slice(-11)
     // console.log('file upload', e.target.files);
     // const fileURL = URL.createObjectURL(e.target.files[0]);
     // console.log(fileURL)
     // setImage(fileURL);
     dispatch({type: SET_CURRENT_MEDIA_URL, payload: e.target.value})
     setMediaURL(e.target.value);
+    fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoID}&key=${YT_API_KEY}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log('youtube api response: ', data)
+      setVideoDesc(data.items[0].snippet.title);
+    })
   }
 
-  const mediaPrompt = () => {
-    if (mediaType === 'image') {
-      return <div>
-          <p>Upload an image, or paste an image URL from the web</p>
-          {/* <input type="text" className="image-upload-input"/> */}
-        </div>
-    } else if (mediaType === 'audio') {
-      return <p>Upload a file from your computer</p>
-    } else if (mediaType === 'video') {
-      return <p>Upload a video or paste a YouTube URL</p>
-    }
+  const YT_API_KEY = "AIzaSyBBHbViheb4lNBDv5X0JXhlubvvjxQaqFE"
+  const getVideoDesc = (id) => {
+    fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id}&key=${YT_API_KEY}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log('youtube api response: ', data)
+        setVideoDesc(data.items[0].snippet.title);
+      })
   }
 
   // const handleFocus = (e) => e.target.select();
@@ -72,13 +77,7 @@ const ClueInputModal = (props) => {
       {
         mediaInputDisplay ? 
         <div className="inputDisplay">
-          <label htmlFor="mediaOptions">What Type of Media?</label>
-          <select name="mediaOptions" id="mediaOptions" onChange={(e) => setMediaType(e.target.value)}>
-            <option value="image">Image</option>
-            <option value="audio">Audio</option>
-            <option value="video">Video</option>
-          </select>
-          {mediaPrompt()}
+          <p>Paste a link to a YouTube video</p>
           {mediaType === 'image' || mediaType === 'video' ? <input type="text" onChange={createMediaFile}></input> : ''}
           {/* <input type="file" onChange={createMediaFile} /> */}
           {image ? <img src={image}/> : ''}
@@ -89,10 +88,11 @@ const ClueInputModal = (props) => {
           <TextEditor type="question" id="question-editor" className="text-editor" />
         </div>
       }
-      {currentMediaURL && <h3>Media</h3>}
-      {currentMediaURL && <YouTubeEmbed videoId={currentMediaURL.slice(-11)} width="100%" height="30%" />}
+      {currentMediaURL && <h3>Current Video</h3>}
+      {/* {currentMediaURL && <YouTubeEmbed videoId={currentMediaURL.slice(-11)} width="100%" height="100%" />} */}
+      {videoDesc && <p>{videoDesc}</p>}
       <div className="clue-input-btns">
-        <button onClick={addMediaClue}>{currentMediaURL ? 'Update Media' : 'Add Media'}</button>
+        <button onClick={addMediaClue}>{currentMediaURL ? 'Remove Video' : 'Add YouTube Video'}</button>
         {mediaInputDisplay && <button>Cancel</button>}
       </div>
       <div className="inputDisplay">

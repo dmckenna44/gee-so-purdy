@@ -36,12 +36,14 @@ const ActiveClue = () => {
 
   return (
     <div className="active-clue-expand">
-      {currentMediaURL ? <YouTubeEmbed url={currentMediaURL.slice(-11)} width="100%" height="50%"/> :''}
+      {currentMediaURL ? <YouTubeEmbed videoId={currentMediaURL.slice(-11)} width="100%" height="100%" /> :''}
       <p className="active-question-display">{parse(currentQuestion)}</p>
       <p className="active-answer-display"><em>{ answerVisible ? parse(currentAnswer) : null}</em></p>
-      <button className="open-response-btn" onClick={toggleBuzzers} style={{display: `${playerName ? 'none' : 'block'}`}}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
-      <button onClick={showAnswer} style={{display: `${playerName ? 'none' : 'block'}`}}>Show Answer</button>
-      <button onClick={resetActiveClue} style={{display: `${playerName ? 'none' : 'block'}`}}>Done</button>
+      <div className="btn-container">
+        <button className="open-response-btn" onClick={toggleBuzzers} style={{display: `${playerName ? 'none' : 'block'}`}}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
+        <button onClick={showAnswer} style={{display: `${playerName ? 'none' : 'block'}`}}>Show Answer</button>
+        <button onClick={resetActiveClue} style={{display: `${playerName ? 'none' : 'block'}`}}>Done</button>
+      </div>
     </div>
   )
 }

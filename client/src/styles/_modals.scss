@@ -52,11 +52,14 @@
   align-items: center;
   justify-content: center;
   position: absolute;
+  top: 2rem;
   align-self: center;
   background-color: $backgroundColor;
   min-width: 50%;
-  height: fit-content;
+  // height: fit-content;
+  max-height: 80vh;
   padding: 1.5rem;
+  overflow-y: scroll;
   border: solid 2px $borderColor;
   box-shadow: 0.1rem 0.1rem 0.5rem 2px darken($borderColor, 10%);
   z-index: 5;
@@ -198,11 +201,12 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  // height: 100%;
+  min-height: inherit;
   background-color: $backgroundColor;
   border: 10px solid #0D4C92;
   animation: expandClue .3s linear;
-  padding: 20%;
+  // padding: 20%;
   box-shadow: 0 0 0.5rem 0 $borderColor;
 
 

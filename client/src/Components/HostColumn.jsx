@@ -4,6 +4,8 @@ import HostClue from './HostClue.jsx';
 const HostColumn = (props) => {
 
   const {handleModal, category, index, questions, answers, urls} = props;
+
+  console.log('urls from column: ', urls)
   
   const clueList = questions.map((clue, i) => {
     return <HostClue
@@ -13,7 +15,7 @@ const HostColumn = (props) => {
         value={(i+1)*100} 
         question={clue} 
         answer={answers[i]}
-        mediaURl={urls[i]}
+        mediaURL={urls[i]}
         handleModal={handleModal} 
       />
   })
