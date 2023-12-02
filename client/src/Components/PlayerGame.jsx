@@ -77,6 +77,7 @@ const PlayerGame = (props) => {
 
     return () => {
       dispatch({type: actions.CLEAR_GAME});
+      socket.close(); // disconnect user from socket when they hit back button
     }
 
   }, [socket, dispatch])
