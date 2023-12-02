@@ -106,7 +106,7 @@ const HostGame = (props) => {
 
   const sendResponse = (e, correct) => {
     e.preventDefault();
-    socket.emit('send_update_buzzers', {roomID: roomID, activePlayer: activePlayer});
+    console.log('active player: ', activePlayer)
     socket.emit('send_new_scores', {roomID: roomID, playerName: activePlayer, value: activeClueValue, correct: correct});
     socket.emit('send_active_player', {roomID: roomID, name: ''});
     if (!correct) toggleBuzzers(e)

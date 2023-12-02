@@ -164,12 +164,6 @@ io.on('connection', socket => {
     const currentRoom = rooms.find(room => room.id === roomID);
     io.to(currentRoom).emit('receive_reset_buzzers', true);
   })
-  
-  socket.on('send_update_buzzers', data => {
-    const {roomID, activePlayer} = data;
-    const currentRoom = rooms.find(room => room.id === roomID);
-    io.to(currentRoom).emit('receive_update_buzzers', {activePlayer: activePlayer});
-  })
 
   socket.on('send_toggle_answer', data => {
     const {roomID, show} = data;
