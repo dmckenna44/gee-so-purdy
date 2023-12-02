@@ -77,9 +77,10 @@ const PlayerGame = (props) => {
 
     return () => {
       dispatch({type: actions.CLEAR_GAME});
+      socket.close();
     }
 
-  }, [socket, dispatch])
+  }, [dispatch, playerName])
 
   const currentGame = useSelector(state => state.game);
 

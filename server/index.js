@@ -29,7 +29,8 @@ const io = new Server(server, {
   cors: {
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE']
-  }
+  },
+  connectionStateRecovery: {}
 })
 
 
@@ -84,7 +85,7 @@ io.on('connection', socket => {
         io.to(room).emit('player_joined', {newPlayerList: room.players});
       }
     })
-    if (response.found) cb(response)
+    cb(response)
   })
 
   socket.on('get_players', (data, cb) => {

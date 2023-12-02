@@ -10,6 +10,7 @@ const PlayerSignIn = (props) => {
   const [playerName, setPlayerName] = useState('');
   const [gamePassword, setGamePassword] = useState('');
   const [errorMsg, showErrorMsg] = useState(false);
+  const [noRoomFound, showNoRoomFound] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -24,7 +25,7 @@ const PlayerSignIn = (props) => {
           dispatch({type: actions.SET_PLAYER_NAME, payload: playerName})
           dispatch({type: actions.UPDATE_PLAYERS, payload: response.room.players});
           navigate(`/play/${response.room.game.name}`);
-        }
+        } else showNoRoomFound(true)
       })
     } else  {
       showErrorMsg(true);
@@ -47,6 +48,7 @@ const PlayerSignIn = (props) => {
         </form>
 
         <h3>{errorMsg ? 'All Fields Are Required!' : null}</h3>
+        <h3>{noRoomFound ? 'No Room Found With That Passcode' : null}</h3>
       </section>
     </div>
   )

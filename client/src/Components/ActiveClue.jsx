@@ -32,7 +32,7 @@ const ActiveClue = () => {
     socket.emit('send_toggle_answer', {roomID: roomID, show: true})
     socket.emit('send_buzzer_change', {roomID: roomID, active: false});
     socket.emit('send_reset_buzzers', {roomID: roomID}); 
-  }
+  } 
 
   return (
     <div className="active-clue-expand">
