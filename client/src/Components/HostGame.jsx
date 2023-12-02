@@ -109,7 +109,7 @@ const HostGame = (props) => {
     socket.emit('send_update_buzzers', {roomID: roomID, activePlayer: activePlayer});
     socket.emit('send_new_scores', {roomID: roomID, playerName: activePlayer, value: activeClueValue, correct: correct});
     socket.emit('send_active_player', {roomID: roomID, name: ''});
-    toggleBuzzers(e)
+    if (!correct) toggleBuzzers(e)
   }
 
   const columns = currGame.clues.map((clue, i) => {
