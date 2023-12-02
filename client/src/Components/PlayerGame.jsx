@@ -39,12 +39,6 @@ const PlayerGame = (props) => {
       dispatch({type: actions.SET_BUZZERS_ACTIVE, payload: data.buzzersActive});
     })
 
-    socket.on('receive_update_buzzers', data => {
-      if(data.activePlayer !== playerName) {
-        dispatch({type: actions.SET_CAN_ANSWER, payload: true})
-      }
-    })
-
     socket.on('receive_active_player', data => {
       const sound = new Audio(buzzerSound);
       if (data.activePlayer !== "") sound.play();
