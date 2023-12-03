@@ -78,7 +78,7 @@ const HostGame = (props) => {
     
   }, [socket, dispatch])
       
-  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, activeClueValue, password} = useSelector(state => state.game);
+  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, activeClueValue, password, correctResponse } = useSelector(state => state.game);
 
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setEditModal] = useState(false);
@@ -106,10 +106,12 @@ const HostGame = (props) => {
 
   const sendResponse = (e, correct) => {
     e.preventDefault();
+    if (correct) dispatch({type: actions.SET_CORRECT_RESPONSE, payload: true});
     console.log('active player: ', activePlayer)
     socket.emit('send_new_scores', {roomID: roomID, playerName: activePlayer, value: activeClueValue, correct: correct});
     socket.emit('send_active_player', {roomID: roomID, name: ''});
     if (!correct) toggleBuzzers(e)
+    console.log('correctResponse:', correctResponse)
   }
 
   const columns = currGame.clues.map((clue, i) => {

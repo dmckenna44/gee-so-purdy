@@ -10,6 +10,8 @@ const PlayerSignIn = (props) => {
   const [playerName, setPlayerName] = useState('');
   const [gamePassword, setGamePassword] = useState('');
   const [errorMsg, showErrorMsg] = useState(false);
+  const [sameNameErr, showSameNameErr] = useState(false);
+  const [wrongPwErr, showWrongPwErr] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -18,12 +20,17 @@ const PlayerSignIn = (props) => {
     if (playerName !== '' && gamePassword !== '') {
       showErrorMsg(false);
       socket.emit('join_room', {password: gamePassword, player: playerName}, (response) => {
+        console.log('join game response: ', response)
         if (response.found) {
-          dispatch({type: actions.SET_GAME, payload: response.room.game});
-          dispatch({type: actions.SET_ROOM_ID, payload: response.room.id});
-          dispatch({type: actions.SET_PLAYER_NAME, payload: playerName})
-          dispatch({type: actions.UPDATE_PLAYERS, payload: response.room.players});
-          navigate(`/play/${response.room.game.name}`);
+          if (response.ok) {
+            dispatch({type: actions.SET_GAME, payload: response.room.game});
+            dispatch({type: actions.SET_ROOM_ID, payload: response.room.id});
+            dispatch({type: actions.SET_PLAYER_NAME, payload: playerName})
+            dispatch({type: actions.UPDATE_PLAYERS, payload: response.room.players});
+            navigate(`/play/${response.room.game.name}`);
+          } else showSameNameErr(true);
+        } else {
+          showWrongPwErr(true);
         }
       })
     } else  {
@@ -47,6 +54,8 @@ const PlayerSignIn = (props) => {
         </form>
 
         <h3>{errorMsg ? 'All Fields Are Required!' : null}</h3>
+        <h3>{sameNameErr ? 'There is already a player with that name!' : null}</h3>
+        <h3>{wrongPwErr ? 'No games found with that password' : null}</h3>
       </section>
     </div>
   )

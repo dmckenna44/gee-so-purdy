@@ -77,6 +77,14 @@ io.on('connection', socket => {
     rooms.forEach(room => {
       if (room.pw === data.password) {
         response.found = true;
+        for (const player of room.players) {
+          if (player.name.toLowerCase() === data.player.toLowerCase()) {
+            response.ok = false;
+            cb(response);
+            return;
+          }
+        }
+        response.ok = true;
         response.room = room;
         const newPlayer = {name: data.player, score: 0, id: socket.id};
         room.players.push(newPlayer)
@@ -84,7 +92,7 @@ io.on('connection', socket => {
         io.to(room).emit('player_joined', {newPlayerList: room.players});
       }
     })
-    if (response.found) cb(response)
+    cb(response)
   })
 
   socket.on('get_players', (data, cb) => {
