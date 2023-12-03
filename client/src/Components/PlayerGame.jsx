@@ -103,6 +103,7 @@ const PlayerGame = (props) => {
         {activeClue ? <ActiveClue/> : columns}
       </div>
       
+      <p>{activePlayer ? `Responding: ${activePlayer}` : ''}</p>
       {
       !currentGame.buzzersActive ? 
             <div className="player-list">

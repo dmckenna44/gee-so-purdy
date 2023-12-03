@@ -313,14 +313,14 @@
 }
 
 .timed-player {
-  // background-color: #FF6464;
+  background-color: #FF6464;
   // background: linear-gradient(to right, #FF6464  50%, transparent 50%);
   // background-size: 200% 100%;
   // transition: all 5s ease;
   // background-position: right bottom;
-  animation-name: timePlayer;
-  animation-duration: 0.5s;
-  animation-iteration-count: infinite;
+  // animation-name: timePlayer;
+  // animation-duration: 0.5s;
+  // animation-iteration-count: infinite;
 }
 
 @keyframes timerBar {
@@ -337,12 +337,12 @@
   height: .5rem;
   background-color: #FF6464;
   overflow: hidden;
-  animation-name: timePlayer;
-  animation-duration: 0.5s;
-  animation-iteration-count: infinite;
+  animation-name: timerBar;
+  animation-duration: 5s;
+  animation-iteration-count: once;
 //   animation-name: timePlayer;
 //   animation-duration: .5;
-//   animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 //   animation-timing-function: infinite;
 }
 
