@@ -14,7 +14,17 @@ const PlayerGame = (props) => {
   const { players, activePlayer, playerName, activeClue, buzzersActive} = useSelector(state => state.game);
   const dispatch = useDispatch();
 
+  let currentGame = useSelector(state => state.game);
+
   useEffect(() => {
+
+    // Receive up to date game from server
+    socket.on('receive_updated_game', data => {
+      // currentGame = data.newState;
+      console.log('update game received')
+      dispatch({type: actions.UPDATE_GAME, payload: data.newState})
+    })
+
     // Receive updated player list after a new player joins
     socket.on('player_joined', (data) => {
       dispatch({type: actions.UPDATE_PLAYERS, payload: data.newPlayerList});
@@ -76,7 +86,7 @@ const PlayerGame = (props) => {
 
   }, [socket, dispatch])
 
-  const currentGame = useSelector(state => state.game);
+  
 
   const columns = currentGame.clues.map((clue, i) => {
     return <PlayerColumn

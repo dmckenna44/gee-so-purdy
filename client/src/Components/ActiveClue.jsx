@@ -37,6 +37,7 @@ const ActiveClue = () => {
     <div className="active-clue-expand">
       <p className="active-question-display">{parse(currentQuestion)}</p>
       <p className="active-answer-display"><em>{ answerVisible ? parse(currentAnswer) : null}</em></p>
+      <hr style={{width: "75%", border: "1px solid black"}}/>
       <div className="btn-container">
         {
           !activePlayer && !correctResponse && !answerVisible ?
