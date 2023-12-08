@@ -201,6 +201,14 @@ const gameReducer = (state = initialState, action) => {
         roomID: action.payload
       })
 
+    case types.UPDATE_GAME:
+      newState = {...state};
+      newState.players = action.payload.players;
+      newState.clues = action.payload.clues;
+
+      return Object.assign({}, state, newState);
+
+
     case types.CLEAR_GAME:
       return Object.assign({}, state, {
         name: '',

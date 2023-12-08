@@ -28,6 +28,7 @@ const HostGame = (props) => {
 
   const state = useSelector(state => state.game);
   // console.log('state from host game', state);
+  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, activeClueValue, password, correctResponse } = useSelector(state => state.game);
   
   useEffect(() => {
     dispatch({type: actions.SET_GAME, payload: currGame});
@@ -42,6 +43,10 @@ const HostGame = (props) => {
     }
   }, [currGame]);
       
+  useEffect(() => {
+    socket.emit('send_updated_game', {roomID: roomID, newState: state})
+  }, [players])
+
   useEffect(() => {
     socket.on('player_joined', (data) => {
       console.log('data from player joined event: ', data)
@@ -75,10 +80,13 @@ const HostGame = (props) => {
     socket.on('receive_toggle_answer', data => {
       dispatch({type: actions.SET_SHOW_ANSWER, payload: data.show});
     })
+
+    socket.on('receive_updated_game', data => {
+      console.log('new state of game?: ', data)
+    })
     
   }, [socket, dispatch])
       
-  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, activeClueValue, password, correctResponse } = useSelector(state => state.game);
 
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setEditModal] = useState(false);
@@ -107,11 +115,9 @@ const HostGame = (props) => {
   const sendResponse = (e, correct) => {
     e.preventDefault();
     if (correct) dispatch({type: actions.SET_CORRECT_RESPONSE, payload: true});
-    console.log('active player: ', activePlayer)
     socket.emit('send_new_scores', {roomID: roomID, playerName: activePlayer, value: activeClueValue, correct: correct});
     socket.emit('send_active_player', {roomID: roomID, name: ''});
     if (!correct) toggleBuzzers(e)
-    console.log('correctResponse:', correctResponse)
   }
 
   const columns = currGame.clues.map((clue, i) => {
