@@ -77,6 +77,7 @@ io.on('connection', socket => {
     rooms.forEach(room => {
       if (room.pw === data.password) {
         response.found = true;
+        // Check if the player's name is in use already
         for (const player of room.players) {
           if (player.name.toLowerCase() === data.player.toLowerCase()) {
             response.ok = false;
@@ -84,6 +85,7 @@ io.on('connection', socket => {
             return;
           }
         }
+        // If the name isn't in use
         response.ok = true;
         response.room = room;
         const newPlayer = {name: data.player, score: 0, id: socket.id};
@@ -177,6 +179,14 @@ io.on('connection', socket => {
     const {roomID, show} = data;
     const currentRoom = rooms.find(room => room.id === roomID);
     io.to(currentRoom).emit('receive_toggle_answer', {show: show});
+  })
+
+  socket.on('send_updated_game', data => {
+    const {roomID, newState} = data;
+    console.log('new state of game?: newState');
+    const currentRoom = rooms.find(room => room.id === roomID);
+    io.to(currentRoom).emit('receive_updated_game', {newState: newState});
+
   })
 
   socket.on('disconnect', (data) => {
