@@ -37,14 +37,16 @@ const ActiveClue = () => {
     <div className="active-clue-expand">
       <p className="active-question-display">{parse(currentQuestion)}</p>
       <p className="active-answer-display"><em>{ answerVisible ? parse(currentAnswer) : null}</em></p>
-      {
-        !activePlayer && !correctResponse && !answerVisible ?
-        <button className="open-response-btn" onClick={toggleBuzzers} style={{display: `${playerName ? 'none' : 'block'}`}}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
-          :
-        null
-      }
-      <button onClick={showAnswer} style={{display: `${playerName ? 'none' : 'block'}`}}>Show Answer</button>
-      <button onClick={resetActiveClue} style={{display: `${playerName ? 'none' : 'block'}`}}>Done</button>
+      <div className="btn-container">
+        {
+          !activePlayer && !correctResponse && !answerVisible ?
+          <button className="open-response-btn" onClick={toggleBuzzers} style={{display: `${playerName ? 'none' : 'block'}`}}>{!buzzersActive ? 'Activate Buzzers' : 'Reset Buzzers'}</button>
+            :
+          null
+        }
+        <button onClick={showAnswer} style={{display: `${playerName ? 'none' : 'block'}`}}>Show Answer</button>
+        <button onClick={resetActiveClue} style={{display: `${playerName ? 'none' : 'block'}`}}>Done</button>
+      </div>
     </div>
   )
 }
