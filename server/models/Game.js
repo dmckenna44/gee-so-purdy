@@ -11,7 +11,12 @@ const gameSchema = new mongoose.Schema({
   },
   clues: [{
     category: String,
-    questions: [String],
+    questions: [String | {
+      text: String,
+      media: Boolean,
+      mediaType: String,
+      mediaLocation: String
+    }],
     answers: [String]
   }],
   password: {

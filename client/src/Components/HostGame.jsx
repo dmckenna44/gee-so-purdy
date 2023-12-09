@@ -28,6 +28,7 @@ const HostGame = (props) => {
 
   const state = useSelector(state => state.game);
   // console.log('state from host game', state);
+  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, activeClueValue, password, correctResponse } = useSelector(state => state.game);
   
   useEffect(() => {
     dispatch({type: actions.SET_GAME, payload: currGame});
@@ -42,6 +43,10 @@ const HostGame = (props) => {
     }
   }, [currGame]);
       
+  useEffect(() => {
+    socket.emit('send_updated_game', {roomID: roomID, newState: state})
+  }, [players])
+
   useEffect(() => {
     socket.on('player_joined', (data) => {
       console.log('data from player joined event: ', data)
@@ -75,10 +80,13 @@ const HostGame = (props) => {
     socket.on('receive_toggle_answer', data => {
       dispatch({type: actions.SET_SHOW_ANSWER, payload: data.show});
     })
+
+    socket.on('receive_updated_game', data => {
+      console.log('new state of game?: ', data)
+    })
     
   }, [socket, dispatch])
       
-  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, activeClueValue, password} = useSelector(state => state.game);
 
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setEditModal] = useState(false);
@@ -106,9 +114,10 @@ const HostGame = (props) => {
 
   const sendResponse = (e, correct) => {
     e.preventDefault();
-    socket.emit('send_update_buzzers', {roomID: roomID, activePlayer: activePlayer})
+    if (correct) dispatch({type: actions.SET_CORRECT_RESPONSE, payload: true});
     socket.emit('send_new_scores', {roomID: roomID, playerName: activePlayer, value: activeClueValue, correct: correct});
-    socket.emit('send_active_player', {roomID: roomID, name: ''}); 
+    socket.emit('send_active_player', {roomID: roomID, name: ''});
+    if (!correct) toggleBuzzers(e)
   }
 
   const columns = currGame.clues.map((clue, i) => {
@@ -135,18 +144,7 @@ const HostGame = (props) => {
     <div id="playGameContainer">
       <p className="back-to-prof-link" onClick={() => navigate(`/profile/${userId}`)}>← Back to Profile</p>
       <div className="overlay" hidden={helpModalHidden}></div>
-      <div className="host-config">
-        <p>Passcode: <span className="game-pw-display">{password}</span></p>
-        <button className="host-help-btn" onClick={handleHelpModal}>How To Play</button>
-        {/* <button onClick={(e) => {console.log('current game state', state)}}>Save Game Progress</button> */}
-        {/* <p>Timer?</p> */}
-        {/* <label class="switch">
-          <input type="checkbox" />
-          <span class="slider round"></span>
-          <span>On</span>
-        </label> */}
-
-      </div>
+  
       <div className="overlay" hidden={!showEditModal}></div>
       <h2>{currGame.name}</h2>
          <EditScoresModal hidden={!showEditModal} handleModal={handleEditModal} />
@@ -159,14 +157,26 @@ const HostGame = (props) => {
           {playerList.length ? playerList : 'No players yet'}
          </div>
          <br />
+         <div className="host-options-container">
+         <div className="host-config">
+            <p>Passcode: <span className="game-pw-display">{password}</span></p>
+            <button className="host-help-btn" onClick={handleHelpModal}>How To Play</button>
+            {/* <button onClick={(e) => {console.log('current game state', state)}}>Save Game Progress</button> */}
+            {/* <p>Timer?</p> */}
+            {/* <label class="switch">
+              <input type="checkbox" />
+              <span class="slider round"></span>
+              <span>On</span>
+            </label> */}
+         </div>
          <div className="host-options">
           <div className="host-btns">
             <button className="edit-scores-btn" onClick={handleEditModal}>Edit Scores</button>  
-            {
+            {/* {
               activeClue ?
               <button className="open-response-btn" onClick={toggleBuzzers}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
               : null
-            }
+            } */}
           </div>
           <div className="judge-response">
             <p>{activePlayer ? `Answering: ${activePlayer}` : ''}</p>
@@ -182,6 +192,9 @@ const HostGame = (props) => {
               null
           }
          </div>
+
+         </div>
+  
     </div>
   )
 } 

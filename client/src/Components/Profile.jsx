@@ -17,6 +17,8 @@ const Profile = props => {
 
   const { userGames, username } = useSelector((state) => state.game);
 
+  console.log('games from profile: ', userGames)
+
   const [buildGameModalHidden, toggleBuildGameModal] = useState(true);
   const [helpModalHidden, toggleHelpModal] = useState(true);
   const [deleteHidden, toggleDelete] = useState(true);

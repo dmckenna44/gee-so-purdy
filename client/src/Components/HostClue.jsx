@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import parse from 'html-react-parser';
 import * as types from '../constants/actionTypes.js';
 
 import {socket} from '../apiRoutes.js';
