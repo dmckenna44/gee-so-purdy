@@ -8,3 +8,18 @@ export const newGamePW = () => {
   }
   return pw;
 }
+
+export const formatClues = (clues, categories) => {
+  const formattedClues = clues.map((clueArr, i) => {
+    const questions = clueArr.map(clue => clue.question);
+    const answers = clueArr.map(clue => clue.answer);
+
+    return {
+      category: categories[i],
+      questions: questions,
+      answers: answers
+    }
+  })
+
+  return formattedClues;
+}

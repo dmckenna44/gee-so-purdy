@@ -1,5 +1,6 @@
 import * as types from '../constants/actionTypes';
 import { baseUrl } from "../apiRoutes";
+import { formatClues } from '../utils';
 
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
   canAnswer: true,
   answerVisible: false,
   userGames: [],
+  activeGames: [],
   currentQuestion: '',
   currentAnswer: '',
   currentIndex: null,
@@ -148,6 +150,11 @@ const gameReducer = (state = initialState, action) => {
         userGames: action.payload
       }) 
 
+    case types.LOAD_ACTIVE_GAMES:
+      return Object.assign({}, state, {
+        activeGames: action.payload
+      })
+
     case types.SET_ACTIVE_PLAYER: 
       return Object.assign({}, state, {
         activePlayer: action.payload
@@ -241,18 +248,8 @@ const gameReducer = (state = initialState, action) => {
 
 export const saveGame = () => async (dispatch, getState) => {
   const game = getState().game;
-  console.log('state from saveGame thunk', game)
 
-  const formattedClues = game.clues.map((clueArr, i) => {
-    const questions = clueArr.map(clue => clue.question);
-    const answers = clueArr.map(clue => clue.answer);
-
-    return {
-      category: game.categories[i],
-      questions: questions,
-      answers: answers
-    }
-  })
+  const formattedClues = formatClues(game.clues, game.categories);
   console.log(formattedClues);
 
   const formattedGame = {
@@ -270,7 +267,7 @@ export const saveGame = () => async (dispatch, getState) => {
       body: JSON.stringify(formattedGame)
     })
     const returnedGame = await addedGame.json();
-    console.log('response from save game POST', returnedGame);
+    console.log('save game successful!');
     return returnedGame;
   } catch (err) {
     console.log('error in save game thunk', err)
@@ -279,34 +276,52 @@ export const saveGame = () => async (dispatch, getState) => {
 
 export const saveGameProgress = () => async (dispatch, getState) => {
   const game = getState().game;
+
+  const answered = [];
+  
+  game.clues.forEach((clueArr, column) => {
+    // go through clues and each add the coordinates of every answered question to answered array
+    clueArr.forEach((clue, row) => {
+      if (clue.answered) answered.push([column, row])
+    })
+  })
+
+  const formattedClues = formatClues(game.clues, game.categories);
+
   const gameData = {
-    id: game.gameId,
+    userId: game.userId,
+    gameId: game.gameId,
     name: game.name,
     players: game.players,
-    clues: game.clues
+    clues: formattedClues,
+    answered: answered
   }
 
-  
+  try {
+    const options = {
+      method: 'PUT', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(gameData)
+    }
+    fetch(`${baseUrl}/api/activegames`, options)
+      .then(res => res.json())
+      .then(data => console.log('response from save active game ', data))
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 export const loadSavedGame = () => async (dispatch, getState) => {
-
+  return;
 }
 
 export const updateGame = () => async (dispatch, getState) => {
   const game = getState().game;
   const currentGame = game.userGames.find(g => g._id === game.gameId);
 
-  const formattedClues = game.clues.map((clueArr, i) => {
-    const questions = clueArr.map(clue => clue.question);
-    const answers = clueArr.map(clue => clue.answer);
-
-    return {
-      category: game.categories[i],
-      questions: questions,
-      answers: answers
-    }
-  })
+  const formattedClues = formatClues(game.clues, game.categories);
 
   const formattedGame = {
     user_id: game.userId,
@@ -331,8 +346,20 @@ export const updateGame = () => async (dispatch, getState) => {
   }
 }
 
+export const loadActiveGames = (userid) => async (dispatch, getState) => {
+  try {
+    const response = await fetch(`${baseUrl}/api/activegames/${userid}`);
+    const activeGames = await response.json();
+    console.log('games in progress: ', activeGames);
+    dispatch({type: types.LOAD_ACTIVE_GAMES, payload: activeGames})
+  } catch (err) {
+    console.log('error getting active games', err)
+  }
+}
+
 export const loadGames = (userid) => async (dispatch, getState) => {
   const response = await fetch(`${baseUrl}/api/games/${userid}`);
+  console.log(response);
   const games = await response.json();
   console.log('games from load games', games)
   dispatch({type: types.LOAD_GAMES, payload: games});

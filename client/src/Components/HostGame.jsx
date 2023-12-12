@@ -11,6 +11,7 @@ import * as actions from "../constants/actionTypes.js";
 import buzzerSound from '../buzzersound.wav';
 
 import {socket} from '../apiRoutes.js';
+import { saveGameProgress } from "../reducers/gameReducer.js";
 
 const HostGame = (props) => {
 
@@ -120,6 +121,12 @@ const HostGame = (props) => {
     if (!correct) toggleBuzzers(e)
   }
 
+  const saveActiveGame = (e) => {
+    console.log('state from active game: ', state)
+    dispatch(saveGameProgress())
+    return;
+  }
+
   const columns = currGame.clues.map((clue, i) => {
     return <HostColumn 
         key={i} 
@@ -158,43 +165,42 @@ const HostGame = (props) => {
          </div>
          <br />
          <div className="host-options-container">
-         <div className="host-config">
-            <p>Passcode: <span className="game-pw-display">{password}</span></p>
-            <button className="host-help-btn" onClick={handleHelpModal}>How To Play</button>
-            {/* <button onClick={(e) => {console.log('current game state', state)}}>Save Game Progress</button> */}
-            {/* <p>Timer?</p> */}
-            {/* <label class="switch">
-              <input type="checkbox" />
-              <span class="slider round"></span>
-              <span>On</span>
-            </label> */}
-         </div>
-         <div className="host-options">
-          <div className="host-btns">
-            <button className="edit-scores-btn" onClick={handleEditModal}>Edit Scores</button>  
-            {/* {
-              activeClue ?
-              <button className="open-response-btn" onClick={toggleBuzzers}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
-              : null
-            } */}
+          <div className="host-config">
+              <p>Passcode: <span className="game-pw-display">{password}</span></p>
+              <button className="host-help-btn" onClick={handleHelpModal}>How To Play</button>
+              <button onClick={saveActiveGame}>Save Game Progress</button>
+              {/* <button onClick={(e) => {console.log('current game state', state)}}>Save Game Progress</button> */}
+              {/* <p>Timer?</p> */}
+              {/* <label class="switch">
+                <input type="checkbox" />
+                <span class="slider round"></span>
+                <span>On</span>
+              </label> */}
           </div>
-          <div className="judge-response">
-            <p>{activePlayer ? `Answering: ${activePlayer}` : ''}</p>
-            { activePlayer ? <Timer seconds={5}/> : null }
-            { buzzersActive ?  <Timer seconds={5}/> : null }
+          <div className="host-options">
+            <div className="host-btns">
+              <button className="edit-scores-btn" onClick={handleEditModal}>Edit Scores</button>  
+              {/* {
+                activeClue ?
+                <button className="open-response-btn" onClick={toggleBuzzers}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
+                : null
+              } */}
+            </div>
+            <div className="judge-response">
+              <p>{activePlayer ? `Answering: ${activePlayer}` : ''}</p>
+              { activePlayer ? <Timer seconds={5}/> : null }
+              { buzzersActive ?  <Timer seconds={5}/> : null }
+            </div>
+            {
+              activePlayer ?          
+                <div className="judge-response-btns">
+                  <button onClick={(e) => sendResponse(e, true)}>Correct</button>
+                  <button onClick={(e) => sendResponse(e, false)}>Incorrect</button>
+                </div> : 
+                null
+            }
           </div>
-          {
-            activePlayer ?          
-              <div className="judge-response-btns">
-                <button onClick={(e) => sendResponse(e, true)}>Correct</button>
-                <button onClick={(e) => sendResponse(e, false)}>Incorrect</button>
-              </div> : 
-              null
-          }
          </div>
-
-         </div>
-  
     </div>
   )
 } 

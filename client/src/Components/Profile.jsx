@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { loadGames, randomGame } from '../reducers/gameReducer.js';
+import { loadGames, loadActiveGames, randomGame } from '../reducers/gameReducer.js';
 import { SET_USERID, SET_GAME, SET_BUZZERS_ACTIVE, SET_PLAYER_NAME } from "../constants/actionTypes.js";
 import BuildGameModal from "./BuildGameModal.jsx";
 import DeleteGameModal from "./DeleteGameModal.jsx";
@@ -15,7 +15,8 @@ const Profile = props => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { userGames, username } = useSelector((state) => state.game);
+  const { userGames, activeGames, username } = useSelector((state) => state.game);
+  console.log('active games from profile', activeGames)
 
   console.log('games from profile: ', userGames)
 
@@ -41,6 +42,43 @@ const Profile = props => {
     navigate(`/buildgame/${id}`)
   }
   
+  
+  useEffect(() => {
+    dispatch({type: SET_USERID, payload: userid});
+    dispatch({type: SET_PLAYER_NAME, payload: ''});
+    dispatch(loadGames(userid));
+    dispatch(loadActiveGames(userid))
+  }, [])
+  
+  const setRandomGame = () => {
+    setShowLoader(true);
+    dispatch(randomGame())
+    .then((response) => {
+      console.log('response from randomGame: ', response);
+      dispatch({type: SET_GAME, payload: response})
+      setShowLoader(false);
+      navigate(`/playgame/${userid}/${response._id}`)
+    })
+  }
+  
+  const handleHelpModal = (e) => {
+    e.preventDefault();
+    toggleHelpModal(!helpModalHidden);
+  }
+  
+  const handleDeleteModal = (e, id) => {
+    e.preventDefault();
+    setGameId(id);
+    toggleDelete(!deleteHidden);
+  }
+  
+  const handleBuildGameModal = (e, rand) => {
+    e.preventDefault();
+    // setRandomGame()
+    if (rand) setRandom(true);
+    toggleBuildGameModal(!buildGameModalHidden);
+  }
+
   const gameLinks = userGames.length ? userGames.map((game, i) => {
     return (
       <div className="game-list-choice" key={i}>
@@ -56,40 +94,18 @@ const Profile = props => {
     )
   }) : [];
   
-  useEffect(() => {
-    dispatch({type: SET_USERID, payload: userid});
-    dispatch({type: SET_PLAYER_NAME, payload: ''});
-    dispatch(loadGames(userid));
-  }, [])
-
-  const setRandomGame = () => {
-    setShowLoader(true);
-    dispatch(randomGame())
-      .then((response) => {
-        console.log('response from randomGame: ', response);
-        dispatch({type: SET_GAME, payload: response})
-        setShowLoader(false);
-        navigate(`/playgame/${userid}/${response._id}`)
-      })
-  }
-
-  const handleHelpModal = (e) => {
-    e.preventDefault();
-    toggleHelpModal(!helpModalHidden);
-  }
-
-  const handleDeleteModal = (e, id) => {
-    e.preventDefault();
-    setGameId(id);
-    toggleDelete(!deleteHidden);
-  }
-
-  const handleBuildGameModal = (e, rand) => {
-    e.preventDefault();
-    // setRandomGame()
-    if (rand) setRandom(true);
-    toggleBuildGameModal(!buildGameModalHidden);
-  }
+  const activeGameLinks = activeGames.length ? activeGames.map((game, i) => {
+    return (
+      <div className="active-game-choice" key={i}>
+        <h5 className="game-list-name">{game.name}</h5>
+        <div className="game-list-options">
+          <button onClick={(e) => {playGame(e, game._id)}}>Play</button>
+          <h3>|</h3>
+          <button onClick={(e) => handleDeleteModal(e, game._id)}>Delete</button>
+        </div>
+      </div>
+    )
+  }) : null;
 
   return (
     
@@ -118,7 +134,15 @@ const Profile = props => {
         <h2>Your Saved Games</h2>
         {gameLinks.length ? gameLinks : <p><em>No Games Yet, Click the Button Above to Start Creating!</em></p>}
       </div>
-      
+
+      {
+        activeGames.length ?
+          <div className="active-game-list"> 
+            <h3>Games In Progress</h3>
+            {activeGameLinks}
+          </div> : null
+      }
+
     </div>
   )
 }

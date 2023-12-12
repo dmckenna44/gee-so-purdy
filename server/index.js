@@ -238,6 +238,14 @@ app.delete('/api/games', gameController.deleteGame, (req, res) => {
   res.status(200).json(res.locals.deleted);
 });
 
+app.get('/api/activegames/:userid', gameController.getActiveGames, (req, res) => {
+  res.status(200).json(res.locals.activeGameList);
+})
+
+app.put('/api/activegames', gameController.saveActiveGame, (req, res) => {
+  res.status(200).json(res.locals.saveActiveResponse);
+})
+
 app.get('/api/games/:userid', gameController.getGames, (req, res) => {
   res.status(200).json(res.locals.games);
 });
