@@ -15,26 +15,24 @@ import { saveGameProgress } from "../reducers/gameReducer.js";
 
 const HostGame = (props) => {
 
-  const { gameid } = useParams();
+  const { gameid, active } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+  const state = useSelector(state => state.game);
 
-  const currGame = useSelector(
-      state => state.game.userGames.find(game => {
-        return game._id === gameid
-      })
-  );
+  const currGame = active === 'new' ? state.userGames.find(game => game._id === gameid) : state.activeGames.find(game => game._id === gameid);
 
   const [helpModalHidden, toggleHelpModal] = useState(true);
 
-  const state = useSelector(state => state.game);
   // console.log('state from host game', state);
-  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, activeClueValue, password, correctResponse } = useSelector(state => state.game);
+  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, activeClueValue, password } = useSelector(state => state.game);
+  console.log('player list from hstGame', state.players)
   
   useEffect(() => {
     dispatch({type: actions.SET_GAME, payload: currGame});
     socket.emit('create_room', currGame, response => {
-      dispatch({type: actions.UPDATE_PLAYERS, payload: response.players})
+      // dispatch({type: actions.UPDATE_PLAYERS, payload: response.players})
       dispatch({type: actions.SET_ROOM_ID, payload: response.id});
       dispatch({type: actions.SET_GAME_PW, payload: response.pw});
     });
@@ -83,7 +81,7 @@ const HostGame = (props) => {
     })
 
     socket.on('receive_updated_game', data => {
-      console.log('new state of game?: ', data)
+      // console.log('new state of game?: ', data)
     })
     
   }, [socket, dispatch])

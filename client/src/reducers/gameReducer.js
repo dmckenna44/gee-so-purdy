@@ -129,7 +129,7 @@ const gameReducer = (state = initialState, action) => {
       return Object.assign({}, state, newState)
 
     case types.SET_GAME:
-      const { name, clues, _id } = action.payload;
+      const { name, clues, _id, answered, players } = action.payload;
       const newCategories = clues.map(clue => clue.category);
       const newClues = [];
       clues.forEach(clue => {
@@ -137,11 +137,18 @@ const gameReducer = (state = initialState, action) => {
         clue.questions.forEach((q, i) => subArr.push({question: q, answer: clue.answers[i]}));
         newClues.push(subArr)
       })
+      answered?.forEach(coord => {
+        // coord[0] = column, coord[1] = row
+        // clues[coord[0]][coord[1]] = clue
+        newClues[coord[0]][coord[1]].answered = true 
+      })
+      console.log('new clues: ', newClues, 'new players: ', players)
       newState = {...state};
       newState.name = name;
       newState.categories = newCategories;
       newState.clues = newClues;
       newState.gameId = _id;
+      if (players) newState.players = players;
 
       return Object.assign({}, state, newState)
 
@@ -278,6 +285,8 @@ export const saveGameProgress = () => async (dispatch, getState) => {
   const game = getState().game;
 
   const answered = [];
+
+  const timeSaved = new Date().toLocaleString();
   
   game.clues.forEach((clueArr, column) => {
     // go through clues and each add the coordinates of every answered question to answered array
@@ -294,7 +303,8 @@ export const saveGameProgress = () => async (dispatch, getState) => {
     name: game.name,
     players: game.players,
     clues: formattedClues,
-    answered: answered
+    answered: answered,
+    date: timeSaved
   }
 
   try {

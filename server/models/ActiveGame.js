@@ -26,6 +26,7 @@ const ActiveGameSchema = new mongoose.Schema({
     score: Number,
     id: String
   }],
+  date: String,
   password: {
     type: String
   }

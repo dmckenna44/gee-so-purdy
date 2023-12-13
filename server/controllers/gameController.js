@@ -64,7 +64,7 @@ gameController.deleteGame = async (req, res, next) => {
 
 
 gameController.saveActiveGame = async (req, res, next) => {
-  const {userId, name, players, clues, answered} = req.body;
+  const {userId, name, players, clues, answered, date} = req.body;
 
   try {
     const game = new ActiveGame({
@@ -72,7 +72,8 @@ gameController.saveActiveGame = async (req, res, next) => {
       name: name,
       players: players, 
       clues: clues,
-      answered: answered
+      answered: answered,
+      date: date
     })
     const savedActiveGame = await game.save();
     res.locals.saveActiveResponse = savedActiveGame;

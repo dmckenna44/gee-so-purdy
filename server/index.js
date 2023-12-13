@@ -60,11 +60,13 @@ io.on('connection', socket => {
   clients.push(socket.id)
 
   socket.on('create_room', (data, cb) => {
+    const players = data.players?.length ? data.players : [];
     const newRoom = {
       id: uuidv4(),
       pw: newGamePW(),
       game: data,
-      players: []
+      players: players,
+      active: players.length || false
     }
     rooms.push(newRoom);
     socket.join(newRoom);
@@ -77,24 +79,45 @@ io.on('connection', socket => {
     rooms.forEach(room => {
       if (room.pw === data.password) {
         response.found = true;
-        // Check if the player's name is in use already
-        for (const player of room.players) {
-          if (player.name.toLowerCase() === data.player.toLowerCase()) {
-            response.ok = false;
-            cb(response);
-            return;
+        // First check if this is a game in progress (that's been saved)
+        if (room.active) {
+          response.active = true;
+          response.players = room.players;
+          cb(response);
+          // return;
+        } else {
+          // Check if the player's name is in use already
+          for (const player of room.players) {
+            if (player.name.toLowerCase() === data.player.toLowerCase()) {
+              response.ok = false;
+              cb(response);
+              return;
+            }
           }
+          // If the name isn't in use
+          response.ok = true;
+          response.room = room;
+          const newPlayer = {name: data.player, score: 0, id: socket.id};
+          room.players.push(newPlayer)
+          socket.join(room)
+          io.to(room).emit('player_joined', {newPlayerList: room.players});
         }
-        // If the name isn't in use
-        response.ok = true;
-        response.room = room;
-        const newPlayer = {name: data.player, score: 0, id: socket.id};
-        room.players.push(newPlayer)
-        socket.join(room)
-        io.to(room).emit('player_joined', {newPlayerList: room.players});
       }
     })
     cb(response)
+  })
+
+  socket.on('join_active_game', (data, cb) => {
+    const response = {};
+    console.log('data from join_active_game', data)
+    rooms.forEach(room => {
+      console.log('room password', room.pw)
+      if (room.pw === data.password) {
+        socket.join(room);
+        response.room = room;
+        cb(response)
+      }
+    })
   })
 
   socket.on('get_players', (data, cb) => {

@@ -32,7 +32,14 @@ const Profile = props => {
     e.preventDefault();
     dispatch({type: SET_BUZZERS_ACTIVE, payload: false});
     dispatch({type: SET_GAME, payload: userGames.find(game => game._id === id)});
-    navigate(`/playgame/${userid}/${id}`)
+    navigate(`/playgame/${userid}/${id}/new`)
+  }
+
+  const playActiveGame = (e, id) => {
+    e.preventDefault();
+    dispatch({type: SET_BUZZERS_ACTIVE, payload: false});
+    dispatch({type: SET_GAME, payload: activeGames.find(game => game._id === id)});
+    navigate(`/playgame/${userid}/${id}/active`)
   }
 
   const editGame = (e, id)  => {
@@ -97,9 +104,9 @@ const Profile = props => {
   const activeGameLinks = activeGames.length ? activeGames.map((game, i) => {
     return (
       <div className="active-game-choice" key={i}>
-        <h5 className="game-list-name">{game.name}</h5>
+        <h5 className="game-list-name">{game.name} {game.date}</h5>
         <div className="game-list-options">
-          <button onClick={(e) => {playGame(e, game._id)}}>Play</button>
+          <button onClick={(e) => {playActiveGame(e, game._id)}}>Play</button>
           <h3>|</h3>
           <button onClick={(e) => handleDeleteModal(e, game._id)}>Delete</button>
         </div>
@@ -130,15 +137,15 @@ const Profile = props => {
       <DeleteGameModal hidden={deleteHidden} handleDelete={handleDeleteModal} gameId={gameId} userId={userid} />
       <ProfileHelpModal hidden={helpModalHidden} handleModal={handleHelpModal} component={'profile'} />
 
-      <div id="savedGameList">
+      <div className="saved-game-list">
         <h2>Your Saved Games</h2>
         {gameLinks.length ? gameLinks : <p><em>No Games Yet, Click the Button Above to Start Creating!</em></p>}
       </div>
 
       {
         activeGames.length ?
-          <div className="active-game-list"> 
-            <h3>Games In Progress</h3>
+          <div className="saved-game-list"> 
+            <h2>Games In Progress</h2>
             {activeGameLinks}
           </div> : null
       }
