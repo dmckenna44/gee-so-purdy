@@ -17,7 +17,6 @@ const Profile = props => {
 
   const { userGames, activeGames, username } = useSelector((state) => state.game);
   console.log('active games from profile', activeGames)
-
   console.log('games from profile: ', userGames)
 
   const [buildGameModalHidden, toggleBuildGameModal] = useState(true);
@@ -142,6 +141,9 @@ const Profile = props => {
         {gameLinks.length ? gameLinks : <p><em>No Games Yet, Click the Button Above to Start Creating!</em></p>}
       </div>
 
+      <div className="saved-game-list">
+
+      </div>
       {
         activeGames.length ?
           <div className="saved-game-list"> 

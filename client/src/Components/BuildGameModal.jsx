@@ -29,7 +29,7 @@ const BuildGameModal = (props) => {
         console.log('response from randomGame: ', response);
         dispatch({type: actions.SET_GAME, payload: response})
         setShowLoader(false);
-        navigate(`/playgame/${currGame.userId}/${response._id}`)
+        navigate(`/playgame/${currGame.userId}/${response._id}/new`)
       })
   }
 

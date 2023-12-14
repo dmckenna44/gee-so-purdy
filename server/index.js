@@ -269,6 +269,10 @@ app.put('/api/activegames', gameController.saveActiveGame, (req, res) => {
   res.status(200).json(res.locals.saveActiveResponse);
 })
 
+app.delete('/api/activegames', gameController.deleteActiveGame, (req, res) => {
+  res.status(200).json(res.locals.deleted)
+})
+
 app.get('/api/games/:userid', gameController.getGames, (req, res) => {
   res.status(200).json(res.locals.games);
 });

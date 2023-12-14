@@ -96,4 +96,16 @@ gameController.getActiveGames = async (req, res, next) => {
   }
 }
 
+gameController.deleteActiveGame = async (req, res, next) => {
+  const {id} = req.body;
+
+  try {
+    const deleted = await ActiveGame.deleteOne({_id: id});
+    res.locals.deleted = deleted;
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+}
+
 module.exports = gameController;
