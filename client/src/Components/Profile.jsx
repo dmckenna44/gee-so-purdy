@@ -57,9 +57,13 @@ const Profile = props => {
   }) : [];
   
   useEffect(() => {
-    dispatch({type: SET_USERID, payload: userid});
-    dispatch({type: SET_PLAYER_NAME, payload: ''});
-    dispatch(loadGames(userid));
+    if(!sessionStorage.getItem('session')) {
+      navigate('/')
+    } else {
+      dispatch({type: SET_USERID, payload: userid});
+      dispatch({type: SET_PLAYER_NAME, payload: ''});
+      dispatch(loadGames(userid));
+    }
   }, [])
 
   const setRandomGame = () => {
@@ -71,6 +75,12 @@ const Profile = props => {
         setShowLoader(false);
         navigate(`/playgame/${userid}/${response._id}`)
       })
+  }
+
+  const logoutUser = (e) => {
+    e.preventDefault();
+    sessionStorage.removeItem('session');
+    navigate('/');
   }
 
   const handleHelpModal = (e) => {
@@ -94,7 +104,7 @@ const Profile = props => {
   return (
     
     <div id="profileContainer">
-      <p className="logout-btn" onClick={() => navigate('/')}>Logout</p>
+      <p className="logout-btn" onClick={logoutUser}>Logout</p>
       <div className="overlay" hidden={buildGameModalHidden && deleteHidden && helpModalHidden}></div>
       {/* <p className="help-btn" onClick={handleHelpModal}>?</p> */}
       <h1 className="welcome-title">Gee-So-Purdy</h1>

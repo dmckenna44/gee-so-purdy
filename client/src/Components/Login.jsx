@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import Cookies from "universal-cookie";
 import { baseUrl } from "../apiRoutes";
 
 const Login = (props) => {
 
+  const cookies = new Cookies();
+  
   const navigate = useNavigate();
   const { userid } = useParams();
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    sessionStorage.removeItem('session');
+  }, [])
 
   const nameChange = e => {
     setUsername(e.target.value);
@@ -32,8 +39,10 @@ const Login = (props) => {
     const response = await fetch(`${baseUrl}/api/login`, options)
     const user = await response.json()
     if (user.found) {
-      dispatch({type: 'SET_USERNAME', payload: user.user.username});
-      navigate(`/profile/${user.user._id.toString()}`);
+      console.log('response on client: ', response)
+      dispatch({type: 'SET_USERNAME', payload: user.user.name});
+      sessionStorage.setItem('session', `${user.user.id.toString()}`);
+      navigate(`/profile/${user.user.id.toString()}`);
     }
   }
 
