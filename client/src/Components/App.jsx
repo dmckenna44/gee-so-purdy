@@ -9,10 +9,12 @@ import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
 import PlayerSignIn from "./PlayerSignIn.jsx";
 import PlayerGame from "./PlayerGame.jsx";
-import Footer from "./Footer.jsx";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 
 
 function App() {
+
+  const session = sessionStorage.getItem('session');
 
   return (
     <Router>
@@ -29,10 +31,12 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/playerlogin" element={<PlayerSignIn />} />
-            <Route path="/profile/:userid" element={<Profile />}/>
-            <Route path="/playgame/:userid/:gameid" element={<HostGame />}/>
-            <Route path="/play/:name" element={<PlayerGame />}/>
-            <Route path="/buildgame/:id" element={<EditGame />}/>
+            <Route element={<ProtectedRoute session={session} />}> 
+              <Route path="/profile/:userid" element={<Profile />}/>
+              <Route path="/playgame/:userid/:gameid" element={<HostGame />}/>
+              <Route path="/play/:name" element={<PlayerGame />}/>
+              <Route path="/buildgame/:id" element={<EditGame />}/>
+            </Route>
             <Route path="*" />
           </Routes>
         </div>

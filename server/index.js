@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const { Server } = require('socket.io');
 const mongoose = require('mongoose');
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors());
+app.use(cookieParser());
 app.set('trust proxy', 1);
 
 
@@ -242,6 +244,9 @@ app.get('/api/games/:userid', gameController.getGames, (req, res) => {
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.resolve(__dirname, '../client/build')));
+  app.post('/api/login', cors(), userController.verifyUser, (req, res) => {
+    res.status(200).json(res.locals.user);
+  });
 
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../client/build/index.html"))
