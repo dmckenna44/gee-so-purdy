@@ -9,7 +9,6 @@ import * as actions from '../constants/actionTypes.js';
 const BuildGameModal = (props) => {
 
   const {hidden, handleModal, random} = props;
-  console.log('random?: ', random)
 
   const dispatch = useDispatch();
   const currGame = useSelector(state => state.game);
@@ -22,11 +21,9 @@ const BuildGameModal = (props) => {
 
   const setRandomGame = (e) => {
     e.preventDefault();
-    console.log('random game now...')
     setShowLoader(true);
     dispatch(randomGame(currGame.categories.length, currGame.clues[0].length))
       .then((response) => {
-        console.log('response from randomGame: ', response);
         dispatch({type: actions.SET_GAME, payload: response})
         setShowLoader(false);
         navigate(`/playgame/${currGame.userId}/${response._id}/new`)

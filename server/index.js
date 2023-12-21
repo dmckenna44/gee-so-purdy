@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const { Server } = require('socket.io');
 const mongoose = require('mongoose');
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors());
+app.use(cookieParser());
 app.set('trust proxy', 1);
 
 
@@ -109,9 +111,7 @@ io.on('connection', socket => {
 
   socket.on('join_active_game', (data, cb) => {
     const response = {};
-    console.log('data from join_active_game', data)
     rooms.forEach(room => {
-      console.log('room password', room.pw)
       if (room.pw === data.password) {
         socket.join(room);
         response.room = room;
@@ -135,7 +135,6 @@ io.on('connection', socket => {
     // receive player name and new score from client and adjust in the room state
     const {roomID, playerName, value, correct} = data;
     const currentRoom = rooms.find(room => room.id === roomID);
-    console.log('value of score change', value);
     currentRoom.players.forEach(player => {
       if (player.name === playerName) {
         player.score += correct ? +value : -value;
@@ -146,7 +145,6 @@ io.on('connection', socket => {
 
   socket.on('send_updated_score', data => {
     const {roomID, playerName, value} = data;
-    console.log('value of score change', value);
     const currentRoom = rooms.find(room => room.id === roomID);
     currentRoom.players.forEach(player => {
       if (player.name === playerName) {
@@ -212,7 +210,6 @@ io.on('connection', socket => {
 
   socket.on('send_updated_game', data => {
     const {roomID, newState} = data;
-    console.log('new state of game?: newState');
     const currentRoom = rooms.find(room => room.id === roomID);
     io.to(currentRoom).emit('receive_updated_game', {newState: newState});
 
@@ -283,6 +280,9 @@ app.get('/api/games/:userid', gameController.getGames, (req, res) => {
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.resolve(__dirname, '../client/build')));
+  app.post('/api/login', cors(), userController.verifyUser, (req, res) => {
+    res.status(200).json(res.locals.user);
+  });
 
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../client/build/index.html"))

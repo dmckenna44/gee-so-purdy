@@ -24,10 +24,10 @@ const HostGame = (props) => {
   const currGame = active === 'new' ? state.userGames.find(game => game._id === gameid) : state.activeGames.find(game => game._id === gameid);
 
   const [helpModalHidden, toggleHelpModal] = useState(true);
+  const [saveModalHidden, toggleSaveModal] = useState(true);
 
   // console.log('state from host game', state);
   const { userId, players, roomID, buzzersActive, activePlayer, activeClue, activeClueValue, password } = useSelector(state => state.game);
-  console.log('player list from hstGame', state.players)
   
   useEffect(() => {
     dispatch({type: actions.SET_GAME, payload: currGame});
@@ -48,17 +48,14 @@ const HostGame = (props) => {
 
   useEffect(() => {
     socket.on('player_joined', (data) => {
-      console.log('data from player joined event: ', data)
       dispatch({type: actions.UPDATE_PLAYERS, payload: data.newPlayerList});
     });
     
     socket.on('player_left', (data) => {
-      console.log('data from player left event: ', data)
       dispatch({type: actions.UPDATE_PLAYERS, payload: data.newPlayerList});
     });
     
     socket.on('receive_new_scores', (data) => {
-      console.log('data from receive new scores: ', data);
       dispatch({type: actions.UPDATE_PLAYERS, payload: data});
     });
     
@@ -120,8 +117,11 @@ const HostGame = (props) => {
   }
 
   const saveActiveGame = (e) => {
-    console.log('state from active game: ', state)
-    dispatch(saveGameProgress())
+    dispatch(saveGameProgress());
+    toggleSaveModal(false);
+    setTimeout(() => {
+      toggleSaveModal(true);
+    }, 1500)
     return;
   }
 
@@ -148,7 +148,7 @@ const HostGame = (props) => {
   return (
     <div id="playGameContainer">
       <p className="back-to-prof-link" onClick={() => navigate(`/profile/${userId}`)}>← Back to Profile</p>
-      <div className="overlay" hidden={helpModalHidden}></div>
+      <div className="overlay" hidden={helpModalHidden || saveModalHidden}></div>
   
       <div className="overlay" hidden={!showEditModal}></div>
       <h2>{currGame.name}</h2>
@@ -166,7 +166,7 @@ const HostGame = (props) => {
           <div className="host-config">
               <p>Passcode: <span className="game-pw-display">{password}</span></p>
               <button className="host-help-btn" onClick={handleHelpModal}>How To Play</button>
-              <button onClick={saveActiveGame}>Save Game Progress</button>
+              <button onClick={saveActiveGame}>{saveModalHidden ? 'Save Game Progress' : 'Game Saved!'}</button>
               {/* <button onClick={(e) => {console.log('current game state', state)}}>Save Game Progress</button> */}
               {/* <p>Timer?</p> */}
               {/* <label class="switch">

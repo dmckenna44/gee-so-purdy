@@ -22,10 +22,21 @@ const Profile = props => {
   const [buildGameModalHidden, toggleBuildGameModal] = useState(true);
   const [helpModalHidden, toggleHelpModal] = useState(true);
   const [deleteHidden, toggleDelete] = useState(true);
+  
   const [gameId, setGameId] = useState('');
   const [showLoader, setShowLoader] = useState(false);
   const [random, setRandom] = useState(false);
 
+  useEffect(() => {
+    if(!sessionStorage.getItem('session')) {
+      navigate('/')
+    } else {
+      dispatch({type: SET_USERID, payload: userid});
+      dispatch({type: SET_PLAYER_NAME, payload: ''});
+      dispatch(loadGames(userid));
+      dispatch(loadActiveGames(userid));
+    }
+  }, [])
   
   const playGame = (e, id)  => {
     e.preventDefault();
@@ -46,25 +57,6 @@ const Profile = props => {
     console.log('game id', id);
     dispatch({type: SET_GAME, payload: userGames.find(game => game._id === id)});
     navigate(`/buildgame/${id}`)
-  }
-  
-  
-  useEffect(() => {
-    dispatch({type: SET_USERID, payload: userid});
-    dispatch({type: SET_PLAYER_NAME, payload: ''});
-    dispatch(loadGames(userid));
-    dispatch(loadActiveGames(userid))
-  }, [])
-  
-  const setRandomGame = () => {
-    setShowLoader(true);
-    dispatch(randomGame())
-    .then((response) => {
-      console.log('response from randomGame: ', response);
-      dispatch({type: SET_GAME, payload: response})
-      setShowLoader(false);
-      navigate(`/playgame/${userid}/${response._id}`)
-    })
   }
   
   const handleHelpModal = (e) => {
@@ -103,7 +95,7 @@ const Profile = props => {
   const activeGameLinks = activeGames.length ? activeGames.map((game, i) => {
     return (
       <div className="active-game-choice" key={i}>
-        <h5 className="game-list-name">{game.name} {game.date}</h5>
+        <h5 className="game-list-name">{game.name} - <span style={{fontWeight:"lighter"}}>{game.date}</span></h5>
         <div className="game-list-options">
           <button onClick={(e) => {playActiveGame(e, game._id)}}>Play</button>
           <h3>|</h3>
@@ -113,10 +105,21 @@ const Profile = props => {
     )
   }) : null;
 
+
+
+
+
+  const logoutUser = (e) => {
+    e.preventDefault();
+    sessionStorage.removeItem('session');
+    navigate('/');
+  }
+
+
   return (
     
     <div id="profileContainer">
-      <p className="logout-btn" onClick={() => navigate('/')}>Logout</p>
+      <p className="logout-btn" onClick={logoutUser}>Logout</p>
       <div className="overlay" hidden={buildGameModalHidden && deleteHidden && helpModalHidden}></div>
       {/* <p className="help-btn" onClick={handleHelpModal}>?</p> */}
       <h1 className="welcome-title">Gee-So-Purdy</h1>
