@@ -67,6 +67,7 @@ const EditGame = (props) => {
     <div className="game-editor-container">
       <p className="back-to-prof-link" onClick={() => navigate(`/profile/${userId}`)}>← Back to Profile</p>
       <div className="overlay" hidden={!showModal}></div>
+        <h4>Game Name</h4>
         <input type="text" required value={name} onFocus={handleFocus} onChange={(e) => dispatch({type: SET_GAME_NAME, payload: e.target.value})}></input>
 
       <div className="edit-game-board">

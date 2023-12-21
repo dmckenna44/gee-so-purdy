@@ -21,7 +21,7 @@ const Buzzer = (props) => {
       dispatch({type: actions.SET_ACTIVE_PLAYER, payload: playerName});
       socket.emit('send_active_player', {roomID: roomID, name: playerName});
       socket.emit('send_buzzer_change', {roomID: roomID, active: !buzzersActive});
-      dispatch({type: actions.SET_CAN_ANSWER, payload: false});
+      // dispatch({type: actions.SET_CAN_ANSWER, payload: false});
       dispatch({type: actions.SET_BUZZERS_ACTIVE, payload: !buzzersActive});
     }
   }

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const gameSchema = new mongoose.Schema({
+const ActiveGameSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user'
@@ -20,11 +20,18 @@ const gameSchema = new mongoose.Schema({
     }],
     answers: [String]
   }],
+  answered:[[Number]],
+  players: [{
+    name: String,
+    score: Number,
+    id: String
+  }],
+  date: String,
   password: {
     type: String
   }
 })
 
-const Game = mongoose.model('game', gameSchema);
+const ActiveGame = mongoose.model('activeGame', ActiveGameSchema);
 
-module.exports = Game;
+module.exports = ActiveGame;
