@@ -15,10 +15,6 @@ const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    sessionStorage.removeItem('session');
-  }, [])
-
   const nameChange = e => {
     setUsername(e.target.value);
   }
@@ -39,9 +35,9 @@ const Login = (props) => {
     const response = await fetch(`${baseUrl}/api/login`, options)
     const user = await response.json()
     if (user.found) {
+      sessionStorage.setItem('session', `${user.user.id.toString()}`);
       console.log('response on client: ', response)
       dispatch({type: 'SET_USERNAME', payload: user.user.name});
-      sessionStorage.setItem('session', `${user.user.id.toString()}`);
       navigate(`/profile/${user.user.id.toString()}`);
     }
   }
