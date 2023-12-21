@@ -1,6 +1,8 @@
 const User = require('../models/User.js');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 12;
+require('dotenv').config();
 
 const userController = {};
 
@@ -23,9 +25,19 @@ userController.verifyUser = async (req, res, next) => {
     if (user) {
       const match = await bcrypt.compare(password, user.password);
       if(match) {
+        const userResponse = {
+          name: user.username,
+          id: user._id
+        }
         res.locals.user = {
           found: true,
-          user: user
+          user: userResponse
+        }
+        if (process.env.JWT_SECRET) {
+          const token = jwt.sign(userResponse, process.env.JWT_SECRET, { expiresIn: '30m'});
+          res.cookie('token', token, {
+            httpOnly: true
+          })
         }
         return next()
       } else return next({err: 'Incorrect password'})

@@ -11,28 +11,28 @@ import * as actions from "../constants/actionTypes.js";
 import buzzerSound from '../buzzersound.wav';
 
 import {socket} from '../apiRoutes.js';
+import { saveGameProgress } from "../reducers/gameReducer.js";
 
 const HostGame = (props) => {
 
-  const { gameid } = useParams();
+  const { gameid, active } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+  const state = useSelector(state => state.game);
 
-  const currGame = useSelector(
-      state => state.game.userGames.find(game => {
-        return game._id === gameid
-      })
-  );
+  const currGame = active === 'new' ? state.userGames.find(game => game._id === gameid) : state.activeGames.find(game => game._id === gameid);
 
   const [helpModalHidden, toggleHelpModal] = useState(true);
+  const [saveModalHidden, toggleSaveModal] = useState(true);
 
-  const state = useSelector(state => state.game);
   // console.log('state from host game', state);
+  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, activeClueValue, password } = useSelector(state => state.game);
   
   useEffect(() => {
     dispatch({type: actions.SET_GAME, payload: currGame});
     socket.emit('create_room', currGame, response => {
-      dispatch({type: actions.UPDATE_PLAYERS, payload: response.players})
+      // dispatch({type: actions.UPDATE_PLAYERS, payload: response.players})
       dispatch({type: actions.SET_ROOM_ID, payload: response.id});
       dispatch({type: actions.SET_GAME_PW, payload: response.pw});
     });
@@ -43,18 +43,19 @@ const HostGame = (props) => {
   }, [currGame]);
        
   useEffect(() => {
+    socket.emit('send_updated_game', {roomID: roomID, newState: state})
+  }, [players])
+
+  useEffect(() => {
     socket.on('player_joined', (data) => {
-      console.log('data from player joined event: ', data)
       dispatch({type: actions.UPDATE_PLAYERS, payload: data.newPlayerList});
     });
     
     socket.on('player_left', (data) => {
-      console.log('data from player left event: ', data)
       dispatch({type: actions.UPDATE_PLAYERS, payload: data.newPlayerList});
     });
     
     socket.on('receive_new_scores', (data) => {
-      console.log('data from receive new scores: ', data);
       dispatch({type: actions.UPDATE_PLAYERS, payload: data});
     });
     
@@ -75,10 +76,13 @@ const HostGame = (props) => {
     socket.on('receive_toggle_answer', data => {
       dispatch({type: actions.SET_SHOW_ANSWER, payload: data.show});
     })
+
+    socket.on('receive_updated_game', data => {
+      // console.log('new state of game?: ', data)
+    })
     
   }, [socket, dispatch])
       
-  const { userId, players, roomID, buzzersActive, activePlayer, activeClue, activeClueValue, password} = useSelector(state => state.game);
 
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setEditModal] = useState(false);
@@ -100,16 +104,25 @@ const HostGame = (props) => {
 
   const toggleBuzzers = (e) => {
     e.preventDefault();
-    socket.emit('send_buzzer_change', {roomID: roomID, active: !buzzersActive});
+    socket.emit('send_buzzer_change', {roomID: roomID, active: !buzzersActive, activePlayer: activePlayer});
     dispatch({type: actions.SET_BUZZERS_ACTIVE, payload: !buzzersActive});
   }
 
   const sendResponse = (e, correct) => {
     e.preventDefault();
-    socket.emit('send_update_buzzers', {roomID: roomID, activePlayer: activePlayer});
+    if (correct) dispatch({type: actions.SET_CORRECT_RESPONSE, payload: true});
     socket.emit('send_new_scores', {roomID: roomID, playerName: activePlayer, value: activeClueValue, correct: correct});
     socket.emit('send_active_player', {roomID: roomID, name: ''});
     if (!correct) toggleBuzzers(e)
+  }
+
+  const saveActiveGame = (e) => {
+    dispatch(saveGameProgress());
+    toggleSaveModal(false);
+    setTimeout(() => {
+      toggleSaveModal(true);
+    }, 1500)
+    return;
   }
 
   const columns = currGame.clues.map((clue, i) => {
@@ -136,7 +149,7 @@ const HostGame = (props) => {
   return (
     <div id="playGameContainer">
       <p className="back-to-prof-link" onClick={() => navigate(`/profile/${userId}`)}>← Back to Profile</p>
-      <div className="overlay" hidden={helpModalHidden}></div>
+      <div className="overlay" hidden={helpModalHidden || saveModalHidden}></div>
   
       <div className="overlay" hidden={!showEditModal}></div>
       <h2>{currGame.name}</h2>
@@ -151,43 +164,42 @@ const HostGame = (props) => {
          </div>
          <br />
          <div className="host-options-container">
-         <div className="host-config">
-            <p>Passcode: <span className="game-pw-display">{password}</span></p>
-            <button className="host-help-btn" onClick={handleHelpModal}>How To Play</button>
-            {/* <button onClick={(e) => {console.log('current game state', state)}}>Save Game Progress</button> */}
-            {/* <p>Timer?</p> */}
-            {/* <label class="switch">
-              <input type="checkbox" />
-              <span class="slider round"></span>
-              <span>On</span>
-            </label> */}
-         </div>
-         <div className="host-options">
-          <div className="host-btns">
-            <button className="edit-scores-btn" onClick={handleEditModal}>Edit Scores</button>  
-            {/* {
-              activeClue ?
-              <button className="open-response-btn" onClick={toggleBuzzers}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
-              : null
-            } */}
+          <div className="host-config">
+              <p>Passcode: <span className="game-pw-display">{password}</span></p>
+              <button className="host-help-btn" onClick={handleHelpModal}>How To Play</button>
+              <button onClick={saveActiveGame}>{saveModalHidden ? 'Save Game Progress' : 'Game Saved!'}</button>
+              {/* <button onClick={(e) => {console.log('current game state', state)}}>Save Game Progress</button> */}
+              {/* <p>Timer?</p> */}
+              {/* <label class="switch">
+                <input type="checkbox" />
+                <span class="slider round"></span>
+                <span>On</span>
+              </label> */}
           </div>
-          <div className="judge-response">
-            <p>{activePlayer ? `Answering: ${activePlayer}` : ''}</p>
-            { activePlayer ? <Timer seconds={5}/> : null }
-            { buzzersActive ?  <Timer seconds={5}/> : null }
+          <div className="host-options">
+            <div className="host-btns">
+              <button className="edit-scores-btn" onClick={handleEditModal}>Edit Scores</button>  
+              {/* {
+                activeClue ?
+                <button className="open-response-btn" onClick={toggleBuzzers}>{!buzzersActive ? 'Open Responses' : 'Reset'}</button>
+                : null
+              } */}
+            </div>
+            <div className="judge-response">
+              <p>{activePlayer ? `Answering: ${activePlayer}` : ''}</p>
+              { activePlayer ? <Timer seconds={5}/> : null }
+              { buzzersActive ?  <Timer seconds={5}/> : null }
+            </div>
+            {
+              activePlayer ?          
+                <div className="judge-response-btns">
+                  <button onClick={(e) => sendResponse(e, true)}>Correct</button>
+                  <button onClick={(e) => sendResponse(e, false)}>Incorrect</button>
+                </div> : 
+                null
+            }
           </div>
-          {
-            activePlayer ?          
-              <div className="judge-response-btns">
-                <button onClick={(e) => sendResponse(e, true)}>Correct</button>
-                <button onClick={(e) => sendResponse(e, false)}>Incorrect</button>
-              </div> : 
-              null
-          }
          </div>
-
-         </div>
-  
     </div>
   )
 } 

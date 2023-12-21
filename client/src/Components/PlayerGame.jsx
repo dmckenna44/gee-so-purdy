@@ -14,7 +14,17 @@ const PlayerGame = (props) => {
   const { players, activePlayer, playerName, activeClue, buzzersActive} = useSelector(state => state.game);
   const dispatch = useDispatch();
 
+  let currentGame = useSelector(state => state.game);
+
   useEffect(() => {
+
+    // Receive up to date game from server
+    socket.on('receive_updated_game', data => {
+      // currentGame = data.newState;
+      console.log('update game received')
+      dispatch({type: actions.UPDATE_GAME, payload: data.newState})
+    })
+
     // Receive updated player list after a new player joins
     socket.on('player_joined', (data) => {
       dispatch({type: actions.UPDATE_PLAYERS, payload: data.newPlayerList});
@@ -36,15 +46,18 @@ const PlayerGame = (props) => {
     })
 
     socket.on('receive_buzzer_change', data => {
+      // host clicks open responses - buzzers active
+      // player rings in - buzzers inactive
+      // host clicks correct or incorrect - set canAnswer to false for the player that responded
       dispatch({type: actions.SET_BUZZERS_ACTIVE, payload: data.buzzersActive});
     })
 
     socket.on('receive_update_buzzers', data => {
-      if(data.activePlayer !== playerName) {
-        dispatch({type: actions.SET_CAN_ANSWER, payload: true})
+      if(data.activePlayer === playerName) {
+        dispatch({type: actions.SET_CAN_ANSWER, payload: false})
       }
     })
-
+    
     socket.on('receive_active_player', data => {
       const sound = new Audio(buzzerSound);
       if (data.activePlayer !== "") sound.play();
@@ -77,12 +90,12 @@ const PlayerGame = (props) => {
 
     return () => {
       dispatch({type: actions.CLEAR_GAME});
-      socket.close();
+      socket.close(); // disconnect user from socket when they hit back button
     }
 
   }, [dispatch, playerName])
 
-  const currentGame = useSelector(state => state.game);
+  
 
   const columns = currentGame.clues.map((clue, i) => {
     return <PlayerColumn
@@ -109,6 +122,7 @@ const PlayerGame = (props) => {
         {activeClue ? <ActiveClue/> : columns}
       </div>
       
+      <p>{activePlayer ? `Responding: ${activePlayer}` : ''}</p>
       {
       !currentGame.buzzersActive ? 
             <div className="player-list">
@@ -119,7 +133,7 @@ const PlayerGame = (props) => {
       <Buzzer />
       {activePlayer === playerName ? <Timer seconds={5}/> : null}
       {activePlayer === playerName ? <div className="timer-bar"></div> : null}
-      {buzzersActive ? <Timer seconds={5}/> : null}
+      {buzzersActive ? <Timer seconds={5}/> : null} 
   </div>
   )
 }

@@ -19,7 +19,7 @@ const HostHelpModal = (props) => {
         <p>Once you or a player decides on a category and a "dollar" amount, click on that clue to display the question to everyone.</p>
       </section>
       <section>
-        <h3><em>3 - Click <span><button className="inactive-btn">Open Responses</button></span></em></h3>
+        <h3><em>3 - Click <span><button className="inactive-btn">Activate Buzzers</button></span></em></h3>
         <p>Once a question is displayed, this button will let the players ring in if they want to try and answer the question.</p>
       </section>
       <section>

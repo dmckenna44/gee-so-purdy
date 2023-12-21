@@ -153,3 +153,13 @@ export const setShowAnswerActionCreator = (bool) => ({
   type: types.SET_SHOW_ANSWER,
   payload: bool
 })
+
+export const updateGameActionCreator = (game) => ({
+  type: types.UPDATE_GAME,
+  payload: game
+})
+
+export const loadActiveGamesActionCreator = (games) => ({
+  type: types.LOAD_ACTIVE_GAMES,
+  payload: games
+})

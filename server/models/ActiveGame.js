@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const BSON = require('bson');
 
-const gameSchema = new mongoose.Schema({
+const ActiveGameSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user'
@@ -19,14 +18,20 @@ const gameSchema = new mongoose.Schema({
       mediaLocation: String,
       answered: Boolean
     }],
-    answers: [String],
-    urls: [String]
+    answers: [String]
   }],
+  answered:[[Number]],
+  players: [{
+    name: String,
+    score: Number,
+    id: String
+  }],
+  date: String,
   password: {
     type: String
   }
 })
 
-const Game = mongoose.model('game', gameSchema);
+const ActiveGame = mongoose.model('activeGame', ActiveGameSchema);
 
-module.exports = Game;
+module.exports = ActiveGame;
