@@ -33,7 +33,6 @@ userController.verifyUser = async (req, res, next) => {
           found: true,
           user: userResponse
         }
-        console.log('jwt secret: ', process.env.JWT_SECRET)
         if (process.env.JWT_SECRET) {
           const token = jwt.sign(userResponse, process.env.JWT_SECRET, { expiresIn: '30m'});
           res.cookie('token', token, {

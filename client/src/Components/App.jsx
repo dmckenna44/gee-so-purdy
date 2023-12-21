@@ -31,7 +31,7 @@ function App() {
             <Route path="/playerlogin" element={<PlayerSignIn />} />
             <Route element={<ProtectedRoute />}> 
               <Route path="/profile/:userid" element={<Profile />}/>
-              <Route path="/playgame/:userid/:gameid" element={<HostGame />}/>
+              <Route path="/playgame/:userid/:gameid/:active" element={<HostGame />}/>
               <Route path="/buildgame/:id" element={<EditGame />}/>
             </Route>
             <Route path="/play/:name" element={<PlayerGame />}/>
