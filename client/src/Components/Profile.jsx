@@ -90,7 +90,7 @@ const Profile = props => {
     )
   }) : [];
   
-  const activeGameLinks = activeGames.length ? activeGames.map((game, i) => {
+  const activeGameLinks = activeGames?.length ? activeGames.map((game, i) => {
     return (
       <div className="active-game-choice" key={i}>
         <h5 className="game-list-name">{game.name} - <span style={{fontWeight:"lighter"}}>{game.date}</span></h5>
@@ -143,7 +143,7 @@ const Profile = props => {
 
       </div>
       {
-        activeGames.length ?
+        activeGames?.length ?
           <div className="saved-game-list"> 
             <h2>Games In Progress</h2>
             {activeGameLinks}
