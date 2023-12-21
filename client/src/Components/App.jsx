@@ -32,9 +32,9 @@ function App() {
             <Route element={<ProtectedRoute />}> 
               <Route path="/profile/:userid" element={<Profile />}/>
               <Route path="/playgame/:userid/:gameid" element={<HostGame />}/>
-              <Route path="/play/:name" element={<PlayerGame />}/>
               <Route path="/buildgame/:id" element={<EditGame />}/>
             </Route>
+            <Route path="/play/:name" element={<PlayerGame />}/>
             <Route path="*" />
           </Routes>
         </div>
