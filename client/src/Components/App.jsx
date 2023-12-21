@@ -14,8 +14,6 @@ import ProtectedRoute from "./ProtectedRoute.jsx";
 
 function App() {
 
-  const session = sessionStorage.getItem('session');
-
   return (
     <Router>
       <div className="App">
@@ -31,7 +29,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/playerlogin" element={<PlayerSignIn />} />
-            <Route element={<ProtectedRoute session={session} />}> 
+            <Route element={<ProtectedRoute />}> 
               <Route path="/profile/:userid" element={<Profile />}/>
               <Route path="/playgame/:userid/:gameid" element={<HostGame />}/>
               <Route path="/play/:name" element={<PlayerGame />}/>
