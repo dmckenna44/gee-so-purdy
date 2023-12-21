@@ -16,8 +16,6 @@ const Profile = props => {
   const navigate = useNavigate();
 
   const { userGames, activeGames, username } = useSelector((state) => state.game);
-  console.log('active games from profile', activeGames)
-  console.log('games from profile: ', userGames)
 
   const [buildGameModalHidden, toggleBuildGameModal] = useState(true);
   const [helpModalHidden, toggleHelpModal] = useState(true);
@@ -104,9 +102,6 @@ const Profile = props => {
       </div>
     )
   }) : null;
-
-
-
 
 
   const logoutUser = (e) => {
