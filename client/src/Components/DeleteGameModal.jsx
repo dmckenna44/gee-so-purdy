@@ -14,7 +14,7 @@ const DeleteGameModal = (props) => {
   const state = useSelector(state => state.game);
   let active;
   console.log('state from delete modal', state)
-  state.activeGames.forEach(game => {
+  state.activeGames?.forEach(game => {
     if (game._id === gameId) active = true;
   })
 
