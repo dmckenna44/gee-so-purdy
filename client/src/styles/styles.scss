@@ -5,6 +5,10 @@
 @import 'modals.scss';
 @import 'mobile.scss';
 
+html {
+  height: 100%;
+}
+
 body {
   background-color: #EAFDFC;
   font-family: 'Josefin Sans';
@@ -111,7 +115,9 @@ input {
 }
 
 .active-question-display {
+  text-align: center;
   white-space: pre-wrap;
+  width: 75%;
 }
 
 
@@ -240,11 +246,12 @@ input:checked + .slider:before {
 
 #answer-editor {
   width: 60%;
-  height: 1.5rem;
+  min-height: 1.5rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
+
 
 .ce-toolbar {
   display: none !important;
@@ -257,4 +264,9 @@ input:checked + .slider:before {
 
 .tox {
   z-index: 5;
+}
+
+.video-embed {
+  width: 50%;
+  height: 15rem;
 }
