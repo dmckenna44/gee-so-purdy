@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import parse from 'html-react-parser';
 import * as types from '../constants/actionTypes.js';
 
 import {socket} from '../apiRoutes.js';
@@ -13,8 +12,6 @@ const HostClue = (props) => {
 
   const currentClue = clues[column][index];
 
-  console.log('url from clue', mediaURL)
-
   const showClue = (e) => {
     dispatch({type: types.SET_ACTIVE_CLUE_VALUE, payload: value});
     dispatch({type: types.SET_ACTIVE_CLUE, payload: true});
@@ -22,7 +19,6 @@ const HostClue = (props) => {
     dispatch({type: types.SET_CURRENT_A, payload: answer});
     dispatch({type: types.SET_CURRENT_MEDIA_URL, payload: mediaURL})
     setClueAnswered();
-    // socket.emit('update_clue_value', {roomID: roomID, value: props.value})
     socket.emit('update_clue_visibility', {roomID: roomID, question: question, answer: answer, index: [column, index], answered: true});
   }
 

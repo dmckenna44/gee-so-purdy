@@ -140,15 +140,19 @@ const gameReducer = (state = initialState, action) => {
       const newClues = [];
       clues.forEach(clue => {
         const subArr = [];
-        clue.questions.forEach((q, i) => subArr.push({question: q, answer: clue.answers[i], mediaURL: clue.urls[i]}));
+        clue.questions.forEach((q, i) => {
+          const newClue = {}
+          newClue.question = q;
+          newClue.answer = clue.answers[i];
+          if (clue.urls) newClue.medaURL = clue.urls[i]
+          subArr.push(newClue)
+        });
+        
         newClues.push(subArr)
       })
       answered?.forEach(coord => {
-        // coord[0] = column, coord[1] = row
-        // clues[coord[0]][coord[1]] = clue
         newClues[coord[0]][coord[1]].answered = true 
       })
-      console.log('new clues: ', newClues, 'new players: ', players)
       newState = {...state};
       newState.name = name;
       newState.categories = newCategories;
@@ -263,7 +267,6 @@ export const saveGame = () => async (dispatch, getState) => {
   const game = getState().game;
 
   const formattedClues = formatClues(game.clues, game.categories);
-  console.log(formattedClues);
 
   const formattedGame = {
     user_id: game.userId,
