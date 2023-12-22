@@ -88,7 +88,6 @@ const ClueInputModal = (props) => {
         null
       }
       {currentMediaURL && <h4>Current Video</h4>}
-      {/* {currentMediaURL && <YouTubeEmbed videoId={currentMediaURL.slice(-11)} width="100%" height="100%" />} */}
       {currentMediaURL && videoDesc && <a href={currentMediaURL}>{videoDesc}</a>}
       <div className="clue-input-btns">
         {!mediaInputDisplay && <button onClick={(e) => addMediaClue(e)}>{`${!currentMediaURL ? 'Add' : 'Update'} YouTube Video`}</button> }

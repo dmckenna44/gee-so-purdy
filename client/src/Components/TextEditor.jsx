@@ -31,16 +31,21 @@ const TextEditor = ({type, id}) => {
       onReady: () => {
         ejInstance.current = editor
       },
-      autfocus: true,
+      autofocus: type === 'question' ? true : false,
       data: INITIAL_DATA,
       inlineToolbar: ['bold', 'underline', 'italic', 'link'],
       onChange: async () => {
-        let content = await editor.saver.save();
-        const fullText = await content.blocks.reduce((a, b) => a.data.text + '\n' + b.data.text)
-        console.log('full text', fullText)
-        if (type === 'question') {
-          dispatch({type: SET_CURRENT_Q, payload: fullText})
-        } else dispatch({type: SET_CURRENT_A, payload: fullText})
+        editor.saver.save()
+          .then(data => {
+            let result = '';
+            data.blocks.forEach((block, i) => {
+              result += block.data.text;
+              if (i < data.blocks.length - 1) result += '\n';
+            })
+            if (type === 'question') {
+              dispatch({type: SET_CURRENT_Q, payload: result})
+            } else dispatch({type: SET_CURRENT_A, payload: result})
+          })
       },
       tools: {
         underline: Underline
