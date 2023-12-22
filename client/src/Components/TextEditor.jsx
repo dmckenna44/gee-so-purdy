@@ -36,9 +36,11 @@ const TextEditor = ({type, id}) => {
       inlineToolbar: ['bold', 'underline', 'italic', 'link'],
       onChange: async () => {
         let content = await editor.saver.save();
+        const fullText = await content.blocks.reduce((a, b) => a.data.text + '\n' + b.data.text)
+        console.log('full text', fullText)
         if (type === 'question') {
-          dispatch({type: SET_CURRENT_Q, payload: content.blocks[0].data.text})
-        } else dispatch({type: SET_CURRENT_A, payload: content.blocks[0].data.text})
+          dispatch({type: SET_CURRENT_Q, payload: fullText})
+        } else dispatch({type: SET_CURRENT_A, payload: fullText})
       },
       tools: {
         underline: Underline
