@@ -7,8 +7,6 @@ import BuildGameModal from "./BuildGameModal.jsx";
 import DeleteGameModal from "./DeleteGameModal.jsx";
 import ProfileHelpModal from "./ProfileHelpModal.jsx";
 
-import {socket} from '../apiRoutes.js';
-
 const Profile = props => {
   
   const { userid } = useParams();
@@ -22,7 +20,6 @@ const Profile = props => {
   const [deleteHidden, toggleDelete] = useState(true);
   
   const [gameId, setGameId] = useState('');
-  const [showLoader, setShowLoader] = useState(false);
   const [random, setRandom] = useState(false);
 
   useEffect(() => {
@@ -52,7 +49,6 @@ const Profile = props => {
 
   const editGame = (e, id)  => {
     e.preventDefault();
-    console.log('game id', id);
     dispatch({type: SET_GAME, payload: userGames.find(game => game._id === id)});
     navigate(`/buildgame/${id}`)
   }

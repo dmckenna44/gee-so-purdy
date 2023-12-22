@@ -11,7 +11,6 @@ const ActiveClue = () => {
   // const [answerVisible, setAnswerVisible] = useState(false);
   const { currentQuestion, currentAnswer, currentMediaURL, roomID, playerName, answerVisible, buzzersActive, activePlayer, correctResponse } = useSelector(state => state.game);
   const dispatch = useDispatch();
-  console.log('question', currentQuestion, 'answer', currentAnswer, 'url: ', currentMediaURL)
 
   const resetActiveClue = (e) => {
     e.stopPropagation();
