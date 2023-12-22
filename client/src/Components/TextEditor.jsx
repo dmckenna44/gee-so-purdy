@@ -42,6 +42,7 @@ const TextEditor = ({type, id}) => {
               result += block.data.text;
               if (i < data.blocks.length - 1) result += '\n';
             })
+            console.log(result)
             if (type === 'question') {
               dispatch({type: SET_CURRENT_Q, payload: result})
             } else dispatch({type: SET_CURRENT_A, payload: result})
