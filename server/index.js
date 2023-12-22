@@ -213,7 +213,15 @@ io.on('connection', socket => {
     const {roomID, newState} = data;
     const currentRoom = rooms.find(room => room.id === roomID);
     io.to(currentRoom).emit('receive_updated_game', {newState: newState});
+  })
 
+  socket.on('get_video_desc', data => {
+    const {videoID} = data;
+    fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoID}&key=${process.env.YT_API_KEY}`)
+    .then(response => response.json())
+    .then(data => {
+      socket.emit('send_video_desc', data)
+    })
   })
 
   socket.on('disconnect', (data) => {

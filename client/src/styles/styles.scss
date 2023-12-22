@@ -246,11 +246,12 @@ input:checked + .slider:before {
 
 #answer-editor {
   width: 60%;
-  height: 1.5rem;
+  min-height: 1.5rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
+
 
 .ce-toolbar {
   display: none !important;

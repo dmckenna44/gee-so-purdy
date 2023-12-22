@@ -295,7 +295,6 @@ export const saveGameProgress = () => async (dispatch, getState) => {
   const timeSaved = new Date().toLocaleString();
   
   game.clues.forEach((clueArr, column) => {
-    // go through clues and each add the coordinates of every answered question to answered array
     clueArr.forEach((clue, row) => {
       if (clue.answered) answered.push([column, row])
     })
@@ -329,14 +328,9 @@ export const saveGameProgress = () => async (dispatch, getState) => {
   }
 }
 
-export const loadSavedGame = () => async (dispatch, getState) => {
-  return;
-}
-
 export const updateGame = () => async (dispatch, getState) => {
   const game = getState().game;
   const currentGame = game.userGames.find(g => g._id === game.gameId);
-
   const formattedClues = formatClues(game.clues, game.categories);
 
   const formattedGame = {
@@ -366,7 +360,6 @@ export const loadActiveGames = (userid) => async (dispatch, getState) => {
   try {
     const response = await fetch(`${baseUrl}/api/activegames/${userid}`);
     const activeGames = await response.json();
-    console.log('games in progress: ', activeGames);
     dispatch({type: types.LOAD_ACTIVE_GAMES, payload: activeGames})
   } catch (err) {
     console.log('error getting active games', err)
@@ -374,18 +367,17 @@ export const loadActiveGames = (userid) => async (dispatch, getState) => {
 }
 
 export const loadGames = (userid) => async (dispatch, getState) => {
-  const response = await fetch(`${baseUrl}/api/games/${userid}`);
-  console.log(response);
-  const games = await response.json();
-  console.log('games from load games', games)
-  dispatch({type: types.LOAD_GAMES, payload: games});
+  try {
+    const response = await fetch(`${baseUrl}/api/games/${userid}`);
+    const games = await response.json();
+    dispatch({type: types.LOAD_GAMES, payload: games});
+  } catch (err) {
+    console.log('error loading games', err)
+  }
 } 
 
 export const randomGame = (numCat, numQ) => async (dispatch, getState) => {
   const game = getState().game;
-  console.log('state from random game thunk', game);
-
-  console.log('random game arguments, numCat: ', numCat, 'numQ: ', numQ)
   
   const finalClues = [];
   const categoryChoices = {
@@ -448,13 +440,11 @@ export const randomGame = (numCat, numQ) => async (dispatch, getState) => {
      clueObj['answers'] = aArr;
      finalClues.push(clueObj);
    }
-   console.log('final clues', finalClues);
+  
    return finalClues;
   }
 
   const randGame = await getTrivia();
-  
-  
 
   try {
     const addedGame = await fetch(`${baseUrl}/api/games`, {
@@ -465,14 +455,11 @@ export const randomGame = (numCat, numQ) => async (dispatch, getState) => {
       body: JSON.stringify({user_id: game.userId, name: game.name, clues: randGame})
     })
     const returnedGame = await addedGame.json();
-    console.log('response from save game POST', returnedGame);
     await dispatch(loadGames(game.userId))
     return returnedGame;
   } catch (err) {
     console.log('error in save game thunk', err)
   }
-  
-  console.log('state after random func', getState().game);
 }
 
 
