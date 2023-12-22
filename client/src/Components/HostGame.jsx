@@ -41,7 +41,7 @@ const HostGame = (props) => {
       dispatch({type: actions.CLEAR_GAME});
     }
   }, [currGame]);
-      
+       
   useEffect(() => {
     socket.emit('send_updated_game', {roomID: roomID, newState: state})
   }, [players])
@@ -132,6 +132,7 @@ const HostGame = (props) => {
         category={clue.category} 
         questions={clue.questions}
         answers={clue.answers} 
+        urls={clue.urls}
         handleModal={handleModal}
       />
   })

@@ -10,6 +10,7 @@ export const CREATE_USER = 'CREATE_USER';
 export const SET_USERID = 'SET_USERID';
 export const SET_CURRENT_Q = 'SET_CURRENT_Q';
 export const SET_CURRENT_A = 'SET_CURRENT_A';
+export const SET_CURRENT_MEDIA_URL = 'SET_CURRENT_URL';
 export const SET_CURRENT_INDEX = 'SET_CURRENT_INDEX';
 export const SET_USERNAME = 'SET_USERNAME';
 export const SET_RAND_GAME = 'SET_RANDOM_GAME';

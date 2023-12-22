@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { SET_CURRENT_Q, SET_CURRENT_A, SET_CURRENT_INDEX } from "../constants/actionTypes";
+import { SET_CURRENT_Q, SET_CURRENT_A, SET_CURRENT_MEDIA_URL, SET_CURRENT_INDEX } from "../constants/actionTypes";
 
 
 const Clue = (props) => {
-  const { question, answer, column, handleModal, index, value } = props;
+  const { question, answer, mediaURL, column, handleModal, index, value } = props;
 
   const dispatch = useDispatch();
  
@@ -14,6 +14,8 @@ const Clue = (props) => {
     dispatch({type: SET_CURRENT_INDEX, payload: [column, index]});
     dispatch({type: SET_CURRENT_Q, payload: question});
     dispatch({type: SET_CURRENT_A, payload: answer});
+    dispatch({type: SET_CURRENT_MEDIA_URL, payload: mediaURL});
+    console.log(mediaURL)
     handleModal(e);
   }
 

@@ -42,7 +42,6 @@ gameController.getGames = async (req, res, next) => {
   try {
     const foundGames = await Game.find({user_id: userid});
     res.locals.games = foundGames;
-    console.log('all games: ', foundGames);
     return next();
 
   } catch (err) {

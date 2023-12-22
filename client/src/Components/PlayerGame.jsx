@@ -93,7 +93,7 @@ const PlayerGame = (props) => {
       socket.close(); // disconnect user from socket when they hit back button
     }
 
-  }, [socket, dispatch])
+  }, [dispatch, playerName])
 
   
 
