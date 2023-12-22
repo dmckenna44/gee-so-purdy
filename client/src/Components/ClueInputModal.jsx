@@ -11,12 +11,9 @@ const ClueInputModal = (props) => {
 
   const {handleModal, hidden} = props;
   const dispatch = useDispatch();
-  const { currentIndex, currentQuestion, currentAnswer, currentMediaURL, clues } = useSelector(state => state.game);
+  const { currentIndex, currentQuestion, currentAnswer, currentMediaURL } = useSelector(state => state.game);
 
-  const [image, setImage] = useState('');
-  const [mediaType, setMediaType] = useState('');
   const [mediaURL, setMediaURL] = useState('');
-  const [mediaFile, setMediaFile] = useState();
   const [videoDesc, setVideoDesc] = useState('');
   const [mediaInputDisplay, setMediaInputDisplay] = useState(false);
 
@@ -37,8 +34,6 @@ const ClueInputModal = (props) => {
       mediaURL: currentMediaURL
     }
     dispatch({type: UPDATE_CLUE, payload: [currentIndex[0], currentIndex[1], newClue]})
-    console.log(clues)
-    console.log('media url: ', currentMediaURL)
     dispatch({type: SET_CURRENT_Q, payload: ''});
     dispatch({type: SET_CURRENT_A, payload: ''});
     dispatch({type: SET_CURRENT_MEDIA_URL, payload: ''});
@@ -47,26 +42,12 @@ const ClueInputModal = (props) => {
     handleModal(e);
   };
 
-  const addMediaClue = (e, type) => {
+  const addMediaClue = (e) => {
     e.preventDefault();
-    switch (type) {
-      case 'image':
-        setMediaType('image')
-        break;
-      case 'audio':
-        setMediaType('audio')
-        break;
-      default:
-        setMediaType('video')
-    }
     setMediaInputDisplay(!mediaInputDisplay);
   }
   
   const createMediaFile = (e) => {
-    // console.log('file upload', e.target.files);
-    // const fileURL = URL.createObjectURL(e.target.files[0]);
-    // console.log(fileURL)
-    // setImage(fileURL);
     setMediaInputDisplay(!mediaInputDisplay);
     dispatch({type: SET_CURRENT_MEDIA_URL, payload: mediaURL});
   }
@@ -77,41 +58,16 @@ const ClueInputModal = (props) => {
     setVideoDesc('');
   }
 
-  const updateImgFile = (e) => {
-    
-  }
-
   const updateURL = (e) => {
     e.preventDefault();
     setMediaURL(e.target.value);
   }
 
-  const mediaInput = (type) => {
-
-    switch (type) {
-      default:
-        return (
-          <div className="inputDisplay">
-          <p>Paste a link to a YouTube video</p>
-          <input type="text" onChange={updateURL}></input>
-        </div> 
-        )
-      case 'audio':
-        return (
-          <div className="inputDisplay">
-          <p>Paste a link to a YouTube video</p>
-          <input type="text" onChange={updateURL}></input>
-          </div> 
-        );
-      case 'image':
-        return (
-          <div className="inputDisplay">
-          <p>Upload an image or paste a link</p>
-          <input type="text" onChange={updateURL}></input>
-          <input type="file" onChange={updateImgFile}></input>
-          </div> 
-        )
-    }
+  const closeModal = (e) => {
+    e.preventDefault();
+    setMediaURL('');
+    setMediaInputDisplay(false);
+    handleModal(e)
   }
 
   if (hidden) return null;
@@ -125,7 +81,7 @@ const ClueInputModal = (props) => {
       {
         mediaInputDisplay ? 
         <div className="inputDisplay">
-          <p>Paste a link to a YouTube video</p>
+          <p>Paste YouTube link here</p>
           <input type="text" onChange={updateURL}></input>
         </div> 
           :
@@ -135,13 +91,9 @@ const ClueInputModal = (props) => {
       {/* {currentMediaURL && <YouTubeEmbed videoId={currentMediaURL.slice(-11)} width="100%" height="100%" />} */}
       {currentMediaURL && videoDesc && <a href={currentMediaURL}>{videoDesc}</a>}
       <div className="clue-input-btns">
-        {!mediaInputDisplay && currentMediaURL && <button onClick={(e) => addMediaClue(e)}>Update Media</button> }
-        {!mediaInputDisplay && <button onClick={(e) => addMediaClue(e, 'video')}>Add YouTube Video</button> }
-        {!mediaInputDisplay && <button onClick={(e) => addMediaClue(e, 'image')}>Add Image</button> }
-        {!mediaInputDisplay && <button onClick={(e) => addMediaClue(e, 'audio')}>Add YouTube Audio</button> }
-
-
-        {mediaInputDisplay && <button onClick={createMediaFile}>Save Video</button> }
+        {!mediaInputDisplay && <button onClick={(e) => addMediaClue(e)}>{`${!currentMediaURL ? 'Add' : 'Update'} YouTube Video`}</button> }
+        
+        {mediaInputDisplay && <button onClick={createMediaFile}>Set Video</button> }
         {mediaInputDisplay && <button onClick={removeMediaFile}>Remove Video</button> }
         {mediaInputDisplay && <button onClick={(e) => addMediaClue(e)}>Cancel</button>}
       </div>
@@ -150,8 +102,8 @@ const ClueInputModal = (props) => {
         <TextEditor type="answer" id="answer-editor" />
       </div>
       <div className="clue-input-btns">
-        <button type="button" onClick={submitClue}>Save Clue</button>
-        <button className="close-btn" onClick={handleModal}>Close</button>
+        <button type="button" onClick={submitClue}>Save Changes</button>
+        <button className="close-btn" onClick={closeModal}>Close</button>
       </div>
   </div>
   )

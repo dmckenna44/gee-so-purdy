@@ -59,13 +59,18 @@
   // height: fit-content;
   max-height: 80vh;
   padding: 1.5rem;
-  overflow-y: scroll;
+  overflow-y: scroll; 
+  scrollbar-width: none;
   border: solid 2px $borderColor;
   box-shadow: 0.1rem 0.1rem 0.5rem 2px darken($borderColor, 10%);
   z-index: 5;
 
   label {
     font-size: large;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
