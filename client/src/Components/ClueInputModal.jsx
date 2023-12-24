@@ -17,8 +17,6 @@ const ClueInputModal = (props) => {
   const [videoDesc, setVideoDesc] = useState('');
   const [mediaInputDisplay, setMediaInputDisplay] = useState(false);
 
-  console.log('clue input state, ', useSelector(state => state.game))
-
   useEffect(() => {
     if (currentMediaURL) {
       socket.emit('get_video_desc', {videoID: currentMediaURL.slice(-11)});

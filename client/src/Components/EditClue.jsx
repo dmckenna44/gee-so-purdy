@@ -15,7 +15,6 @@ const Clue = (props) => {
     dispatch({type: SET_CURRENT_Q, payload: question});
     dispatch({type: SET_CURRENT_A, payload: answer});
     dispatch({type: SET_CURRENT_MEDIA_URL, payload: mediaURL});
-    console.log(mediaURL)
     handleModal(e);
   }
 

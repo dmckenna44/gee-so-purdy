@@ -36,8 +36,6 @@ const Login = (props) => {
     const user = await response.json()
     if (user.found) {
       sessionStorage.setItem('session', `${user.user.id.toString()}`);
-      console.log('response on client: ', response)
-      console.log('cookies', response.cookies)
       dispatch({type: 'SET_USERNAME', payload: user.user.name});
       navigate(`/profile/${user.user.id.toString()}`);
     }
