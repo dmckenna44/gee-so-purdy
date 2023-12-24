@@ -144,7 +144,7 @@ const gameReducer = (state = initialState, action) => {
           const newClue = {}
           newClue.question = q;
           newClue.answer = clue.answers[i];
-          if (clue.urls) newClue.medaURL = clue.urls[i]
+          if (clue.urls) newClue.mediaURL = clue.urls[i]
           subArr.push(newClue)
         });
         
